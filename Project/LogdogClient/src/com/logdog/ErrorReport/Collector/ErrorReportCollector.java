@@ -1,9 +1,10 @@
 package com.logdog.ErrorReport.Collector;
 
-public class ErrorReportCollector {
+import com.logdog.ErrorReport.ErrorReportData;
 
-	public ErrorReportCollector() {
-		// TODO Auto-generated constructor stub
-	}
+public abstract class ErrorReportCollector {
+
+	public abstract void DoCollect(ErrorReportData data);
+	 
 
 }

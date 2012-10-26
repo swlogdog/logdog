@@ -6,4 +6,5 @@ public class LogDogServerSetting {
 		// TODO Auto-generated constructor stub
 	}
 
+	public boolean m_SendLog;
 }
