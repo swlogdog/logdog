@@ -2,12 +2,13 @@ package com.logdog.log.Appender;
 
 import com.google.code.microlog4android.appender.Appender;
 import com.google.code.microlog4android.appender.LogCatAppender;
+import com.logdog.Setting.LogDogSetting;
 
 
 /**
- * 
+ * 로그켓에 로그 적용
  * @since 2012. 10. 13.오후 10:11:05
- * TODO 로그켓에 로그 적용
+ * TODO 
  * @author JeongSeungsu
  */
 public class Log4LogCat extends Log4Appender {
@@ -19,7 +20,7 @@ public class Log4LogCat extends Log4Appender {
 	}
 
 	@Override
-	public void CreateAppender() {
+	public void CreateAppender(LogDogSetting setting) {
 		// TODO Auto-generated method stub
 		appender = new LogCatAppender();
 	}

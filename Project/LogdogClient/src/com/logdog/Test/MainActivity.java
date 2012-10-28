@@ -1,7 +1,7 @@
-package com.logdogclient;
+package com.logdog.Test;
 
-import com.google.code.microlog4android.Level;
-import com.logdog.log.LogDoglog4android;
+import com.logdog.Test.R;
+import com.logdog.util.FileControler;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,9 +13,11 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        LogDoglog4android logger = new LogDoglog4android();
-        logger.init("Log4LogCat|Log4File", Level.DEBUG);
         setContentView(R.layout.activity_main);
+        
+           FileControler cont = new FileControler();
+           
+           cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
     }
 
     @Override
