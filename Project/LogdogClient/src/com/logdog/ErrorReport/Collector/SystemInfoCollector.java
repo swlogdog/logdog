@@ -59,7 +59,7 @@ public class SystemInfoCollector {
 				use = manager.getNetworkInfo(Type).isConnectedOrConnecting();
 			}
 		} catch (Exception e) {
-			Log.e("CheckNetwork", e.getMessage());
+			Log.e("LOGDOG", e.getMessage());
 		}
 		return use;
 	}

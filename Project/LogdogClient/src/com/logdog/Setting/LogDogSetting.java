@@ -21,6 +21,9 @@ public final class LogDogSetting {
 	private String						m_URL;
 	
 	private boolean 					m_SendLog;
+	/**
+	 * 디폴트값 100 , 0이면 모든 로그 기록
+	 */
 	private int							m_ReadLogLine;			
 							
 	
@@ -45,8 +48,11 @@ public final class LogDogSetting {
 	public Boolean GetReadLog(){
 		return m_SendLog;
 	}
-	public void SestReadLog(Boolean log){
+	public void SetReadLog(Boolean log){
 		m_SendLog = log;
+	}
+	public String GetStackTraceFileName(){
+		return m_StackTraceName;
 	}
 	public void SetReadLogLine(int line){
 		m_ReadLogLine = line;

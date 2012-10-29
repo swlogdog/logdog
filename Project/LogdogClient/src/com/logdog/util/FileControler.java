@@ -30,7 +30,7 @@ public class FileControler {
             file = new File(Exdirectory+"/"+Directory, FileName);
         
         if(file == null)
-            Log.e("ExternalStroageError", "ExternalStroage Access Fail");
+            Log.e("LOGDOG", "ExternalStroage Access Fail");
         
         return file;
 	}
@@ -52,14 +52,14 @@ public class FileControler {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			Log.e("FileSaveError",e.getMessage());
+			Log.e("LOGDOG",e.getMessage());
 		}
-		return Directory+"/"+FileName;
+		return FileName;
 	}
 	
 	
 	public String FiletoString(String Directory, String FileName){
-		StringBuilder Content = null;
+		StringBuilder Content = new StringBuilder();
 		Content.append("");
 		
 		try{
@@ -78,7 +78,7 @@ public class FileControler {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			Log.e("FileSaveError",e.getMessage());
+			Log.e("LOGDOG",e.getMessage());
 		}
 		
 		return Content.toString();
@@ -96,7 +96,7 @@ public class FileControler {
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			Log.e("FileDelete",e.getMessage());
+			Log.e("LOGDOG",e.getMessage());
 		}
 		
 		return Success;

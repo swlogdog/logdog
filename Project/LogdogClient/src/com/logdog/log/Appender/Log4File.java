@@ -24,7 +24,7 @@ public class Log4File extends Log4Appender {
 		// TODO Auto-generated method stub
 		appender = new FileAppender();
 		appender.setAppend(true);
-		appender.setFileName(setting.GetLogFileName()); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
+		appender.setFileName(setting.GetSaveDirPath()+"/"+setting.GetLogFileName()); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 	}
 
 	@Override

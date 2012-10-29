@@ -1,8 +1,6 @@
 package com.logdog.util;
 
 import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import android.content.Context;
 
 public class Date {

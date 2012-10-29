@@ -42,7 +42,7 @@ public class HTTPAppender extends NetworkAppender {
 		}
 		catch(IOException e){
 			e.printStackTrace();
-			Log.e("HTTPPost","Transmit Http Post Error");
+			Log.e("LOGDOG","Transmit Http Post Error");
 		}
 	}
 

@@ -1,6 +1,7 @@
 package com.logdog;
 
 import com.google.code.microlog4android.Level;
+import com.logdog.Alarm.LogDogAlarm;
 import com.logdog.ErrorReport.ErrorReportFactory;
 import com.logdog.Handler.LogDogExceptionHandler;
 import com.logdog.Network.LogDogNetwork;
@@ -18,6 +19,7 @@ public final class LogDog {
 	private LogDoglog4android		Log;
 	private ErrorReportFactory		Factory;
 	private LogDogExceptionHandler	ExceptionHandler;
+	private LogDogAlarm				Alarm;
 
 	public LogDog() {
 		// TODO Auto-generated constructor stub
@@ -27,15 +29,17 @@ public final class LogDog {
 		Log 				= null;
 		Factory 			= null;
 		Network				= null;
+		Alarm				= null;
 		
 	}
 	
 	void LogDoginitialize(Context context,String URL) {
+		Alarm			 = new LogDogAlarm(); 
 		Setting 		 = new LogDogSetting();
 		Network 		 = new LogDogNetwork();
 		Log 			 = new LogDoglog4android();
 		Factory 		 = new ErrorReportFactory(Setting);
-		Process			 = new LogDogProcess(); 
+		Process			 = new LogDogProcess(Alarm,Factory,Network,Setting); 
 		ExceptionHandler = new LogDogExceptionHandler(Process);
 		
 		Setting.m_Context = context;

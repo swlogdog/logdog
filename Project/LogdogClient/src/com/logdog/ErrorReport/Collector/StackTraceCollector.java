@@ -59,7 +59,7 @@ public class StackTraceCollector {
 	private String SaveFileData(String StackTrace){
 		String FileName;
 		FileControler fcon = new FileControler();
-		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), "StackTrace.txt");
+		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), Setting.GetStackTraceFileName());
 		
 		return FileName;
 	}
