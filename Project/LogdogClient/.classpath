@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry exported="true" kind="lib" path="C:/workspace1/logdog/Project/LogdogClient/libs/microlog4android-1.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="C:/workspace1/logdog/Project/LogdogClient/libs/gson-2.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/workspace1/logdog/Project/LogdogClient/libs/httpclient-4.2.2.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>

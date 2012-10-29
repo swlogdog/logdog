@@ -1,6 +1,6 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ErrorReportData;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
 
 public class LogCollector{
@@ -9,10 +9,8 @@ public class LogCollector{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void DoCollectLog(ErrorReportData OutputData) {
+	public void DoCollectLog(ClientReportData OutputData) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 }

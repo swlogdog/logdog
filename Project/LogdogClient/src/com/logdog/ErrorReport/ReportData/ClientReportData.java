@@ -1,15 +1,25 @@
-package com.logdog.ErrorReport;
+package com.logdog.ErrorReport.ReportData;
 
-public class ErrorReportData {
+public class ClientReportData {
 
-	public ErrorReportData() {
+	public ClientReportData() {
 		// TODO Auto-generated constructor stub
+		Model 				= "unknown";
+		National 			= "unknown";
+		ErrorName			= "";
+		ErrorClassName		= "";
+		AppVersion			= "unknown";
+		OSVersion			= "unknown";
+		ErrorLine			= -1;
+		GPS					= false;
+		WiFi				= false;
+		MobileNetwork		= false;
+		ScreenWidth			= -1;
+		ScreenHeight		= -1;
+		CallStackFileName 	= null;
+		LogFileName			= null;
 	}
 	
-	/**
-	 * 에러가 발생한 날짜 및 시간
-	 */
-	public String Date;
 	/**
 	 * 핸드폰 모델 명
 	 */
@@ -24,12 +34,10 @@ public class ErrorReportData {
 	public String ErrorName;
 	/**
 	 * 에러가 발생한 클래스 이름
+	 * ClassName(60)
+	 * 클래스 이름+(라인)
 	 */
 	public String ErrorClassName;
-	/**
-	 * 에러가 발생한 파일 이름
-	 */
-	public String ErrorFileName;
 	/**
 	 * 앱 버젼
 	 */
@@ -60,11 +68,11 @@ public class ErrorReportData {
 	/**
 	 * 화면 가로 크기
 	 */
-	public String ScreenWidth;
+	public int ScreenWidth;
 	/**
 	 * 화면 세로 크기
 	 */
-	public String ScreenHeight;
+	public int ScreenHeight;
 	
 	/**
 	 * 보낼 콜스택 파일 이름

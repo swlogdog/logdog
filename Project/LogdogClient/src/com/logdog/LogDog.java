@@ -34,7 +34,7 @@ public final class LogDog {
 		Setting 		 = new LogDogSetting();
 		Network 		 = new LogDogNetwork();
 		Log 			 = new LogDoglog4android();
-		Factory 		 = new ErrorReportFactory();
+		Factory 		 = new ErrorReportFactory(Setting);
 		Process			 = new LogDogProcess(); 
 		ExceptionHandler = new LogDogExceptionHandler(Process);
 		

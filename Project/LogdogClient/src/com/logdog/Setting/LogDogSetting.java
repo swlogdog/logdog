@@ -19,8 +19,9 @@ public final class LogDogSetting {
 	
 	
 	private String						m_URL;
-	private LogDogServerSetting 		m_ServerSetting;
 	
+	private boolean 					m_SendLog;
+	private int							m_ReadLogLine;			
 							
 	
 	private String						m_FileSaveDirectory;
@@ -29,17 +30,36 @@ public final class LogDogSetting {
 	
 	
 	
+
+	
 	public LogDogSetting() {
 		// TODO Auto-generated constructor stub
+		m_URL 		= null;
+		m_SendLog 	= false;
+		
+		m_FileSaveDirectory = "LogDog";
+		m_ReadLogLine		= 100;
+		
 	}
-
+	
+	public Boolean GetReadLog(){
+		return m_SendLog;
+	}
+	public void SestReadLog(Boolean log){
+		m_SendLog = log;
+	}
+	public void SetReadLogLine(int line){
+		m_ReadLogLine = line;
+	}
+	public int GetReadLogLine(){
+		return m_ReadLogLine;
+	}
 	public void SetSaveDirPath(String dir){
 		m_FileSaveDirectory = dir;
 	}
 	public String GetSaveDirPath(){
 		return m_FileSaveDirectory;
 	}
-	
 	public String GetLogAppenderName(){
 		return m_LogAppenderName;
 	}

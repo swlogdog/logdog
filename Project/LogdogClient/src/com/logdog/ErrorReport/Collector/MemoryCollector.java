@@ -1,6 +1,6 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ErrorReportData;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
 
 public class MemoryCollector {
 
@@ -9,7 +9,7 @@ public class MemoryCollector {
 	}
 
 	
-	public void DoCollect(ErrorReportData data) {
+	public void DoCollect(ClientReportData data) {
 		// TODO Auto-generated method stub
 		
 	}

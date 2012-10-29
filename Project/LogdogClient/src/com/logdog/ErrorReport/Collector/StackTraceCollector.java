@@ -6,7 +6,7 @@ import java.io.Writer;
 
 
 
-import com.logdog.ErrorReport.ErrorReportData;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
 import com.logdog.util.FileControler;
 
@@ -20,7 +20,7 @@ public class StackTraceCollector {
 	}
 
 
-	public void DoCollectStackTrace(ErrorReportData outputdata,Throwable Errorthrow ) {
+	public void DoCollectStackTrace(ClientReportData outputdata,Throwable Errorthrow ) {
 		// TODO Auto-generated method stub
 		
 		
@@ -33,10 +33,10 @@ public class StackTraceCollector {
        
         ParseStackTrace(outputdata,Errorthrow);
         
-        outputdata.CallStackFileName = SaveFileData(outputdata.Date,StackTraceString);
+        outputdata.CallStackFileName = SaveFileData(StackTraceString);
 	}
 	
-	private void ParseStackTrace(ErrorReportData outputdata,Throwable Errorthrow){
+	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){
 		boolean RunTimeError = false;
 		
         Throwable cause = Errorthrow.getCause();
@@ -48,20 +48,18 @@ public class StackTraceCollector {
         	recordthrow = cause;
         else
         	recordthrow = Errorthrow;
-        
-        
+                
         outputdata.ErrorName = recordthrow.getMessage();
         StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
         
-        outputdata.ErrorClassName = ErrorElements[0].getClassName();
         outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();
-        outputdata.ErrorFileName  = ErrorElements[0].getFileName();
+        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(outputdata.ErrorLine) + ")";
 	}
 	
-	private String SaveFileData(String Date,String StackTrace){
+	private String SaveFileData(String StackTrace){
 		String FileName;
 		FileControler fcon = new FileControler();
-		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), Date + "StackTrace.txt");
+		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), "StackTrace.txt");
 		
 		return FileName;
 	}

@@ -1,5 +1,9 @@
 package com.logdog.Test;
 
+import com.logdog.ErrorReport.ErrorReportFactory;
+import com.logdog.ErrorReport.Collector.StackTraceCollector;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Setting.LogDogSetting;
 import com.logdog.Test.R;
 import com.logdog.util.FileControler;
 
@@ -15,9 +19,25 @@ public class MainActivity extends Activity {
         
         setContentView(R.layout.activity_main);
         
-           FileControler cont = new FileControler();
+           //FileControler cont = new FileControler();
            
-           cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
+           //cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
+        
+        
+        LogDogSetting setting = new LogDogSetting();
+        setting.m_Context = getApplicationContext();
+        setting.SetSaveDirPath("TESTlogdog");
+        
+        ErrorReportFactory factory = new ErrorReportFactory(setting);
+        
+       try{
+    	   int i = 10/0;
+       }
+       catch(Exception e){
+    	  e.printStackTrace(); 
+          factory.CreateErrorReport(e);
+       }
+               
     }
 
     @Override

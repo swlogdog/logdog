@@ -1,9 +1,31 @@
 package com.logdog.ErrorReport;
 
+import com.logdog.ErrorReport.Collector.LogCollector;
+import com.logdog.ErrorReport.Collector.MemoryCollector;
+import com.logdog.ErrorReport.Collector.StackTraceCollector;
+import com.logdog.ErrorReport.Collector.SystemInfoCollector;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Setting.LogDogSetting;
+import com.logdog.util.Date;
+
 public class ErrorReportFactory {
 
-	public ErrorReportFactory() {
+	LogCollector 			m_LogCollector;
+	MemoryCollector			m_MemoryCollector;
+	StackTraceCollector		m_StackCollector;
+	SystemInfoCollector		m_SysInfoCollector;
+	
+	LogDogSetting			Setting;
+	
+	public ErrorReportFactory(LogDogSetting setting) {
 		// TODO Auto-generated constructor stub
+		Setting = setting;
+		
+		m_LogCollector 		= new LogCollector(Setting);
+		m_StackCollector	= new StackTraceCollector(Setting);
+		m_SysInfoCollector	= new SystemInfoCollector(Setting);
+		//m_MemoryCollector	= new MemoryCollector();
+		
 	}
 	
 	/**
@@ -14,10 +36,14 @@ public class ErrorReportFactory {
 	 * @author JeongSeungsu
 	 * @return
 	 */
-	public ErrorReportData CreateErrorReport(){
-		ErrorReportData data = null;
-		data.Date = null;
+	public ClientReportData CreateErrorReport(Throwable errorthorw){
+		ClientReportData data = new ClientReportData();
 		
+		m_StackCollector.DoCollectStackTrace(data, errorthorw);
+		m_SysInfoCollector.DoCollectSystemInfo(data);
+		if(Setting.GetReadLog())
+			m_LogCollector.DoCollectLog(data);
+		//m_MemoryCollector.DoCollect(data);
 		return data; 
 	}
 
