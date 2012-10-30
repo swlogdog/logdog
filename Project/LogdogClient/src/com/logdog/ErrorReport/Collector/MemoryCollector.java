@@ -1,15 +1,15 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ErrorReportData;
+import com.logdog.ErrorReport.ReportData.ClientReportData;
 
-public class MemoryCollector extends ErrorReportCollector {
+public class MemoryCollector {
 
 	public MemoryCollector() {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public void DoCollect(ErrorReportData data) {
+	
+	public void DoCollect(ClientReportData data) {
 		// TODO Auto-generated method stub
 		
 	}

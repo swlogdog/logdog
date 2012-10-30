@@ -1,19 +1,54 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ErrorReportData;
-import com.logdog.Setting.LogDogSetting;
+import android.util.Log;
 
-public class LogCollector extends ErrorReportCollector {
+import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Setting.LogDogSetting;
+import com.logdog.util.FileControler;
+
+public class LogCollector {
+
+	LogDogSetting Setting;
 
 	public LogCollector(LogDogSetting setting) {
 		// TODO Auto-generated constructor stub
+		Setting = setting;
 	}
 
-	@Override
-	public void DoCollect(ErrorReportData data) {
+	public void DoCollectLog(ClientReportData OutputData) {
 		// TODO Auto-generated method stub
-		
+		try {
+
+			final int readline = Setting.GetReadLogLine();
+
+			FileControler fcon = new FileControler();
+
+			String totallog = fcon.FiletoString(Setting.GetSaveDirPath(),Setting.GetLogFileName());
+			if(totallog == "")
+			{
+				Log.e("LOGDOG","Fail Read Log File");
+				return;
+			}
+			
+			String[] StrArray;
+			StrArray = totallog.split("\\n");
+
+			int start = StrArray.length - readline;
+			if(start < 0)
+				start = 0;
+			
+			StringBuilder SendlogBuild = new StringBuilder(); 
+			for(int i = start; i < StrArray.length; i++){
+				SendlogBuild.append(StrArray[i]).append("\n");
+			}
+			String SendLog = SendlogBuild.toString();
+			
+			OutputData.LogFileName = fcon.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , "SendLogFile.txt" );
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+			Log.e("LOGDOG", "LogReadError");
+		}
+
 	}
-
-
 }

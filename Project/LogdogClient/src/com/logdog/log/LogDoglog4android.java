@@ -9,14 +9,16 @@ import com.google.code.microlog4android.LoggerFactory;
 import com.google.code.microlog4android.appender.Appender;
 import com.google.code.microlog4android.format.PatternFormatter;
 
+import com.logdog.Setting.LogDogSetting;
 import com.logdog.log.Appender.*;
 
 
 
 /**
  * 로그4안드로이드 랩퍼 클래스
+ * 랩퍼 클래스로 간단한 꼭 필요한 인터페이스만 제공한다.
  * @since 2012. 10. 13.오후 9:44:41
- * TODO 랩퍼 클래스로 간단한 꼭 필요한 인터페이스만 제공한다.
+ * TODO 
  * @author JeongSeungsu
  */
 public class LogDoglog4android {
@@ -27,6 +29,7 @@ public class LogDoglog4android {
 	 */
 	private Logger m_logger; 
 	
+	
 	public LogDoglog4android() {
 		// TODO Auto-generated constructor stub		
 		m_logger = LoggerFactory.getLogger();
@@ -34,14 +37,16 @@ public class LogDoglog4android {
 	}
 		
 	/**
-	 * 로그 남기는 클래스 초기화 
+	 * 로그 남기는 클래스 초기화
+	 * appender를 선택하여 필요한것과 보여줄 로그의 레벨 설정 
 	 * @since 2012. 10. 13.오후 10:02:25
-	 * TODO 초기화 해준다. appender를 선택하여 필요한것과 보여줄 로그의 레벨 설정
+	 * TODO 
 	 * @author JeongSeungsu
 	 * @param appendernames 쓸 어펜더 이름 "Log4LogCat|Log4File" 예제 중간에 | 넣어줘서 분리함
 	 * @param loglevel 레벨 설정 debug, info, fetal, error, warn 설정 가능
+	 
 	 */
-	public void init(String appendernames,Level loglevel)
+	public void init(Level loglevel,LogDogSetting setting)
 	{
 		try {
 			PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
@@ -49,11 +54,11 @@ public class LogDoglog4android {
 			m_logger.setLevel(loglevel);
 
 			String[] StrArray;
-			StrArray = appendernames.split("\\|");
+			StrArray = setting.GetLogAppenderName().split("\\|");
 
 			for (String s : StrArray) {
 
-				Appender appender = InitAppender(s);
+				Appender appender = InitAppender(s,setting);
 
 				appender.setFormatter(formatter);
 				m_logger.addAppender(appender);
@@ -61,14 +66,15 @@ public class LogDoglog4android {
 			
 			m_logger.info("LogDog log Init");
 		} catch (Exception e) { 
-			Log.e("LOG_ERROR", "FAIL Log4Andorid : " + appendernames);
+			Log.e("LOG_ERROR", "FAIL Log4Andorid : " + setting.GetLogAppenderName());
 		}
 	}
 	
 	/**
 	 * 포맷터 설정하는데 모든 어펜더에 동일하게...
+	 * 각 어펜더 마다 포매터 설정
 	 * @since 2012. 10. 13.오후 10:08:20
-	 * TODO 각 어펜더 마다 포매터 설정
+	 * TODO 
 	 * @author JeongSeungsu
 	 * @param formatter
 	 */
@@ -80,14 +86,25 @@ public class LogDoglog4android {
 	}
 	
 	/**
-	 * 위에서 받은 어펜더 스트링을 이용하여 각 어펜더들을 초기화
+	 * 로그 레벨 설정
+	 * @since 2012. 10. 28.오후 8:49:17
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level 
+	 */
+	public void SetLogLever(Level level){
+		m_logger.setLevel(level);
+	}
+	
+	/**
+	 * 어펜더 스트링을 이용하여 각 어펜더들을 초기화
 	 * @since 2012. 10. 13.오후 10:08:56
-	 * TODO 어펜더 초기화(
+	 * TODO 
 	 * @author JeongSeungsu
 	 * @param appendername
 	 * @return
 	 */
-	private Appender InitAppender(String appendername) {
+	private Appender InitAppender(String appendername,LogDogSetting setting) {
 
 		Log4Appender appender = null;
 		String packagename;
@@ -99,22 +116,36 @@ public class LogDoglog4android {
 			appendername = packagename + "." + appendername;
 			Class c = Class.forName(appendername);
 			appender = (Log4Appender) c.newInstance();
-			appender.CreateAppender();
+			appender.CreateAppender(setting);
 
 		} catch (ClassNotFoundException e1) { //클래스 이름이 없다.
-			Log.e("LOG_ERROR", "Class is Not Found");
+			Log.e("LOGDOG", "Class is Not Found");
 			return null;
 		} catch (InstantiationException e2) { //인스턴스를 생성 할 수 없다.
-			Log.e("LOG_ERROR", "new Instance Fail");
+			Log.e("LOGDOG", "new Instance Fail");
 			return null;
 		} catch (IllegalAccessException e3) { //클래스 파일을 액세서 할 수 없다.
-			Log.e("LOG_ERROR", "Class File Access Error");
+			Log.e("LOGDOG", "Class File Access Error");
 			return null;
 		}
 
 		return appender.GetAppender();
 	}
 
-	
+	public void warn(String log){
+		m_logger.warn(log);
+	}
+	public void info(String log){
+		m_logger.info(log);
+	}
+	public void fatal(String log){
+		m_logger.fatal(log);
+	}
+	public void error(String log){
+		m_logger.error(log);
+	}
+	public void debug(String log){
+		m_logger.debug(log);
+	}
 
 }

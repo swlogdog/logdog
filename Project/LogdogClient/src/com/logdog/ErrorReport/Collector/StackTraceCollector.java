@@ -1,18 +1,67 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ErrorReportData;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
-public class StackTraceCollector extends ErrorReportCollector {
 
-	public StackTraceCollector() {
+
+import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Setting.LogDogSetting;
+import com.logdog.util.FileControler;
+
+public class StackTraceCollector {
+
+	LogDogSetting Setting;
+	
+	public StackTraceCollector(LogDogSetting setting) {
 		// TODO Auto-generated constructor stub
+		Setting = setting;
 	}
 
 
-	@Override
-	public void DoCollect(ErrorReportData data) {
+	public void DoCollectStackTrace(ClientReportData outputdata,Throwable Errorthrow ) {
 		// TODO Auto-generated method stub
 		
+		
+	    Writer stacktracewirter = new StringWriter();
+        PrintWriter stacktraceprinter = new PrintWriter(stacktracewirter);
+        
+        Errorthrow.printStackTrace(stacktraceprinter);
+        String StackTraceString = stacktracewirter.toString();
+        stacktraceprinter.close();
+       
+        ParseStackTrace(outputdata,Errorthrow);
+        
+        outputdata.CallStackFileName = SaveFileData(StackTraceString);
+	}
+	
+	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){
+		boolean RunTimeError = false;
+		
+        Throwable cause = Errorthrow.getCause();
+        if(cause != null)
+            RunTimeError = true;
+        
+        Throwable recordthrow;
+        if(RunTimeError)
+        	recordthrow = cause;
+        else
+        	recordthrow = Errorthrow;
+                
+        outputdata.ErrorName = recordthrow.getMessage();
+        StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
+        
+        outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();
+        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(outputdata.ErrorLine) + ")";
+	}
+	
+	private String SaveFileData(String StackTrace){
+		String FileName;
+		FileControler fcon = new FileControler();
+		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), Setting.GetStackTraceFileName());
+		
+		return FileName;
 	}
 
 }
