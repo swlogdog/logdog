@@ -1,0 +1,82 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1347214366820
+Build-Id: 1.14 ${buildNumber}
+Build-Jdk: 1.6.0_33
+Built-By: jerseyrobot
+Bundle-Description: Jersey is the open source (under dual CDDL+GPL licen
+ se) JAX-RS (JSR 311)        production quality Reference Implementation
+  for building        RESTful Web services.
+Bundle-DocURL: http://www.oracle.com/
+Bundle-License: http://glassfish.java.net/public/CDDL+GPL_1_1.html, http
+ ://glassfish.java.net/public/CDDL+GPL_1_1.html
+Bundle-ManifestVersion: 2
+Bundle-Name: jersey-json
+Bundle-SymbolicName: com.sun.jersey.json
+Bundle-Vendor: Oracle Corporation
+Bundle-Version: 1.14.0
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.sun.jersey.api.json;uses:="com.sun.jersey.json.impl,
+ javax.xml.bind,org.codehaus.jackson.map,org.codehaus.jackson";version="
+ 1.14.0",com.sun.jersey.json.impl;uses:="javax.xml.stream,com.sun.jersey
+ .api.json,javax.xml.bind,javax.xml.bind.annotation,javax.xml.namespace,
+ com.sun.jersey.localization,javax.xml.bind.attachment,javax.xml.transfo
+ rm,javax.xml.bind.annotation.adapters,javax.xml.validation,org.w3c.dom,
+ org.xml.sax,org.codehaus.jettison.json,com.sun.xml.bind.v2.model.runtim
+ e,com.sun.xml.bind.v2.runtime,com.sun.xml.bind.v2.model.core,com.sun.xm
+ l.bind.v2.runtime.property,com.sun.xml.bind.v2.runtime.unmarshaller,org
+ .codehaus.jackson,org.eclipse.persistence.oxm,org.eclipse.persistence.d
+ escriptors,org.eclipse.persistence.internal.oxm,org.eclipse.persistence
+ .mappings,org.eclipse.persistence.sessions,org.eclipse.persistence.mapp
+ ings.converters,org.eclipse.persistence.oxm.mappings,org.eclipse.persis
+ tence.mappings.foundation,org.eclipse.persistence.internal.queries,org.
+ eclipse.persistence.internal.descriptors,org.eclipse.persistence.jaxb,o
+ rg.codehaus.jettison.mapped,com.sun.jersey.core.util,com.sun.jersey.jso
+ n.impl.reader,org.codehaus.jettison.badgerfish,com.sun.jersey.json.impl
+ .writer";version="1.14.0",com.sun.jersey.json.impl.provider.entity;uses
+ :="javax.ws.rs,org.codehaus.jettison.json,javax.ws.rs.core,com.sun.jers
+ ey.json.impl,javax.ws.rs.ext,com.sun.jersey.core.provider.jaxb,com.sun.
+ jersey.api.json,com.sun.jersey.core.util,com.sun.jersey.json.impl.reade
+ r,javax.xml.bind,javax.xml.stream,com.sun.jersey.core.provider,com.sun.
+ jersey.spi,com.sun.jersey.spi.inject,com.sun.jersey.core.spi.component,
+ org.codehaus.jackson.jaxrs";version="1.14.0",com.sun.jersey.json.impl.w
+ riter;uses:="javax.xml.stream,javax.xml.namespace,com.sun.jersey.json.i
+ mpl.reader,org.codehaus.jackson,com.sun.jersey.api.json,com.sun.jersey.
+ json.impl,javax.xml.bind";version="1.14.0",com.sun.jersey.json.impl.rea
+ der;uses:="javax.xml.stream,javax.xml.namespace,org.codehaus.jackson,or
+ g.codehaus.jackson.type,com.sun.jersey.api.json,javax.xml.bind,com.sun.
+ jersey.json.impl";version="1.14.0"
+Implementation-Title: jersey-json
+Implementation-Vendor: Oracle Corporation
+Implementation-Vendor-Id: com.sun.jersey
+Implementation-Version: 1.14
+Import-Package: com.sun.jersey.core.provider;version="[1.14,2)",com.sun.
+ jersey.core.provider.jaxb;version="[1.14,2)",com.sun.jersey.core.spi.co
+ mponent;version="[1.14,2)",com.sun.jersey.core.util;version="[1.14,2)",
+ com.sun.jersey.localization;version="[1.14,2)",com.sun.jersey.spi;versi
+ on="[1.14,2)",com.sun.jersey.spi.inject;version="[1.14,2)",com.sun.xml.
+ bind.annotation;resolution:=optional,com.sun.xml.bind.v2.model.core;res
+ olution:=optional,com.sun.xml.bind.v2.model.runtime;resolution:=optiona
+ l,com.sun.xml.bind.v2.runtime;resolution:=optional,com.sun.xml.bind.v2.
+ runtime.property;resolution:=optional,com.sun.xml.bind.v2.runtime.unmar
+ shaller;resolution:=optional,javax.ws.rs;version="[1.1,2)",javax.ws.rs.
+ core;version="[1.1,2)",javax.ws.rs.ext;version="[1.1,2)",javax.xml.bind
+ ,javax.xml.bind.annotation,javax.xml.bind.annotation.adapters,javax.xml
+ .bind.attachment,javax.xml.namespace,javax.xml.stream,javax.xml.transfo
+ rm,javax.xml.validation,org.codehaus.jackson;version="[1.9,2)",org.code
+ haus.jackson.jaxrs;version="[1.9,2)",org.codehaus.jackson.map;version="
+ [1.9,2)",org.codehaus.jackson.type;version="[1.9,2)",org.codehaus.jetti
+ son.badgerfish;version="[1.1,2)",org.codehaus.jettison.json;version="[1
+ .1,2)",org.codehaus.jettison.mapped;version="[1.1,2)",org.eclipse.persi
+ stence.descriptors;resolution:=optional;version="[2.3,3)",org.eclipse.p
+ ersistence.internal.descriptors;resolution:=optional;version="[2.3,3)",
+ org.eclipse.persistence.internal.oxm;resolution:=optional;version="[2.3
+ ,3)",org.eclipse.persistence.internal.queries;resolution:=optional;vers
+ ion="[2.3,3)",org.eclipse.persistence.jaxb;resolution:=optional;version
+ ="[2.3,3)",org.eclipse.persistence.mappings;resolution:=optional;versio
+ n="[2.3,3)",org.eclipse.persistence.mappings.converters;resolution:=opt
+ ional;version="[2.3,3)",org.eclipse.persistence.mappings.foundation;res
+ olution:=optional;version="[2.3,3)",org.eclipse.persistence.oxm;resolut
+ ion:=optional;version="[2.3,3)",org.eclipse.persistence.oxm.mappings;re
+ solution:=optional;version="[2.3,3)",org.eclipse.persistence.sessions;r
+ esolution:=optional;version="[2.3,3)",org.w3c.dom,org.xml.sax
+Tool: Bnd-1.50.0
