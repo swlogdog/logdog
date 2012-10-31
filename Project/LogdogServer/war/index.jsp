@@ -10,6 +10,15 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Hello App Engine</title>
+  	<script>
+  		window.onload = function() {
+  			var req = new XMLHttpRequest();
+  			req.open('GET','/_ah/admin',false);
+  		
+  			req.send();
+  			document.body.innerHTML = req.responseText;
+  		};
+  	</script>
   </head>
 
   <body>
