@@ -1,5 +1,12 @@
 package com.logdog;
-
+/*
+ * 더블 체크드 락킹....
+ * 팩토리로 만들어서 사용자가 팩토리를 사용하도록 
+ * 4개의 레벨, 어펜더, 포매터, 리포트 
+ * 서비스 형태로 제작....
+ * 하나의 인터페이스...
+ * 개발 기간에도 사용 배포에서도 사용
+ */
 import com.google.code.microlog4android.Level;
 import com.logdog.Alarm.LogDogAlarm;
 import com.logdog.ErrorReport.ErrorReportFactory;
@@ -33,7 +40,7 @@ public final class LogDog {
 		
 	}
 	
-	void LogDoginitialize(Context context,String URL) {
+	public void LogDoginitialize(Context context,String URL) {
 		Alarm			 = new LogDogAlarm(); 
 		Setting 		 = new LogDogSetting();
 		Network 		 = new LogDogNetwork();

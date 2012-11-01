@@ -6,7 +6,7 @@ import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.Collector.SystemInfoCollector;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.util.Date;
+import com.logdog.common.Date;
 
 public class ErrorReportFactory {
 

@@ -8,7 +8,7 @@ import java.io.Writer;
 
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.util.FileControler;
+import com.logdog.common.File.FileControler;
 
 public class StackTraceCollector {
 
@@ -33,7 +33,9 @@ public class StackTraceCollector {
        
         ParseStackTrace(outputdata,Errorthrow);
         
-        outputdata.CallStackFileName = SaveFileData(StackTraceString);
+        outputdata.CallStackFileName = FileControler.SaveStringtoFile(StackTraceString, 
+        															  Setting.GetSaveDirPath(), 
+        															  Setting.GetStackTraceFileName());
 	}
 	
 	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){
@@ -55,13 +57,4 @@ public class StackTraceCollector {
         outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();
         outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(outputdata.ErrorLine) + ")";
 	}
-	
-	private String SaveFileData(String StackTrace){
-		String FileName;
-		FileControler fcon = new FileControler();
-		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), Setting.GetStackTraceFileName());
-		
-		return FileName;
-	}
-
 }

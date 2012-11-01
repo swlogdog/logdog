@@ -13,6 +13,7 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Network.LogDogNetwork;
 import com.logdog.Setting.LogDogSetting;
 
 public class SystemInfoCollector {
@@ -35,8 +36,8 @@ public class SystemInfoCollector {
             OutPutData.AppVersion 			= packageinfo.versionName;
             //String APP_VERSIONCODE 		= String.valueOf(packageinfo.versionCode);
             //String APP_PACKAGE 			= packageinfo.packageName;
-            OutPutData.MobileNetwork 		= Get3GNetwork(Setting.m_Context);
-            OutPutData.WiFi			 		= GetWiFiNetwork(Setting.m_Context);
+            OutPutData.MobileNetwork 		= LogDogNetwork.Get3GNetwork(Setting.m_Context);
+            OutPutData.WiFi			 		= LogDogNetwork.GetWiFiNetwork(Setting.m_Context);
             OutPutData.National 			= GetNational(Setting.m_Context);
             OutPutData.GPS					= GetGps(Setting.m_Context);
             OutPutData.OSVersion			= android.os.Build.VERSION.RELEASE;
@@ -50,25 +51,8 @@ public class SystemInfoCollector {
         }
 	}
 	
-	private boolean GetNetwork(Context context,int Type){
-		boolean use = false;
-		try {
-			PackageManager packagemanager = context.getPackageManager();
-			if (packagemanager.checkPermission("android.permission.ACCESS_NETWORK_STATE",context.getPackageName()) == 0) {
-				ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-				use = manager.getNetworkInfo(Type).isConnectedOrConnecting();
-			}
-		} catch (Exception e) {
-			Log.e("LOGDOG", e.getMessage());
-		}
-		return use;
-	}
-	private boolean Get3GNetwork(Context context){
-		return GetNetwork(context,ConnectivityManager.TYPE_MOBILE);
-	}
-	private boolean GetWiFiNetwork(Context context){
-		return GetNetwork(context,ConnectivityManager.TYPE_WIFI);
-	}
+
+
 
 	private String GetNational(Context context){
 		Locale nowlocale = context.getResources( ).getConfiguration( ).locale;

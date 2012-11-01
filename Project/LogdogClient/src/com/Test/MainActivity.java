@@ -1,4 +1,4 @@
-package com.logdog.Test;
+package com.Test;
 
 import java.lang.reflect.Type;
 
@@ -10,8 +10,8 @@ import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
 import com.logdog.Test.R;
+import com.logdog.common.File.FileControler;
 import com.logdog.log.LogDoglog4android;
-import com.logdog.util.FileControler;
 
 import android.os.Bundle;
 import android.app.Activity;

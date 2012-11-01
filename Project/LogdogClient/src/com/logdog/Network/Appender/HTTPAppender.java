@@ -25,7 +25,7 @@ public class HTTPAppender extends NetworkAppender {
 	}
 	
 	@Override
-	public void SendMessage(String URL,ClientReportData data){
+	public void SendMessage(String URL){
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(URL);
@@ -34,6 +34,10 @@ public class HTTPAppender extends NetworkAppender {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 		     // nameValuePairs.add(new BasicNameValuePair(FileName,Data));
 		      post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		      /*보낼 타입 설정... 
+		      post.setHeader("Accept", "application/json");
+		      post.setHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF8");
+		      */
 		 
 		      HttpResponse response = client.execute(post);
 		      BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
