@@ -1,5 +1,0 @@
-package com.logdog.server.Model.Controller;
-
-public class ErrorClassifier {
-
-}

@@ -1,5 +1,0 @@
-package logdog.Common.Json;
-
-public class BooleanResult {
-
-}

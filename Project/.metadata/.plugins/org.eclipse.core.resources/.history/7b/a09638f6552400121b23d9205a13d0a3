@@ -1,8 +1,0 @@
-package logdog.ErrorReport.DTO;
-
-import java.util.ArrayList;
-
-public class CallStackData {
-
-	ArrayList<String> Data;
-}

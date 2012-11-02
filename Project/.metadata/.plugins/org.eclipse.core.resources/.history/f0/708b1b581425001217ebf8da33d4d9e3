@@ -1,5 +1,0 @@
-package logdog.Common.BlobStore;
-
-public class BlobWriterFactory {
-
-}

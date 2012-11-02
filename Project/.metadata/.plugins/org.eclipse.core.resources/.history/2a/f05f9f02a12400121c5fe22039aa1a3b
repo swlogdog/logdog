@@ -1,6 +1,0 @@
-package logdog.Util.GAE;
-
-public interface ServerFileWriter {
-
-	private String FileWriter(String Data);
-}
