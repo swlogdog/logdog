@@ -8,8 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import logdog.Model.ErrorClassifiedInfo;
-import logdog.Model.GsonRefer.ClientReportData;
+import logdog.ErrorReport.DAO.ErrorTypeInfo;
+import logdog.ErrorReport.DTO.ClientReportData;
 
 import com.google.gson.Gson;
 
@@ -53,8 +53,8 @@ public class GsonInputCase {
 	public Response createTrackInJSON(ClientReportData track) {
 		Gson gson = new Gson();
 		//ClientReportData nData = gson.fromJson(track, ClientReportData.class);
-		ErrorClassifiedInfo Temp = new ErrorClassifiedInfo("aaa","bbb");
-		String result = "Track saved : " + track.ErrorName+"    "+Temp.getE_ClassificationCode();
+	//	ErrorTypeInfo Temp = new ErrorTypeInfo("aaa","bbb");
+		String result = "Track saved : " + track.ErrorName+"    ";//Temp.getE_ClassificationCode();
 		return Response.status(201).entity(result).build();
  
 	}
