@@ -1,0 +1,74 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.util.Log;
+
+
+public class MainTestT {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		HttpClient client = new HttpClient();
+		  
+		  // 그룹웨어쪽 메일.
+		  String url = "http://126.5.50.1/ekp/KmMailSend.jsp";
+		  
+		  PostMethod postMethod = new PostMethod ( url);
+		  
+		  // 보낼 파라메터 정의
+		  NameValuePair[] parametersBody =  new NameValuePair[] {
+		    new NameValuePair("userKID", szUserKID),
+		    new NameValuePair("cn", URLEncoder.encode( szCN)),
+		    new NameValuePair("to", URLEncoder.encode( szTO)),
+		    new NameValuePair("cc", URLEncoder.encode( szCC)),
+		    new NameValuePair("bcc", URLEncoder.encode( szBCC)),
+		    
+		    new NameValuePair("subject", URLEncoder.encode( szSubject)),
+		    new NameValuePair("content", URLEncoder.encode( szContent)),
+		  };
+		  postMethod.setRequestBody(parametersBody);
+		  
+		        int statusCode = -1;
+		     try {
+		         statusCode = client.executeMethod( postMethod);
+		         if ( statusCode == 200)
+		         {
+		          logger.debug( szCN + "님이  <<" + szSubject + ">>을 성공적으로 보내습니다.");
+		         }
+		         else
+		         {
+		          logger.debug( szCN + "님이 <<"+ szSubject + ">>을 보내는데 실패하였습니다.");
+		         }
+		            System.out.println( "statusCode = "+ statusCode );
+		        } 
+		     catch (HttpException e) {
+		            System.err.println("A recoverable exception occurred, retrying.  " + e.getMessage());
+		            logger.debug( "A recoverable exception occurred, retrying.  " + e.getMessage());
+		     } 
+		     catch (IOException e) {
+		            System.err.println("Failed to download file.");
+		            logger.debug( "Failed to download file." + e.getMessage());
+		     }
+		     finally 
+		     {
+		      postMethod.releaseConnection(); 
+		     }
+		[출처] HTTPClient의 사용법 1.|작성자 협객
+
+
+	}
+
+}

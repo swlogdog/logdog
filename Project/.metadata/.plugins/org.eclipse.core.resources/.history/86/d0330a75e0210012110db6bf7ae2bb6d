@@ -1,0 +1,6 @@
+package com.logdog.server.View.json;
+
+public class RequestResult {
+
+	private boolean
+}

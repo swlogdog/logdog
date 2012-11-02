@@ -1,0 +1,19 @@
+package com.logdog.server.TestCase;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class GsonInputCase {
+
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/plain");
+		resp.getWriter().println("Hello, world");
+	}
+	
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		
+		
+	}
+}

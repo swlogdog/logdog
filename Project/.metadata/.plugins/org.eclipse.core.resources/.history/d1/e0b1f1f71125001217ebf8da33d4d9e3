@@ -1,0 +1,5 @@
+package logdog.Common.BlobStore;
+
+public class GAEBlobWriter {
+
+}

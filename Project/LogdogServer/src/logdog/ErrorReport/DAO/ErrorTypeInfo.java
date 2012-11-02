@@ -9,8 +9,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import logdog.Common.TimeUtil;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
-import logdog.Util.TimeUtil;
 
 import com.google.appengine.api.datastore.Key;
 // callStack����� �ȱ�� 

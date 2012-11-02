@@ -1,0 +1,5 @@
+package com.logdog.server.Util;
+
+public class TimeUtil {
+
+}

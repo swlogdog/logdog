@@ -1,0 +1,18 @@
+package com.logdog.server.TestCase;
+
+import com.logdog.server.Model.GsonRefer.ClientReportData;
+
+public class GsonInputCase {
+
+
+
+	
+	public String addScore(ClientReportData clientData)
+	{
+		
+		String result = "Error saved : " + clientData.ErrorName;
+	//	return Response.status(201).entity(result).build();
+		return "[{\"Result\":\"true\"}]";
+	}
+
+}

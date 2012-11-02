@@ -1,0 +1,8 @@
+package logdog.Common.BackendWork;
+
+import logdog.Common.BackendWork.DTO.BackendSettingData;
+
+public interface BackendWorkingSet {
+
+	public boolean CreateBackendWork(BackendSettingData data);
+}

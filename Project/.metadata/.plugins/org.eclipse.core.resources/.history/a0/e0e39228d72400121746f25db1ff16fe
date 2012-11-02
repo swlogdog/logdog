@@ -1,0 +1,38 @@
+package logdog.Common.BackendWork.DTO;
+import java.util.Map;
+
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+/**
+ * 
+ * @since 2012. 11. 2.오후 5:26:54
+ * TODO	GAE Backend Setting
+ * @author Karuana
+ */
+public class BackendSettingData {
+	private String pushQuereName;
+	private String workURL;
+	private Method methodType;
+	private Map<String,String> sendData;
+	
+	public BackendSettingData(String pushQuereName, String workURL,
+			Method methodType, Map<String, String> sendData) {
+		super();
+		this.pushQuereName = pushQuereName;
+		this.workURL = workURL;
+		this.methodType = methodType;
+		this.sendData = sendData;
+	}
+	public String getPushQuereName() {
+		return pushQuereName;
+	}
+	public String getWorkURL() {
+		return workURL;
+	}
+	public Method getMethodType() {
+		return methodType;
+	}
+	public Map<String, String> getSendData() {
+		return sendData;
+	}
+	
+}

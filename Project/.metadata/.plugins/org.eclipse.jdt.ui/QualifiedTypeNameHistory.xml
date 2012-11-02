@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.jdo.annotations.IdentityType"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.util.TimeZone"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.blobstore.BlobKey"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.datastore.Query"/>
+<fullyQualifiedTypeName name="javax.jdo.annotations.Query"/>
+<fullyQualifiedTypeName name="javax.persistence.Query"/>
+<fullyQualifiedTypeName name="com.google.apphosting.api.DatastorePb.Query"/>
+<fullyQualifiedTypeName name="com.logdog.server.Util.TimeUtil"/>
+<fullyQualifiedTypeName name="com.logdog.server.Model.GsonRefer.ClientReportData"/>
+<fullyQualifiedTypeName name="org.omg.DynamicAny.NameValuePair"/>
+<fullyQualifiedTypeName name="org.omg.CORBA.NameValuePair"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="org.apache.http.util.EntityUtils"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.MediaType"/>
+<fullyQualifiedTypeName name="javax.ws.rs.core.Response"/>
+<fullyQualifiedTypeName name="org.apache.http.NameValuePair"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="logdog.ErrorReport.DTO.BaseErrorType"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.appidentity.AppIdentityServicePb.SigningService.Method"/>
+<fullyQualifiedTypeName name="logdog.Common.BackendWork.BackendFactory"/>
+<fullyQualifiedTypeName name="logdog.Common.BackendWork.BackendFactory.BackendType"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.taskqueue.TaskOptions.Method"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.datastore.Key"/>
+<fullyQualifiedTypeName name="logdog.ErrorReport.DTO.TypeMatchingInfo"/>
+<fullyQualifiedTypeName name="com.google.appengine.api.datastore.KeyFactory"/>
+<fullyQualifiedTypeName name="javax.ws.rs.PUT"/>
+<fullyQualifiedTypeName name="logdog.Common.BlobStore.BlobWriterFactory"/>
+<fullyQualifiedTypeName name="logdog.Common.ServiceType"/>
+</qualifiedTypeNameHistroy>

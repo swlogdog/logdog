@@ -1,0 +1,61 @@
+package com.logdog.server.Model.Controller;
+
+import javax.jdo.PersistenceManager;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.apphosting.api.DatastorePb.Query;
+
+import com.logdog.server.Model.ErrorClassifiedInfo;
+import com.logdog.server.Util.GAEStore.PMF;
+
+public class ErrorClassifier {
+
+	private PersistenceManager jdoConnector;
+	
+	
+	
+	public ErrorClassifier() {
+		super();
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+	}
+
+	public boolean IsErrorType(String name, String classname)
+	{
+		
+		Query query = jdoConnector.newQuery(ErrorClassifiedInfo.class);
+		
+		return true;
+	}
+	
+	public boolean InsertErrorType(String name, String classname)
+	{
+		
+	
+		return true;
+	}
+	
+	public boolean UpdateErrorType(String name, String classname)
+	{
+		
+		return true;
+	}
+	
+	public ErrorClassifiedInfo getErrorTypeInfo(String name, String classname)
+	{
+		return null;
+		
+	}
+	
+	public ErrorClassifiedInfo getErrorTypeInfo(Key ErrorKey)
+	{
+		
+		return null;
+	}
+	
+	public Key getErrorTypeKey(String name, String classname)
+	{
+		return null;
+	}
+	
+}

@@ -1,0 +1,22 @@
+package com.logdog.server.TestCase;
+
+import com.logdog.server.Model.GsonRefer.ClientReportData;
+
+@Path("/TestCase")
+public class GsonInputCase {
+
+
+	
+	@POST
+	@Path("jsonTest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	
+	public String addScore(ClientReportData clientData)
+	{
+		
+		String result = "Error saved : " + clientData.ErrorName;
+	//	return Response.status(201).entity(result).build();
+		return "[{\"Result\":\"true\"}]";
+	}
+
+}

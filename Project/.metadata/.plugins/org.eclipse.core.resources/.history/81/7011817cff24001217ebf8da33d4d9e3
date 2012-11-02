@@ -1,0 +1,5 @@
+package logdog.ErrorReport.Communicator.Backend;
+
+public class ErrorTypeRegistBackend {
+
+}

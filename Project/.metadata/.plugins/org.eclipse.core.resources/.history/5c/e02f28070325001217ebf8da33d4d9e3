@@ -1,0 +1,49 @@
+package logdog.ErrorReport.Communicator.Backend;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.DTO.CallStackInfo;
+import logdog.ErrorReport.DTO.ErrorUniqueID;
+
+import com.google.gson.Gson;
+
+@SuppressWarnings("serial")
+public class ErrorTypeRegistBackend extends HttpServlet {
+	
+	  @SuppressWarnings("deprecation")
+	@Override
+	  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	      throws ServletException, IOException {
+		  resp.setStatus(406);
+	  }
+
+	 @SuppressWarnings("deprecation")
+	 @Override
+	  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+	      throws ServletException, IOException {
+		  
+		  try{
+		  	String json = req.getParameter("JSON");
+		  	Gson gson = new Gson();
+		  	CallStackInfo callstack = gson.fromJson(json, CallStackInfo.class);
+
+		  	ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
+			ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
+			errClassifier.InsertErrorType(uid);			
+			errClassifier.LinkCallStackData(callstack);		
+			
+			//resp.setStatus(200);
+			resp.setStatus(200, "OK");
+		  }catch(Exception e)
+		  {
+			  resp.setStatus(500);
+		  }
+		  //백엔드로 타입 생
+	  }
+}

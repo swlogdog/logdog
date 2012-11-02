@@ -20,22 +20,22 @@ public class MainTestT {
 		
 		try{
 			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost("http://localhost:8888/score/post");
+			HttpPost httppost = new HttpPost("localhost:8888/logdog/score/post");
 		
 			ClientReportData Temp = new ClientReportData(1);
 			Gson gson = new Gson();
 	
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost postRequest = new HttpPost(
-				"http://localhost:8888/score/post");
+				"http://localhost:8888/logdog/Report/ErrorType");
  
-			StringEntity input = new StringEntity(gson.toJson(Temp));
+			StringEntity input = new StringEntity(gson.toJson(new CallStackInfo(1)));
 			input.setContentType("application/json");
 			postRequest.setEntity(input);
  
 			HttpResponse response = httpClient.execute(postRequest);
-			System.out.print(gson.toJson(new CallstackTest(1)));
-			if (response.getStatusLine().getStatusCode() != 201) {
+	//		System.out.print(gson.toJson(new CallstackTest(1)));
+			if (response.getStatusLine().getStatusCode() != 200) {
 				throw new RuntimeException("Failed : HTTP error code : "
 						+ response.getStatusLine().getStatusCode());
 			}

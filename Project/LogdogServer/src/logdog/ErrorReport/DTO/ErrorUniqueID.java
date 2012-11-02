@@ -1,7 +1,13 @@
 package logdog.ErrorReport.DTO;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ErrorUniqueID {
+	@XmlAttribute
 	private String name;
+	@XmlAttribute
 	private String classname;
 
 	public ErrorUniqueID(String name, String classname) {

@@ -1,0 +1,3 @@
+INDEX VERSION 1.126
+/Users/Karuana/Documents/SWMaestro3/logdog/Project/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/795122284.index
+/LogdogServer/src

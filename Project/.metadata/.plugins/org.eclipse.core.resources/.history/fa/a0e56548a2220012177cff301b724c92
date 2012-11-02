@@ -1,0 +1,44 @@
+package logdog.server.TestCase;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import logdog.server.Model.GsonRefer.ClientReportData;
+
+import com.google.gson.Gson;
+
+
+@Path("/score")
+public class GsonInputCase {
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("TestGet")
+	public String addScore()
+	{	   
+		Gson gson = new Gson();
+		ClientReportData nData = new ClientReportData(true);    
+
+		//scoreService.AddScore(new Score(id, score));
+		return gson.toJson(nData);
+	}
+
+	
+	/*public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {		
+
+	    resp.getWriter().println(gson.toJson(nData)+" ");
+	    
+	}
+	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {		
+	    Gson gson = new Gson();
+	    ClientReportData readData = gson.fromJson(req.getParameter("json"), ClientReportData.class);
+	    
+	    resp.setContentType("application/json");
+	    resp.getWriter().println(gson.toJson(readData));
+	    
+	    
+	}*/
+	
+}

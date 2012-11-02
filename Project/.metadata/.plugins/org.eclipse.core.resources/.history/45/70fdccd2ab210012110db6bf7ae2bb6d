@@ -1,0 +1,141 @@
+package com.logdog.server.Model.Controller;
+
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.PersistenceManagerFactory;
+import javax.jdo.Query;
+
+import com.google.appengine.api.datastore.Key;
+import com.logdog.server.Model.ErrorClassifiedInfo;
+import com.logdog.server.Util.GAEStore.PMF;
+
+public class ErrorClassifier {
+
+	private PersistenceManager jdoConnector;
+	
+	
+	
+	public ErrorClassifier() {
+		super();
+		jdoConnector = null;
+	}
+
+	public boolean IsErrorType(String name, String classname)
+	{
+		//같다 판정, 에러 라인, 
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		Query SearchQuery = jdoConnector.newQuery(ErrorClassifiedInfo.class);
+
+		SearchQuery.setFilter("ErrorName == ");
+		
+		/*q1.setFilter("memberId == Idparm");
+		q1.declareParameters("String Idparm");
+			try{
+				List<MemberInfo> results = (List<MemberInfo>) q1.execute(id);
+			}finally{
+				q1.closeAll();
+				pm.close();
+			}
+		*/
+		return true;
+	}
+	
+	public boolean InsertErrorType(String name, String classname)
+	{
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		ErrorClassifiedInfo eType;
+	
+		try{
+				eType = new ErrorClassifiedInfo(name,classname);
+				jdoConnector.makePersistent(eType);
+		}
+		catch(Exception e){
+				
+			return false;
+				
+		}
+		finally{
+		
+			jdoConnector.close();
+			
+		}
+		return true;
+	}
+	
+	public boolean UpdateErrorType(String name, String classname)
+	{
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		ErrorClassifiedInfo eType = getErrorTypeInfo(name,classname);
+		
+		if(eType == null)
+		{
+			return false;
+		}
+
+		try{
+			eType.updateError();
+		}
+		catch(Exception e){
+		
+			return false;
+		
+		}
+		finally{
+		
+			jdoConnector.close();
+		
+		}
+		
+		return true;
+	}
+	
+	public ErrorClassifiedInfo getErrorTypeInfo(String name, String classname)
+	{	
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		ErrorClassifiedInfo SearchError=null;
+		
+		Query SearchQuery = jdoConnector.newQuery(ErrorClassifiedInfo.class);
+		List<ErrorClassifiedInfo> ErrorTypeResults=null;
+
+
+		try{
+		
+			
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
+			SearchQuery.declareParameters("String errorId,String ClassName");
+	
+			ErrorTypeResults = (List<ErrorClassifiedInfo>) SearchQuery.execute(name, classname);
+
+				
+		}
+		catch(Exception e){
+				
+		
+		}
+		finally{
+			SearchQuery.closeAll();
+			jdoConnector.close();
+			
+		}
+		
+		
+		return (ErrorTypeResults.size()==0) ? null: ErrorTypeResults.get(0);
+		
+	}
+	
+	public ErrorClassifiedInfo getErrorTypeInfo(Key ErrorKey)
+	{
+		
+		return null;
+	}
+	
+	public Key getErrorTypeKey(String name, String classname)
+	{
+		return null;
+	}
+	
+}

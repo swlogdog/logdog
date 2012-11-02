@@ -1,0 +1,5 @@
+package com.logdog.server.Model.GsonRefer;
+
+public class ClientReportData {
+
+}

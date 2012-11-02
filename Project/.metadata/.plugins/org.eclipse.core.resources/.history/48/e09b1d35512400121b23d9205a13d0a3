@@ -1,0 +1,28 @@
+package logdog.ErrorReport.Communicator;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+import logdog.ErrorReport.DAO.ErrorClassifiedInfo;
+import logdog.ErrorReport.DTO.ClientReportData;
+
+import com.google.gson.Gson;
+
+@Path("/Report")
+public class ErrorReport {
+
+	@POST
+	@Path("/ErrorInfo")
+	@Consumes("application/json")
+	public Response createTrackInJSON(ClientReportData track) {
+		Gson gson = new Gson();
+		//ClientReportData nData = gson.fromJson(track, ClientReportData.class);
+		ErrorClassifiedInfo Temp = new ErrorClassifiedInfo("aaa","bbb");
+		String result = "Track saved : " + track.ErrorName+"    "+Temp.getE_ClassificationCode();
+		return Response.status(201).entity(result).build();
+ 
+	}
+ 
+}

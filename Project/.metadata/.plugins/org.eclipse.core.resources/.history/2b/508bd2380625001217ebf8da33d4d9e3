@@ -1,0 +1,32 @@
+package logdog.ErrorReport.Communicator;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.DTO.CallStackInfo;
+import logdog.ErrorReport.DTO.ErrorUniqueID;
+
+@Path("/ReportBackend")
+public class BackendWorkingSet {
+
+	
+	@POST
+	@Path("/ErrorType")
+	@Consumes("application/json")
+	public Response RegistErrorType(CallStackInfo callstack) {
+		
+		ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
+		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
+
+		errClassifier.InsertErrorType(uid);
+		
+		errClassifier.LinkCallStackData(callstack);		
+		//백엔드로 타입 생
+		return Response.status(200).entity("ErrorType Create end").build();
+ 
+	}
+
+}

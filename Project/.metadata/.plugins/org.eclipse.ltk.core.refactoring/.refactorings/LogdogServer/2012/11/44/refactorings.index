@@ -1,0 +1,33 @@
+1351788405400	Delete element
+1351788410721	Delete element
+1351788452150	Delete element
+1351789923205	Delete element
+1351790638504	Delete element
+1351791142418	Move compilation units
+1351791883818	Move compilation unit
+1351791890337	Delete element
+1351792877617	Move compilation units
+1351792885509	Delete element
+1351794150703	Rename type 'ErrorReportTranslator'
+1351794183615	Rename type 'ErrorClassifiedInfo'
+1351794222763	Move compilation units
+1351794242985	Rename type 'ErrorClassifier'
+1351796239638	Rename type 'CallStackData'
+1351825996847	Rename type 'BaseErrorType'
+1351826181703	Rename type 'CallStackID'
+1351828669201	Rename type 'ErrorReportHelper'
+1351828692973	Move compilation unit
+1351828713304	Rename type 'ErrorTypeHelper'
+1351828721558	Move compilation unit
+1351870570993	Delete element
+1351872275466	Delete element
+1351875434209	Delete element
+1351875465330	Move compilation unit
+1351875554774	Delete element
+1351875574426	Move compilation unit
+1351875579589	Delete element
+1351875583935	Delete element
+1351875644928	Rename package 'logdog.Common.FileStore'
+1351878136060	Delete element
+1351879445854	Rename method 'getSendJson'
+1351879463494	Rename field 'sendJson'

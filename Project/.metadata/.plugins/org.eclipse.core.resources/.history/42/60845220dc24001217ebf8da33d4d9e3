@@ -1,0 +1,31 @@
+package logdog.ErrorReport.Communicator;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+import logdog.Common.BackendWork.BackendFactory;
+import logdog.Common.BackendWork.BackendWorkingSet;
+import logdog.Common.BackendWork.DTO.BackendSettingData;
+
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+
+@Path("/ReportBackend")
+public class BackendWorkingSet {
+
+	
+	@POST
+	@Path("/ErrorType")
+	@Consumes("application/json")
+	public Response createTrackInJSON(String callstack) {
+
+		BackendWorkingSet backendService = BackendFactory.GetBackendService(BackendFactory.BackendType.GAE_BACKEND);
+		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/URLInput", Method.POST, callstack);
+		backendService.CreateBackendWorkJson(BackendInfo);
+		//백엔드로 타입 생
+		return Response.status(200).entity("ErrorType Create Start").build();
+ 
+	}
+
+}

@@ -5,10 +5,10 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import logdog.Common.DataStore.PMF;
 import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.ErrorReport.DTO.CallStackInfo;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
-import logdog.Util.GAE.PMF;
 
 import com.google.appengine.api.datastore.Key;
 

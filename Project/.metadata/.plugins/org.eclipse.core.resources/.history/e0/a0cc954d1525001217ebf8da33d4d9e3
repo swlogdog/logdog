@@ -1,0 +1,53 @@
+package logdog.ErrorReport.Communicator;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
+
+import logdog.ErrorReport.Controller.ErrorReportRegister;
+import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.DTO.CallStackInfo;
+import logdog.ErrorReport.DTO.ErrorUniqueID;
+import logdog.ErrorReport.DTO.TypeMatchingInfo;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
+@Path("/ReportBackend")
+public class BackendWorkingSet {
+
+	
+	@POST
+	@Path("/ErrorType")
+	@Consumes("application/json")
+	public Response RegistErrorType(CallStackInfo callstack) {
+		
+		ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
+		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
+
+		errClassifier.InsertErrorType(uid);
+		
+		errClassifier.LinkCallStackData(callstack);		
+		//백엔드로 타입 생
+		return Response.status(200).entity("ErrorType Create end").build();
+ 
+	}
+	
+	
+	@POST
+	@Path("/TypeMatching")
+	@Consumes("application/json")
+	public Response ErrorTypeMatching(TypeMatchingInfo matchingdata) { 
+		
+		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname());
+		ErrorReportRegister eReport = new ErrorReportRegister();
+		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
+		
+		eReport.MatchingErrorType(ReportKey, uid);
+		
+		//백엔드로 타입 생
+		return Response.status(200).entity("ErrorTypeMatching end").build();
+ 
+	}
+}

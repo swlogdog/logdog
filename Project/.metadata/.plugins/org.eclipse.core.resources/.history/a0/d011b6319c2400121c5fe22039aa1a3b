@@ -1,0 +1,38 @@
+package logdog.ErrorReport.DTO;
+
+import java.util.ArrayList;
+
+public class CallStackInfo {
+
+	private String name;
+	private String classname;
+	private ArrayList<String> Callstack;
+	
+	public CallStackInfo(ErrorUniqueID uid, ArrayList<String> data) {
+		super();
+		this.name = uid.getName();
+		this.classname=uid.getClass();
+		Callstack = data;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getClassname() {
+		return classname;
+	}
+	
+	public void setClassname(String classname) {
+		this.classname = classname;
+	}
+
+	public ArrayList<String> getCallstack() {
+		return Callstack;
+	}
+
+}

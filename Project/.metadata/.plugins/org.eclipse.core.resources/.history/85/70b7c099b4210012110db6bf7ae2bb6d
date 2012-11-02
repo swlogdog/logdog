@@ -1,0 +1,29 @@
+package com.logdog.server.Model.Controller;
+
+import javax.jdo.PersistenceManager;
+
+public class ErrorReportController {
+	
+	private PersistenceManager jdoConnector;
+	
+	private ErrorClassifier EClassifier;
+	
+	public ErrorReportController() {
+		super();
+		jdoConnector=null;
+		EClassifier=new ErrorClassifier();
+	}
+	
+	public boolean insertErrorReport()
+	{
+		return true;
+	}
+	
+	public boolean getErrorReport()
+	{
+		return true;
+	}
+	
+	
+	
+}
