@@ -27,7 +27,7 @@ public class FileControler {
 	 * @param FileName 저장될 파일
 	 * @return 실패시 null값 리턴 성공시 파일인스턴스 리턴
 	 */
-	static private File GetExternalStorageFile(String Directory, String FileName){
+	static private File CreateExternalStorageFile(String Directory, String FileName){
 		File Exdirectory = Environment.getExternalStorageDirectory();
 	    String State = Environment.getExternalStorageState();
         
@@ -83,7 +83,7 @@ public class FileControler {
 	 */
 	static public String SaveStringtoFile(String Content, String Directory, String FileName){
 		try{
-	        File file = GetExternalStorageFile(Directory,FileName);
+	        File file = CreateExternalStorageFile(Directory,FileName);
 	        
 	        if(file != null)
 	        {
@@ -120,7 +120,7 @@ public class FileControler {
 		Content.append("");
 		
 		try{
-	        File file = GetExternalStorageFile(Directory,FileName);
+	        File file = CreateExternalStorageFile(Directory,FileName);
 	        
 	        if(file != null)
 	        {
@@ -141,6 +141,40 @@ public class FileControler {
 		return Content.toString();
 	}
 	
+	
+	/**
+	 * 파일을 스트링으로 변환
+	 * @since 2012. 11. 4.오전 1:09:49
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param file 파일객체
+	 * @return
+	 */
+	static public String FiletoString(File file){
+		StringBuilder Content = new StringBuilder();
+		Content.append("");
+		
+		try{
+	        if(file != null)
+	        {
+	            if(file.exists())
+	            {
+	            	char[] c = new char[(int)file.length()];
+	            	BufferedReader br = new BufferedReader(new FileReader(file));
+	            	br.read(c);
+	            	Content.append(c);
+	            }
+	        }
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			Log.e("LOGDOG",e.getMessage());
+		}
+		
+		return Content.toString();
+	}
+	
+	
 	/**
 	 * 파일 삭제
 	 * @since 2012. 11. 2.오전 3:17:33
@@ -153,8 +187,32 @@ public class FileControler {
 	static public boolean DeleteFile(String Directory,String FileName){
 		boolean Success = false;
 		try{
-			File file = GetExternalStorageFile(Directory,FileName); 
+			File file = CreateExternalStorageFile(Directory,FileName); 
 			
+			if(file.exists()){
+				file.delete();
+				Success = true;
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			Log.e("LOGDOG",e.getMessage());
+		}
+		
+		return Success;
+	}
+	
+	/**
+	 * 파일 삭제
+	 * @since 2012. 11. 4.오전 2:05:25
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param file
+	 * @return 성공시 true 실패시 false
+	 */
+	static public boolean DeleteFile(File file){
+		boolean Success = false;
+		try{
 			if(file.exists()){
 				file.delete();
 				Success = true;
@@ -194,5 +252,30 @@ public class FileControler {
 		}
 		return Success;
 	}
-	
+	/**
+	 * 외부 스토리지 파일을 가져옴
+	 * @since 2012. 11. 4.오전 2:08:00
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param Directory
+	 * @param Filename
+	 * @return 실패시 null값 리턴 성공시 파일인스턴스 리턴
+	 */
+	static public File GetExternalStorageFile(String Directory,String Filename){
+		File Exdirectory = Environment.getExternalStorageDirectory();
+	    String State = Environment.getExternalStorageState();
+        
+        File file = null;
+        
+        if(State.equals("mounted") && Exdirectory != null)
+            file = new File(Exdirectory+"/"+Directory, Filename);
+        
+        if(file == null)
+            Log.e("LOGDOG", "ExternalStroage Access Fail");
+        
+        if(!file.exists())
+        	return null;
+        
+        return file;
+	}
 }

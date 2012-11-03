@@ -1,6 +1,8 @@
 package com.logdog.Network;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -12,20 +14,55 @@ import com.logdog.Network.Appender.NetworkAppender;
 
 public class LogDogNetwork {
 
-	private NetworkAppender m_NowNetworkAppender;
+	private List<NetworkAppender> m_NowNetworkAppenderList;
 	
 	public LogDogNetwork() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void SetAppender(NetworkAppender Appender){
-		m_NowNetworkAppender = Appender;
+	public void AddAppender(NetworkAppender Appender){
+		m_NowNetworkAppenderList.add(Appender);
+	}
+	public boolean DeleteAppender(String AppenderName){
+		
+		Iterator<NetworkAppender> iter = m_NowNetworkAppenderList.iterator();
+		
+		while(iter.hasNext()){
+			NetworkAppender appender = iter.next();
+			if(AppenderName.equalsIgnoreCase(appender.GetClassName())){
+				iter.remove();
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	public void AllDeleteAppender(){
+		m_NowNetworkAppenderList.clear();
 	}
 	
 	private NetworkAppender CreateNetworAppender(){
 		return null;
 	}
 
+	
+	
+	public boolean SendData(Map<String,String> Data){
+		for(NetworkAppender appendr : m_NowNetworkAppenderList){
+			if(appendr.SendMessage(Data))
+				return false;
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	static private boolean GetNetwork(Context context,int Type){
 		boolean use = false;
 		try {

@@ -39,6 +39,8 @@ public class ErrorReportFactory {
 	public ClientReportData CreateErrorReport(Throwable errorthorw){
 		ClientReportData data = new ClientReportData();
 		
+		data.Date = Date.GetDateYYMMDDHHMMSS(Setting.m_Context);
+		
 		m_StackCollector.DoCollectStackTrace(data, errorthorw);
 		m_SysInfoCollector.DoCollectSystemInfo(data);
 		if(Setting.GetReadLog())

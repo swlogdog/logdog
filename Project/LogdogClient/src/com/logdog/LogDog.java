@@ -20,6 +20,19 @@ import android.content.Context;
 
 public final class LogDog {
 	
+	
+	private static LogDog instance;
+
+	public static LogDog getInstance() {
+		if (instance == null) {
+			synchronized (LogDog.class) { // 1
+				if (instance == null) // 2
+					instance = new LogDog(); // 3
+			}
+		}
+		return instance;
+	}
+	
 	private LogDogProcess 			Process;
 	private LogDogSetting 			Setting;
 	private LogDogNetwork 			Network;

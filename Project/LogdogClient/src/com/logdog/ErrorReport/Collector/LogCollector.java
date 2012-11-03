@@ -9,7 +9,9 @@ import com.logdog.common.File.FileControler;
 public class LogCollector {
 
 	LogDogSetting Setting;
-
+	private static String SendLogFileName = "SendLogFile.txt";
+	
+	
 	public LogCollector(LogDogSetting setting) {
 		// TODO Auto-generated constructor stub
 		Setting = setting;
@@ -42,7 +44,8 @@ public class LogCollector {
 			}
 			String SendLog = SendlogBuild.toString();
 			
-			OutputData.LogFileName = FileControler.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , "SendLogFile.txt" );
+			OutputData.LogFileName = FileControler.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , 
+																	OutputData.Date+SendLogFileName );
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

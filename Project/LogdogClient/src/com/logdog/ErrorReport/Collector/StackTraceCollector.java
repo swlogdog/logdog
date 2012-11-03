@@ -35,7 +35,7 @@ public class StackTraceCollector {
         
         outputdata.CallStackFileName = FileControler.SaveStringtoFile(StackTraceString, 
         															  Setting.GetSaveDirPath(), 
-        															  Setting.GetStackTraceFileName());
+        															  outputdata.Date + Setting.GetStackTraceFileName());
 	}
 	
 	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){

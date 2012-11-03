@@ -4,6 +4,7 @@ public class ClientReportData {
 
 	public ClientReportData() {
 		// TODO Auto-generated constructor stub
+		Date 				= "unknown";
 		Model 				= "unknown";
 		National 			= "unknown";
 		ErrorName			= "";
@@ -19,7 +20,10 @@ public class ClientReportData {
 		CallStackFileName 	= null;
 		LogFileName			= null;
 	}
-	
+	/**
+	 * 에러 발생 시간
+	 */
+	public String Date;
 	/**
 	 * 핸드폰 모델 명
 	 */

@@ -1,5 +1,7 @@
 package com.logdog.Network.Appender;
 
+import java.util.Map;
+
 
 
 public abstract class NetworkAppender {
@@ -7,6 +9,8 @@ public abstract class NetworkAppender {
 	public NetworkAppender() {
 		// TODO Auto-generated constructor stub
 	}
-	public abstract void SendMessage(String URL);
+	public abstract boolean SendMessage(Map<String,String> SendData);
+	
+	public abstract String GetClassName();
 
-}
+}	

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,17 +19,18 @@ import com.logdog.ErrorReport.ReportData.ClientReportData;
 
 import android.util.Log;
 
-public class HTTPAppender extends NetworkAppender {
+public class AppEngineAppender extends NetworkAppender {
 
-	public HTTPAppender() {
+	AppEngineSetting m_Setting;
+	public AppEngineAppender(AppEngineSetting setting ) {
 		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	public void SendMessage(String URL){
-		
+	public boolean SendMessage(Map<String,String> SendData){
+		boolean resualt = false;
 		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(URL);
+		HttpPost post = new HttpPost(m_Setting.GetURL());
 		
 		try{
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
@@ -48,6 +50,13 @@ public class HTTPAppender extends NetworkAppender {
 			e.printStackTrace();
 			Log.e("LOGDOG","Transmit Http Post Error");
 		}
+		return resualt;
+	}
+
+	@Override
+	public String GetClassName() {
+		// TODO Auto-generated method stub
+		return this.GetClassName();
 	}
 
 }
