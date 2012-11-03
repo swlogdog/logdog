@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.logdog.Test"
+    package="com.Test"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -25,6 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+         
+        <service android:name="com.logdog.Service.LogDogService">
+		</service>
     </application>
 
 </manifest>

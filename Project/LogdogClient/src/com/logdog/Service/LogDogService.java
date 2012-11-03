@@ -1,13 +1,16 @@
-package com.logdog.Process;
+package com.logdog.Service;
 
-import java.io.File;
 
-import com.logdog.common.File.FileControler;
+
+
+import com.logdog.LogDog;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
+
 
 public class LogDogService extends Service implements Runnable {
 
@@ -37,14 +40,20 @@ public class LogDogService extends Service implements Runnable {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
+		m_Running = false;
 		super.onDestroy();
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-				
-		m_Running = true;
+		
+        if (!m_Running) {
+            // this : 서비스 처리의 본체인 run 메소드. Runnable 인터페이스를 구현 필요.
+            // postDelayed : 일정시간마다 메소드 호출
+        	m_Running = true;
+        	m_Handler.postDelayed(this, 0);
+      }
 		//m_Handler.postDelayed(this, CHECK_TIME);
 				
 		return super.onStartCommand(intent, flags, startId);
@@ -52,9 +61,17 @@ public class LogDogService extends Service implements Runnable {
 
 	public void run() {
 		// TODO Auto-generated method stub
+       
+		if (!m_Running) {
+            // 서비스 종료 요청이 들어온 경우 그냥 종료
+            return;
+        } else {
 
-		
-		m_Handler.postDelayed(this, CHECK_TIME);
+        	if(LogDog.getInstance().SendingErrorReport())
+        		return;
+        	else
+        		m_Handler.postDelayed(this, CHECK_TIME);
+        }
 		
 	}
 

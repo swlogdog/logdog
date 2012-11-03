@@ -1,5 +1,6 @@
 package com.logdog.Network;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.logdog.Network.Appender.AppEngineAppender;
+import com.logdog.Network.Appender.AppEngineSetting;
 import com.logdog.Network.Appender.NetworkAppender;
 
 public class LogDogNetwork {
@@ -18,6 +21,12 @@ public class LogDogNetwork {
 	
 	public LogDogNetwork() {
 		// TODO Auto-generated constructor stub
+		m_NowNetworkAppenderList = new ArrayList<NetworkAppender>();
+		//임시 테스트 코드
+		AppEngineSetting Setting= new AppEngineSetting();
+		Setting.SetURL("http://swlogdog7.appspot.com/logdog/score/post");
+		AddAppender(new AppEngineAppender(Setting));
+		
 	}
 
 	public void AddAppender(NetworkAppender Appender){
@@ -49,7 +58,7 @@ public class LogDogNetwork {
 	
 	public boolean SendData(Map<String,String> Data){
 		for(NetworkAppender appendr : m_NowNetworkAppenderList){
-			if(appendr.SendMessage(Data))
+			if(!appendr.SendMessage(Data))
 				return false;
 		}
 		return true;

@@ -24,10 +24,7 @@ public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
 	public void uncaughtException(Thread thread, Throwable ex) {
 		// TODO Auto-generated method stub
 	
-		
-		
-		
-		
+		Process.CreateErrorReport(ex);
 		m_DefaultExceptionHandler.uncaughtException(thread, ex);
 		/*
 		android.os.Process.killProcess(android.os.Process.myPid());

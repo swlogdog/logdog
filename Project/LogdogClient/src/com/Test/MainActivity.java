@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 import com.google.code.microlog4android.Level;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.logdog.LogDog;
 import com.logdog.ErrorReport.ErrorReportFactory;
 import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.Test.R;
 import com.logdog.common.File.FileControler;
 import com.logdog.log.LogDoglog4android;
 
@@ -30,24 +30,17 @@ public class MainActivity extends Activity {
            //cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
         
         
-        LogDogSetting setting = new LogDogSetting();
-        setting.m_Context = getApplicationContext();
-        setting.SetSaveDirPath("TESTlogdog");
-        setting.SetReadLog(true);
-        
-        LogDoglog4android logger = new LogDoglog4android();
-        logger.init(Level.DEBUG, setting);
-        
-        ErrorReportFactory factory = new ErrorReportFactory(setting);
+        LogDog.getInstance().LogDoginitialize(getApplicationContext());
+
         
         
-        
+        /*
         logger.error("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
         logger.info("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
         logger.warn("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
         logger.fatal("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
         logger.debug("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
-        
+        */
         
         
        try{
@@ -55,11 +48,8 @@ public class MainActivity extends Activity {
        }
        catch(Exception e){
     	  e.printStackTrace(); 
-          ClientReportData data = factory.CreateErrorReport(e);
-          Gson gson = new Gson();
-          Type ClientReportDataType = new TypeToken<ClientReportData>(){}.getType();
-          String JsonData = gson.toJson(data, ClientReportDataType);
-          System.out.println(JsonData);
+    	  LogDog.getInstance().CreateLog(e);
+    	  
        }
        
        

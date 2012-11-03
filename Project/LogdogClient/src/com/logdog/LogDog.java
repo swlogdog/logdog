@@ -53,7 +53,7 @@ public final class LogDog {
 		
 	}
 	
-	public void LogDoginitialize(Context context,String URL) {
+	public void LogDoginitialize(Context context) {
 		Alarm			 = new LogDogAlarm(); 
 		Setting 		 = new LogDogSetting();
 		Network 		 = new LogDogNetwork();
@@ -65,10 +65,27 @@ public final class LogDog {
 		Setting.m_Context = context;
 		Log.init(Level.INFO,Setting);
 		
+		////////////////////////////////////////////
+        Setting.SetSaveDirPath("TESTlogdog");
+        Setting.SetReadLog(true);
+        
+       
+        Log.init(Level.DEBUG, Setting);
+        ////////////////////////////////////////////
 	}
 	
 	void SetLogLever(Level level){
 		Log.SetLogLever(level);
+	}
+	
+	public boolean SendingErrorReport(){
+		if(Process.SendErrorReport())
+			return true;
+		else
+			return false;
+	}
+	public void CreateLog(Throwable throwdata){
+		Process.CreateErrorReport(throwdata);
 	}
 		
 }

@@ -11,7 +11,7 @@ import com.logdog.Setting.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public class Log4File extends Log4Appender {
+public class Log4File implements Log4Appender {
 
 	FileAppender appender;
 	
@@ -19,7 +19,6 @@ public class Log4File extends Log4Appender {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void CreateAppender(LogDogSetting setting) {
 		// TODO Auto-generated method stub
 		appender = new FileAppender();
@@ -27,7 +26,6 @@ public class Log4File extends Log4Appender {
 		appender.setFileName(setting.GetSaveDirPath()+"/"+setting.GetLogFileName()); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 	}
 
-	@Override
 	public Appender GetAppender() {
 		// TODO Auto-generated method stub
 		return appender;

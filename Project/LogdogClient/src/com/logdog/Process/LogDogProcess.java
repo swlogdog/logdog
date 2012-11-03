@@ -1,7 +1,11 @@
 package com.logdog.Process;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
+
+import android.content.ComponentName;
+import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.logdog.Alarm.LogDogAlarm;
@@ -28,10 +32,11 @@ public class LogDogProcess {
 		m_Factory 	= factory;
 		m_Network	= network;
 		m_Setting	= Setting;
+		m_SendData  = new HashMap<String, String>();
 	}
 	
 	public boolean SendErrorReport(){
-		File[] SendFileList = FileControler.ExternalStorageDirectoryFileList("LogDog");
+		File[] SendFileList = FileControler.ExternalStorageDirectoryFileList(m_Setting.GetSaveDirPath());
 		
 		//보낼 파일이 없다면 그냥 성공
 		if(SendFileList.length == 0)
@@ -56,9 +61,9 @@ public class LogDogProcess {
 				AllDeleteSendData();
 				AddSendData("JSon/ErrorReport", Content);
 				AddSendData("CallStack", FileControler.FiletoString(callstackfile));
-				AddSendData("CallStack", FileControler.FiletoString(LogFile));
+				AddSendData("Log", FileControler.FiletoString(LogFile));
 				
-				if(m_Network.SendData(GetSendData()))
+				if(!m_Network.SendData(GetSendData()))
 					return false;
 			}
 		}
@@ -69,6 +74,9 @@ public class LogDogProcess {
 	public void CreateErrorReport(Throwable throwadata){
 		ClientReportData data = m_Factory.CreateErrorReport(throwadata);
 		SaveErrorReport(data);
+		m_Setting.m_Context.startService(new Intent(m_Setting.m_Context.getApplicationContext(), 
+													com.logdog.Service.LogDogService.class));
+		
 	}
 	
 	public void SaveErrorReport(ClientReportData data){

@@ -12,7 +12,7 @@ import com.logdog.Setting.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public abstract class Log4Appender 
+public interface Log4Appender 
 {
 
 	public abstract void CreateAppender(LogDogSetting setting);
