@@ -9,7 +9,7 @@ public class ErrorUniqueID {
 	private String name;
 	@XmlAttribute
 	private String classname;
-
+	public ErrorUniqueID()	{}
 	public ErrorUniqueID(String name, String classname) {
 		super();
 		this.name = name;

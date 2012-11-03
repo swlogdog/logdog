@@ -2,6 +2,7 @@ package logdog.ErrorReport.DTO;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+
 @XmlRootElement
 public class TypeMatchingInfo {
 	@XmlAttribute
@@ -10,6 +11,7 @@ public class TypeMatchingInfo {
 	private String classname;
 	@XmlAttribute
 	private String ReportKey;
+	public TypeMatchingInfo() {	}
 	public TypeMatchingInfo(String name, String classname, String reportKey) {
 		super();
 		this.name = name;

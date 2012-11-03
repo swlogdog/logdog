@@ -29,6 +29,16 @@ import com.google.gson.Gson;
 @Path("/Report")
 public class ErrorReport {
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/LogSetting}")
+	public String isLogFile()
+	{	   
+		Gson gson = new Gson();
+		BooleanResult isType = new BooleanResult(true);
+		
+		return gson.toJson(isType);
+	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +100,7 @@ public class ErrorReport {
 			@PathParam("key") final String reportKey,
 									String logData) {
 		
-	
+		
 		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
 		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/LogUpdate/KEY="+reportKey, Method.PUT, logData);
 		backendService.CreateBackendWorkTextData(BackendInfo);
@@ -99,24 +109,7 @@ public class ErrorReport {
 		return Response.status(202).entity("Log Update Accepted").build();
  
 	}
-	/**
-	 *
-	 * @since 2012. 11. 2.오전 3:08:37
-	 * TODO 요청받은 데이터 기록 작업을 Backend로 진행한다.
-	 * @author Karuana
-	 * @param userReport
-	 * @return Response 처리에 대한 응답
-	 */
-	@POST
-	@Path("/DataRegist")
-	@Consumes("application/json")
-	public Response ErrorRegister(ClientReportData userReport) {
-		Gson gson = new Gson();
-	//	ErrorTypeInfo Temp = new ErrorTypeInfo("aaa","bbb");
-		String result = "Track saved : ";
-		return Response.status(201).entity(result).build();
- 
-	}
+
 	
 	
 }

@@ -1,67 +1,84 @@
+import javax.xml.bind.annotation.XmlAttribute;
+
 
 public class ClientReportData {
 	
-		/**
-		* ÇÚµåÆù ¸ðµ¨ ¸í
-		*/
-		public String Model;
-		/**
-		* ±¹°¡¸í
-		*/
-		public String National;
-		/**
-		* ¿¡·¯ ÀÌ¸§
-		*/
-		public String ErrorName;
-		/**
-		* ¿¡·¯°¡ ¹ß»ýÇÑ Å¬·¡½º ÀÌ¸§
-		*/
-		public String ErrorClassName;
-		/**
-		* ¾Û ¹öÁ¯
-		*/
-		public String AppVersion;
-		/**
-		* OS ¹öÁ¯
-		*/
-		public String OSVersion;
+	/**
+	* ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
+	*/
+	
+	public String Model;
+	/**
+	* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	*/
+	
+	public String National;
+	/**
+	* ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	*/
 
-		/**
-		* GPS On/Off
-		*/
-		public boolean GPS;
-		/**
-		* WiFi On/Off
-		*/
-		public boolean WiFi;
-		/**
-		* MobileNetwork(3G) On/Off
-		*/
-		public boolean MobileNetwork;
-		/**
-		* È­¸é °¡·Î Å©±â
-		*/
-		public int ScreenWidth;
-		/**
-		* È­¸é ¼¼·Î Å©±â
-		*/
-		public int ScreenHeight;
+	public String ErrorName;
+	/**
+	* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	*/
 
-		/**
-		* º¸³¾ ÄÝ½ºÅÃ ÆÄÀÏ ÀÌ¸§
-		*/
-		public String CallStackFileName;
+	public String ErrorClassName;
+	/**
+	* ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	*/
+	
+	public String AppVersion;
+	/**
+	* OS ï¿½ï¿½ï¿½ï¿½
+	*/
+	
+	public String OSVersion;
 
-		/**
-		* º¸³¾ ·Î±× ÆÄÀÏ ÀÌ¸§
-		*/
-		public String LogFileName;
+	/**
+	* GPS On/Off
+	*/
+	@XmlAttribute
+	public boolean GPS;
+	/**
+	* WiFi On/Off
+	*/
+
+	public boolean WiFi;
+	/**
+	* MobileNetwork(3G) On/Off
+	*/
+
+	public boolean MobileNetwork;
+	/**
+	* È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+	*/
+
+	public int ScreenWidth;
+	/**
+	* È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+	*/
+
+	public int ScreenHeight;
+
+	/**
+	* ï¿½ï¿½ï¿½ï¿½ ï¿½Ý½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	*/
+	
+	public String CallStackFileName;
+
+	/**
+	* ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	*/
+
+	public String LogFileName;
+
 		public ClientReportData(int temp) {
 			// TODO Auto-generated constructor stub
 			Model = "iPhone 4";
 			National = "KR";
-			ErrorName = "divide by zero";
-			ErrorClassName = "fule";
+			ErrorName = "Devided by Zero";
+			ErrorClassName="Apple.java : 10";
+	
 			AppVersion = "2.0";
 			OSVersion = "1.0";
 			

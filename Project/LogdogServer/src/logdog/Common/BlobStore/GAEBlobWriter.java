@@ -22,6 +22,9 @@ import com.google.appengine.api.files.FileWriteChannel;
 
 public class GAEBlobWriter implements BlobFileWriter{
 
+	/* (non-Javadoc)
+	 * @see logdog.Common.BlobStore.BlobFileWriter#TextWrite(java.lang.String) 현재 에러 있음 수정할 
+	 */ 
 	public BlobKey TextWrite(String text)
 	{
 		BlobKey blobKey =null;
@@ -43,7 +46,8 @@ public class GAEBlobWriter implements BlobFileWriter{
 
 		  // Close without finalizing and save the file path for writing later
 		  out.close();
-
+		  lock = true;
+		  writeChannel = fileService.openWriteChannel(file, lock);
 		  // Now finalize
 		  writeChannel.closeFinally();
 
@@ -51,7 +55,7 @@ public class GAEBlobWriter implements BlobFileWriter{
 		}
 		catch(Exception e)
 		{
-			
+			System.out.print(e.getClass() + "    "+e.getMessage());
 		}
 		return blobKey;
 	}

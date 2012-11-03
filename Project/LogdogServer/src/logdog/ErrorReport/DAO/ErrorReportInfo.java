@@ -8,6 +8,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import logdog.Common.TimeUtil;
 import logdog.ErrorReport.DTO.ClientReportData;
 
 import com.google.appengine.api.blobstore.BlobKey;
@@ -82,6 +83,7 @@ public class ErrorReportInfo {
 		ProviderNetworkState = report.MobileNetwork;
 		ScreanWidth = report.ScreenWidth;
 		ScreanHeight = report.ScreenHeight;
+		UpdatedDate=TimeUtil.GetNowDate();
 	}
 
 	public Key getE_ReportCode() {

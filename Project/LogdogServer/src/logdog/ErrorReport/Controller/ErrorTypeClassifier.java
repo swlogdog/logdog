@@ -6,6 +6,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import logdog.Common.DataStore.PMF;
+import logdog.ErrorReport.DAO.ErrorReportInfo;
 import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.ErrorReport.DTO.CallStackInfo;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
@@ -195,32 +196,26 @@ public class ErrorTypeClassifier {
 	
 		jdoConnector = PMF.getPMF().getPersistenceManager();
 			
-		ErrorTypeInfo SearchError=null;
+		ErrorTypeInfo eType =null;
 			
-		Query SearchQuery = jdoConnector.newQuery(ErrorTypeInfo.class);
-		List<ErrorTypeInfo> ErrorTypeResults=null;
+		
 
 
 		try{
-			
-				
-			SearchQuery.setFilter("E_ClassificationCode == ErrorKey");
-			SearchQuery.declareParameters("Key ErrorKey");
-		
-			ErrorTypeResults = (List<ErrorTypeInfo>) SearchQuery.execute(ErrorKey);
+			eType = jdoConnector.getObjectById(ErrorTypeInfo.class, ErrorKey);
 			}
 		catch(Exception e){
 					
 			return null;
 		}
 		finally{
-			SearchQuery.closeAll();
+			
 			jdoConnector.close();
 				
 		}
 			
 			
-		return (ErrorTypeResults.size()==0) ? null: ErrorTypeResults.get(0);
+		return eType;
 			
 	}
 	

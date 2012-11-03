@@ -17,12 +17,12 @@ public class ErrorReportRegister {
 	
 	private PersistenceManager jdoConnector;
 	
-	private ErrorTypeClassifier EClassifier;
+
 	
 	public ErrorReportRegister() {
 		super();
 		jdoConnector=null;
-		EClassifier=new ErrorTypeClassifier();
+		
 	}
 	
 	public Key insertErrorReport(ClientReportData reportInfo)
@@ -58,29 +58,24 @@ public class ErrorReportRegister {
 	public void MatchingErrorType(Key reportKey, ErrorUniqueID uid)
 	{
 		jdoConnector = PMF.getPMF().getPersistenceManager();
-		List<ErrorReportInfo> ReportResult;
-		Query SearchReportQuery = jdoConnector.newQuery(ErrorReportInfo.class);
+	
 		try{
+			//System.out.print(reportKey);
 			
 		 	ErrorTypeClassifier TypeClassifier = new ErrorTypeClassifier();
 			Key ErrTypeKey = TypeClassifier.UpdateErrorType(uid);
-			
-			SearchReportQuery.setFilter("E_ReportCode == reportKey");
-			SearchReportQuery.declareParameters("Key reportKey");
-			
-			ReportResult = (List<ErrorReportInfo>) 
-					SearchReportQuery.execute(reportKey);
-			
-			ErrorReportInfo targetReport =  ReportResult.get(0);
+				
+			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
 			targetReport.setE_ClassificationCode(ErrTypeKey);
+		//	System.out.print(targetReport.getE_ClassificationCode());
 		}
 		catch(Exception e){
 				
-			
+			System.out.print(e.getClass() + e.getMessage());
 				
 		}
 		finally{
-			SearchReportQuery.closeAll();
+			
 			jdoConnector.close();
 			
 		}
@@ -89,18 +84,10 @@ public class ErrorReportRegister {
 	public void MatchingLogFile(Key reportKey, BlobKey filekey)
 	{
 		jdoConnector = PMF.getPMF().getPersistenceManager();
-		List<ErrorReportInfo> ReportResult;
-		Query SearchReportQuery = jdoConnector.newQuery(ErrorReportInfo.class);
+
 		try{
 			
-		 	
-			SearchReportQuery.setFilter("E_ReportCode == reportKey");
-			SearchReportQuery.declareParameters("Key reportKey");
-			
-			ReportResult = (List<ErrorReportInfo>) 
-					SearchReportQuery.execute(reportKey);
-			
-			ErrorReportInfo targetReport =  ReportResult.get(0);
+			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
 			targetReport.setLogBolbKey(filekey);
 		}
 		catch(Exception e){
@@ -109,7 +96,6 @@ public class ErrorReportRegister {
 				
 		}
 		finally{
-			SearchReportQuery.closeAll();
 			jdoConnector.close();
 			
 		}

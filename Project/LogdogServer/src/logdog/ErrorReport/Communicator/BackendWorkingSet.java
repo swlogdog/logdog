@@ -24,6 +24,14 @@ import com.google.appengine.api.datastore.KeyFactory;
 public class BackendWorkingSet {
 
 	
+	/**
+	 *
+	 * @since 2012. 11. 3.오전 3:27:11
+	 * 에러 타입 등을 Backend를 통해 작업한다.
+	 * @author Karuana
+	 * @param callstack
+	 * @return 성공시 200
+	 */
 	@POST
 	@Path("/ErrorType")
 	@Consumes("application/json")
@@ -46,10 +54,11 @@ public class BackendWorkingSet {
 	@Consumes("application/json")
 	public Response ErrorTypeMatching(TypeMatchingInfo matchingdata) { 
 		
+		
 		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname());
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
-		
+		//System.out.print("Backend Start");
 		eReport.MatchingErrorType(ReportKey, uid);
 		
 		//백엔드로 타입 생
@@ -59,13 +68,13 @@ public class BackendWorkingSet {
 	
 	@PUT
 	@Path("/LogUpdate/KEY={key}")
-	@Consumes("application/json")
+	@Consumes("text/plain")
 	public Response LogWriter(
 			@PathParam("key") final String reportKey,
 									String logData) { 
 		BlobFileWriter blobwriter = BlobWriterFactory.GetBlobService(ServiceType.GOOGLE_APP_ENGINE);
 		BlobKey FileKey = blobwriter.TextWrite(logData);	
-		
+
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		eReport.MatchingLogFile(KeyFactory.stringToKey(reportKey), FileKey);
 		
