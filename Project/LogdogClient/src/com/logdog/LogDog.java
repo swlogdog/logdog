@@ -8,12 +8,11 @@ package com.logdog;
  * 개발 기간에도 사용 배포에서도 사용
  */
 import com.google.code.microlog4android.Level;
-import com.logdog.Alarm.LogDogAlarm;
 import com.logdog.ErrorReport.ErrorReportFactory;
 import com.logdog.Handler.LogDogExceptionHandler;
-import com.logdog.Network.LogDogNetwork;
 import com.logdog.Process.LogDogProcess;
 import com.logdog.Setting.LogDogSetting;
+import com.logdog.common.Network.LogDogNetwork;
 import com.logdog.log.LogDoglog4android;
 
 import android.content.Context;
@@ -39,7 +38,7 @@ public final class LogDog {
 	private LogDoglog4android		Log;
 	private ErrorReportFactory		Factory;
 	private LogDogExceptionHandler	ExceptionHandler;
-	private LogDogAlarm				Alarm;
+
 
 	public LogDog() {
 		// TODO Auto-generated constructor stub
@@ -49,17 +48,15 @@ public final class LogDog {
 		Log 				= null;
 		Factory 			= null;
 		Network				= null;
-		Alarm				= null;
 		
 	}
 	
-	public void LogDoginitialize(Context context) {
-		Alarm			 = new LogDogAlarm(); 
+	public void LogDoginitialize(Context context) { 
 		Setting 		 = new LogDogSetting();
 		Network 		 = new LogDogNetwork();
 		Log 			 = new LogDoglog4android();
 		Factory 		 = new ErrorReportFactory(Setting);
-		Process			 = new LogDogProcess(Alarm,Factory,Network,Setting); 
+		Process			 = new LogDogProcess(Factory,Network,Setting); 
 		ExceptionHandler = new LogDogExceptionHandler(Process);
 		
 		Setting.m_Context = context;

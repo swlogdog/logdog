@@ -45,7 +45,7 @@ public class LogCollector {
 			String SendLog = SendlogBuild.toString();
 			
 			OutputData.LogFileName = FileControler.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , 
-																	OutputData.Date+SendLogFileName );
+																	OutputData.ReportTime+SendLogFileName );
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

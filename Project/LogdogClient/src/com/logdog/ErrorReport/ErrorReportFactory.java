@@ -6,7 +6,7 @@ import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.Collector.SystemInfoCollector;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.common.Date;
+import com.logdog.common.Date.Date;
 
 public class ErrorReportFactory {
 
@@ -39,7 +39,7 @@ public class ErrorReportFactory {
 	public ClientReportData CreateErrorReport(Throwable errorthorw){
 		ClientReportData data = new ClientReportData();
 		
-		data.Date = Date.GetDateYYMMDDHHMMSS(Setting.m_Context);
+		data.ReportTime = Date.GetDateYYMMDDHHMMSS(Setting.m_Context);
 		
 		m_StackCollector.DoCollectStackTrace(data, errorthorw);
 		m_SysInfoCollector.DoCollectSystemInfo(data);

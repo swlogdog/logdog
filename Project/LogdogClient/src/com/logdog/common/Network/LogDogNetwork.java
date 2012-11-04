@@ -1,19 +1,18 @@
-package com.logdog.Network;
+package com.logdog.common.Network;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.logdog.NetworkAppender.AppEngineAppender;
+import com.logdog.NetworkAppender.AppEngineSetting;
+import com.logdog.NetworkAppender.NetworkAppender;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
-
-import com.logdog.Network.Appender.AppEngineAppender;
-import com.logdog.Network.Appender.AppEngineSetting;
-import com.logdog.Network.Appender.NetworkAppender;
 
 public class LogDogNetwork {
 
@@ -24,7 +23,7 @@ public class LogDogNetwork {
 		m_NowNetworkAppenderList = new ArrayList<NetworkAppender>();
 		//임시 테스트 코드
 		AppEngineSetting Setting= new AppEngineSetting();
-		Setting.SetURL("http://swlogdog7.appspot.com/logdog/score/post");
+		Setting.SetURL("http://swlogdog7.appspot.com/logdog/Report/");
 		AddAppender(new AppEngineAppender(Setting));
 		
 	}

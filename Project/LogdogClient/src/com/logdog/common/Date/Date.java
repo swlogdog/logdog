@@ -1,4 +1,4 @@
-package com.logdog.common;
+package com.logdog.common.Date;
 
 import java.text.SimpleDateFormat;
 import android.content.Context;

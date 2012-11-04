@@ -31,14 +31,14 @@ public class StackTraceCollector {
         String StackTraceString = stacktracewirter.toString();
         stacktraceprinter.close();
        
-        ParseStackTrace(outputdata,Errorthrow);
+        ParseStackTrace(outputdata,Errorthrow,StackTraceString);
         
         outputdata.CallStackFileName = FileControler.SaveStringtoFile(StackTraceString, 
         															  Setting.GetSaveDirPath(), 
-        															  outputdata.Date + Setting.GetStackTraceFileName());
+        															  outputdata.ReportTime + Setting.GetStackTraceFileName());
 	}
 	
-	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){
+	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow,String StackTraceString){
 		boolean RunTimeError = false;
 		
         Throwable cause = Errorthrow.getCause();
@@ -51,7 +51,8 @@ public class StackTraceCollector {
         else
         	recordthrow = Errorthrow;
                 
-        outputdata.ErrorName = recordthrow.getMessage();
+        String [] errorname = StackTraceString.split("\n");
+        outputdata.ErrorName = errorname[0].toString(); 
         StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
         
         outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();

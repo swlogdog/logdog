@@ -8,16 +8,16 @@ import android.content.ComponentName;
 import android.content.Intent;
 
 import com.google.gson.Gson;
-import com.logdog.Alarm.LogDogAlarm;
+
 import com.logdog.ErrorReport.ErrorReportFactory;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Network.LogDogNetwork;
+
 import com.logdog.Setting.LogDogSetting;
 import com.logdog.common.File.FileControler;
+import com.logdog.common.Network.LogDogNetwork;
 
 public class LogDogProcess {
 
-	LogDogAlarm 		m_Alarm;
 	ErrorReportFactory 	m_Factory;
 	LogDogNetwork		m_Network;
 	LogDogSetting		m_Setting;
@@ -25,10 +25,9 @@ public class LogDogProcess {
 	Map<String,String>	m_SendData;
 	
 	private static String ErrorReportFileName = "ErrorReport.txt";
-	public LogDogProcess(LogDogAlarm alarm, ErrorReportFactory factory, 
+	public LogDogProcess(ErrorReportFactory factory, 
 						 LogDogNetwork network, LogDogSetting Setting) {
 		// TODO Auto-generated constructor stub
-		m_Alarm 	= alarm;
 		m_Factory 	= factory;
 		m_Network	= network;
 		m_Setting	= Setting;
@@ -62,6 +61,9 @@ public class LogDogProcess {
 				AddSendData("JSon/ErrorReport", Content);
 				AddSendData("CallStack", FileControler.FiletoString(callstackfile));
 				AddSendData("Log", FileControler.FiletoString(LogFile));
+				AddSendData("ErrorName", Data.ErrorName);
+				AddSendData("ErrorClassName", Data.ErrorClassName);
+				
 				
 				if(!m_Network.SendData(GetSendData()))
 					return false;
@@ -83,7 +85,7 @@ public class LogDogProcess {
 		Gson gson = new Gson();
 		String ReportJSon = gson.toJson(data);
 		
-		FileControler.SaveStringtoFile(ReportJSon, m_Setting.GetSaveDirPath(), data.Date + ErrorReportFileName);
+		FileControler.SaveStringtoFile(ReportJSon, m_Setting.GetSaveDirPath(), data.ReportTime + ErrorReportFileName);
 	}
 	
 	private void AddSendData(String Key,String Data){

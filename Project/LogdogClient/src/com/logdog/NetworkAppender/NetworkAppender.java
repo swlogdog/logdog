@@ -1,4 +1,4 @@
-package com.logdog.Network.Appender;
+package com.logdog.NetworkAppender;
 
 import java.util.Map;
 

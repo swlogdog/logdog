@@ -1,5 +1,6 @@
 package com.Test;
 
+import java.io.File;
 import java.lang.reflect.Type;
 
 import com.google.code.microlog4android.Level;
@@ -44,7 +45,8 @@ public class MainActivity extends Activity {
         
         
        try{
-    	   int i = 10/0;
+    	  String saef =null;
+    	  saef.toUpperCase();
        }
        catch(Exception e){
     	  e.printStackTrace(); 

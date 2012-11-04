@@ -13,8 +13,9 @@ import android.view.Display;
 import android.view.WindowManager;
 
 import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Network.LogDogNetwork;
+
 import com.logdog.Setting.LogDogSetting;
+import com.logdog.common.Network.LogDogNetwork;
 
 public class SystemInfoCollector {
 
