@@ -1,0 +1,114 @@
+package logdog.ErrorReport.Controller;
+
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+
+import logdog.Common.DataStore.PMF;
+import logdog.ErrorReport.DAO.ErrorReportInfo;
+import logdog.ErrorReport.DTO.ClientReportData;
+import logdog.ErrorReport.DTO.ErrorUniqueID;
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.datastore.Key;
+
+public class ErrorReportRegister {
+	
+	private PersistenceManager jdoConnector;
+	
+
+	
+	public ErrorReportRegister() {
+		super();
+		jdoConnector=null;
+		
+	}
+	
+	public Key insertErrorReport(ClientReportData reportInfo)
+	{
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		ErrorReportInfo eInfo = new ErrorReportInfo(reportInfo);
+		
+		try{
+				jdoConnector.makePersistent(eInfo);
+		}
+		catch(Exception e){
+				
+			return null;
+				
+		}
+		finally{
+		
+			jdoConnector.close();
+			
+		}
+	
+		return eInfo.getE_ReportCode();
+	}
+	/**
+	 *
+	 * @since 2012. 11. 2.오후 12:43:20
+	 * TODO 에러 파일의 타입을 매칭한다.
+	 * @author Karuana
+	 * @param reportKey
+	 * @param uid
+	 */
+	public void MatchingErrorType(Key reportKey, ErrorUniqueID uid)
+	{
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+	
+		try{
+			//System.out.print(reportKey);
+			
+		 	ErrorTypeClassifier TypeClassifier = new ErrorTypeClassifier();
+			Key ErrTypeKey = TypeClassifier.UpdateErrorType(uid);
+				
+			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
+			targetReport.setE_ClassificationCode(ErrTypeKey);
+		//	System.out.print(targetReport.getE_ClassificationCode());
+		}
+		catch(Exception e){
+				
+			System.out.print(e.getClass() + e.getMessage());
+				
+		}
+		finally{
+			
+			jdoConnector.close();
+			
+		}
+	
+	}
+	public void MatchingLogFile(Key reportKey, BlobKey filekey)
+	{
+		jdoConnector = PMF.getPMF().getPersistenceManager();
+
+		try{
+			
+			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
+			targetReport.setLogBolbKey(filekey);
+		}
+		catch(Exception e){
+				
+			
+				
+		}
+		finally{
+			jdoConnector.close();
+			
+		}
+	}
+	
+	public List<ErrorReportInfo> getErrorReport(Key ErrorType)
+	{
+		return null;
+	}
+	
+	public boolean deleteErrorReport(Key reportKey)
+	{
+		return true;
+	}	
+	
+}
