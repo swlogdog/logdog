@@ -1,18 +1,8 @@
 package com.Test;
 
-import java.io.File;
-import java.lang.reflect.Type;
 
-import com.google.code.microlog4android.Level;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.logdog.LogDog;
-import com.logdog.ErrorReport.ErrorReportFactory;
-import com.logdog.ErrorReport.Collector.StackTraceCollector;
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Setting.LogDogSetting;
-import com.logdog.common.File.FileControler;
-import com.logdog.log.LogDoglog4android;
+
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,7 +21,7 @@ public class MainActivity extends Activity {
            //cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
         
         
-        LogDog.getInstance().LogDoginitialize(getApplicationContext());
+        LogDog.LogDoginitialize(getApplicationContext());
 
         
         
@@ -50,7 +40,7 @@ public class MainActivity extends Activity {
        }
        catch(Exception e){
     	  e.printStackTrace(); 
-    	  LogDog.getInstance().CreateLog(e);
+    	  LogDog.CreateLog(e);
     	  
        }
        

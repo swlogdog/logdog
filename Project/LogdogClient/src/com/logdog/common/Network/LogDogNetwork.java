@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.logdog.NetworkAppender.AppEngineAppender;
-import com.logdog.NetworkAppender.AppEngineSetting;
-import com.logdog.NetworkAppender.NetworkAppender;
+import com.logdog.common.Network.Appender.AppEngineAppender;
+import com.logdog.common.Network.Appender.AppEngineSetting;
+import com.logdog.common.Network.Appender.NetworkAppender;
 
 import android.content.Context;
 import android.content.pm.PackageManager;

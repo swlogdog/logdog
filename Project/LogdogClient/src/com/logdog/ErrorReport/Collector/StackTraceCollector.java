@@ -55,7 +55,6 @@ public class StackTraceCollector {
         outputdata.ErrorName = errorname[0].toString(); 
         StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
         
-        outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();
-        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(outputdata.ErrorLine) + ")";
+        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(ErrorElements[0].getLineNumber()) + ")";
 	}
 }

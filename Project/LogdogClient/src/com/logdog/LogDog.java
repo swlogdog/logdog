@@ -8,81 +8,54 @@ package com.logdog;
  * 개발 기간에도 사용 배포에서도 사용
  */
 import com.google.code.microlog4android.Level;
-import com.logdog.ErrorReport.ErrorReportFactory;
+import com.google.code.microlog4android.format.Formatter;
+
+
 import com.logdog.Handler.LogDogExceptionHandler;
 import com.logdog.Process.LogDogProcess;
-import com.logdog.Setting.LogDogSetting;
-import com.logdog.common.Network.LogDogNetwork;
 import com.logdog.log.LogDoglog4android;
+
 
 import android.content.Context;
 
 public final class LogDog {
 	
 	
-	private static LogDog instance;
 
-	public static LogDog getInstance() {
-		if (instance == null) {
-			synchronized (LogDog.class) { // 1
-				if (instance == null) // 2
-					instance = new LogDog(); // 3
-			}
-		}
-		return instance;
-	}
+	private static LogDogExceptionHandler	ExceptionHandler;
+	private static LogDoglog4android		Logger;
 	
-	private LogDogProcess 			Process;
-	private LogDogSetting 			Setting;
-	private LogDogNetwork 			Network;
-	private LogDoglog4android		Log;
-	private ErrorReportFactory		Factory;
-	private LogDogExceptionHandler	ExceptionHandler;
 
 
 	public LogDog() {
-		// TODO Auto-generated constructor stub
-		Process 			= null;
-		ExceptionHandler 	= null;
-		Setting 			= null;
-		Log 				= null;
-		Factory 			= null;
-		Network				= null;
-		
+		// TODO Auto-generated constructor stub	
 	}
 	
-	public void LogDoginitialize(Context context) { 
-		Setting 		 = new LogDogSetting();
-		Network 		 = new LogDogNetwork();
-		Log 			 = new LogDoglog4android();
-		Factory 		 = new ErrorReportFactory(Setting);
-		Process			 = new LogDogProcess(Factory,Network,Setting); 
-		ExceptionHandler = new LogDogExceptionHandler(Process);
-		
-		Setting.m_Context = context;
-		Log.init(Level.INFO,Setting);
-		
-		////////////////////////////////////////////
-        Setting.SetSaveDirPath("TESTlogdog");
-        Setting.SetReadLog(true);
-        
-       
-        Log.init(Level.DEBUG, Setting);
-        ////////////////////////////////////////////
+	public static void LogDoginitialize(Context context) { 
+		LogDogProcess.getInstance().InitLogDogProcess(context);
+		ExceptionHandler = new LogDogExceptionHandler(LogDogProcess.getInstance());
+		Logger = new LogDoglog4android();
+		Logger.init(Level.DEBUG, LogDogProcess.getInstance().GetSetting());
 	}
 	
-	void SetLogLever(Level level){
-		Log.SetLogLever(level);
+	public static void SetLogLever(Level level){
+		Logger.SetLogLever(level);
+	}
+	public static void PrintLog(Level level,String log){
+		Logger.PrintLog(level, log);
+	}
+	public static void SetFormatter(Formatter formatter){
+		Logger.SetFormatter(formatter);
 	}
 	
-	public boolean SendingErrorReport(){
-		if(Process.SendErrorReport())
+	public static boolean SendingErrorReport(){
+		if(LogDogProcess.getInstance().SendErrorReport())
 			return true;
 		else
 			return false;
 	}
-	public void CreateLog(Throwable throwdata){
-		Process.CreateErrorReport(throwdata);
+	public static void CreateLog(Throwable throwdata){
+		LogDogProcess.getInstance().CreateErrorReport(throwdata);
 	}
 		
 }

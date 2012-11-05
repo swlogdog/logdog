@@ -1,4 +1,4 @@
-package com.logdog.NetworkAppender;
+package com.logdog.common.Network.Appender;
 
 import java.util.ArrayList;
 

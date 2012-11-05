@@ -1,4 +1,4 @@
-package com.logdog.NetworkAppender;
+package com.logdog.common.Network.Appender;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -24,6 +24,7 @@ import org.apache.http.util.EntityUtils;
 import com.google.code.microlog4android.appender.Appender;
 import com.google.gson.Gson;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.common.Parser.LogDogJsonParser;
 
 import android.util.Log;
 
@@ -45,17 +46,23 @@ public class AppEngineAppender extends NetworkAppender {
 	    String LogData			= SendData.get("Log");
 	    
 	    //URL에 관한 문자셋으로 변환
-	    errorname = URLEncoder.encode(errorname);
-	    errorclassname = URLEncoder.encode(errorclassname);
+	    String URLerrorname = null;
+	    String URLerrorclassname = null;
+	    try{
+	    	URLerrorname = URLEncoder.encode(errorname,"UTF-8");
+	    	URLerrorclassname = URLEncoder.encode(errorclassname,"UTF-8");
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
 	    
 	    //1 현재 에러가 서버에 존재하는지 체크
-	    BooleanResult result = HttpGetExistErrorCheck(errorname,errorclassname);
+	    BooleanResult result = HttpGetExistErrorCheck(URLerrorname,URLerrorclassname);
 		
 	    if(result == null)
 	    	return false;
 	    
 	    //2 성공시 콜스택과 에러정보를 보낸다.
-	    if(result.isResult()){
+	    if(!result.isResult()){
 	    	if(!HttpPostSendNewError(errorname, errorclassname,CallStackString))
 	    		return false;
 	    }
@@ -135,8 +142,7 @@ public class AppEngineAppender extends NetworkAppender {
 		}
 		CallStackInfo info = new CallStackInfo(ErrorName, ClassName, callstackarray);
 		
-		Gson gson = new Gson();
-		String CallStackInfoJson = gson.toJson(info); 
+		String CallStackInfoJson = LogDogJsonParser.toJson(info); 
 		String SendUrl = m_AppEngineSetting.GetURL()+m_AppEngineSetting.GetErrorCheckUrl();
 		
 		String Response = HttpPostSendJson(SendUrl,CallStackInfoJson);
@@ -218,8 +224,7 @@ public class AppEngineAppender extends NetworkAppender {
 			if (resEntityGet != null) {
 				// 결과를 처리
 				String Result = EntityUtils.toString(resEntityGet);
-				Gson gson = new Gson();
-				BooleanResult isExist = gson.fromJson(Result, BooleanResult.class);
+				BooleanResult isExist = (BooleanResult) LogDogJsonParser.fromJson(Result, BooleanResult.class);
 				return isExist;
 			}
 		} catch (Exception e) {
