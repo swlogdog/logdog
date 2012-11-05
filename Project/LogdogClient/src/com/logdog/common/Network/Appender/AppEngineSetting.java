@@ -1,12 +1,20 @@
 package com.logdog.common.Network.Appender;
 
-public class AppEngineSetting {
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
+import com.logdog.common.Network.NetwrokSetting;
+
+@Root
+public class AppEngineSetting implements NetwrokSetting {
+
+	@Element
 	private String URL;
 	
 	private final String ErrorCheckUrl = "ErrorType";
 	
 	private final String SendUserInfoUrl = "UserInfo";
+	
 	private final String LogSettingUrl = "LogSetting";
 	
 	
@@ -29,5 +37,14 @@ public class AppEngineSetting {
 	}
 	public String GetLogSettingUrl(){
 		return LogSettingUrl;
+	}
+
+	public String GetAppenderClassName() {
+		return "com.logdog.common.Network.Appender.AppEngineAppender";
+	}
+
+	public Class GetSettingClass() {
+		// TODO Auto-generated method stub
+		return AppEngineSetting.class;
 	}
 }

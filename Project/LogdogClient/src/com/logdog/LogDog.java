@@ -7,6 +7,8 @@ package com.logdog;
  * 하나의 인터페이스...
  * 개발 기간에도 사용 배포에서도 사용
  */
+import java.io.File;
+
 import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.format.Formatter;
 
@@ -31,8 +33,8 @@ public final class LogDog {
 		// TODO Auto-generated constructor stub	
 	}
 	
-	public static void LogDoginitialize(Context context) { 
-		LogDogProcess.getInstance().InitLogDogProcess(context);
+	public static void LogDoginitialize(Context context,String NetworkXml) { 
+		LogDogProcess.getInstance().InitLogDogProcess(context,NetworkXml);
 		ExceptionHandler = new LogDogExceptionHandler(LogDogProcess.getInstance());
 		Logger = new LogDoglog4android();
 		Logger.init(Level.DEBUG, LogDogProcess.getInstance().GetSetting());

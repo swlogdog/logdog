@@ -3,12 +3,13 @@ package com.logdog.common.Network.Appender;
 import java.util.Map;
 
 
+import com.logdog.common.Network.NetwrokSetting;
 
-public abstract class NetworkAppender {
 
-	public NetworkAppender() {
-		// TODO Auto-generated constructor stub
-	}
+
+public interface NetworkAppender {
+
+
 	/**
 	 * 에러 전송
 	 * @since 2012. 11. 5.오전 7:31:17
@@ -17,8 +18,10 @@ public abstract class NetworkAppender {
 	 * @param SendData
 	 * @return
 	 */
-	public abstract boolean SendMessage(Map<String,String> SendData);
+	public boolean SendMessage(Map<String,String> SendData);
 	
-	public abstract String GetClassName();
+	public boolean InitAppender(NetwrokSetting Setting);
+	
+	public String GetClassName();
 
 }	

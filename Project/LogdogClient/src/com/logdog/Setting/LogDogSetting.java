@@ -1,5 +1,6 @@
 package com.logdog.Setting;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import android.content.Context;
@@ -10,6 +11,14 @@ import android.content.Context;
  * TODO
  * @author JeongSeungsu
  */
+/*
+ * @Attribute(required=false)
+ * (name="")
+ *  @ElementList
+ *   @ElementArray
+ *   inline=true
+ *   @ElementMap(entry="property", key="key", attribute=true, inline=true)
+ */
 @Root
 public final class LogDogSetting {
 
@@ -17,6 +26,7 @@ public final class LogDogSetting {
 	/**
 	 * 디폴트값 100 , 0이면 모든 로그 기록
 	 */
+	@Element(name="")
 	private int							m_ReadLogLine;			
 	 
 	private boolean 					m_SendLog;
@@ -27,17 +37,18 @@ public final class LogDogSetting {
 	
 	
 	/////////////////Network 관련 셋팅/////////////////////////////
+	
 	private String						m_URL;
 	
 	
 	
-	////////////////기본 셋팅//////////////////
+	////////////////ErrorReport 관련 셋팅//////////////////
 	private final String				m_StackTraceName 	= "StackTrace.txt";
 	
+	
+	
+	/////////////////XML 안씀/////////////////////////////
 	private String						m_FileSaveDirectory;
-	
-	
-	
 	
 	public Context						m_Context;
 

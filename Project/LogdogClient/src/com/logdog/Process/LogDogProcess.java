@@ -11,6 +11,7 @@ import com.google.code.microlog4android.Level;
 
 import com.logdog.ErrorReport.ErrorReportFactory;
 import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Factory.NetworkFactory;
 
 import com.logdog.Setting.LogDogSetting;
 import com.logdog.common.File.FileControler;
@@ -45,14 +46,17 @@ public class LogDogProcess {
 	public LogDogProcess() {
 		// TODO Auto-generated constructor stub
 		Setting 		 = new LogDogSetting();
-		Network 		 = new LogDogNetwork();
+		
 		
 		Factory 		 = new ErrorReportFactory(Setting);
 		m_SendData  	 = new HashMap<String, String>();
 		
 	}
 	
-	public void InitLogDogProcess(Context context){
+	public void InitLogDogProcess(Context context,String NetworkXml){
+		
+		Network 		 = NetworkFactory.CreateLogDogNetwork(NetworkXml);
+		
 		Setting.m_Context = context;
 				
 		////////////////////////////////////////////

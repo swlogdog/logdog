@@ -1,0 +1,7 @@
+<NetworkSettingList>
+   <SettingList>
+      <NetwrokSetting class="com.logdog.common.Network.Appender.AppEngineSetting">
+      	<URL>http://swlogdog7.appspot.com/logdog/Report/</URL>
+   	  </NetwrokSetting>
+   </SettingList>
+</NetworkSettingList>

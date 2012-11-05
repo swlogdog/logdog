@@ -1,42 +1,46 @@
 package com.logdog.common.Network.Appender;
 
-import java.io.IOException;
-import java.net.URLDecoder;
+
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Map;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
+
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
+
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
+
+
 import org.apache.http.util.EntityUtils;
 
-import com.google.code.microlog4android.appender.Appender;
-import com.google.gson.Gson;
-import com.logdog.ErrorReport.ReportData.ClientReportData;
+
+
+import com.logdog.common.Network.NetwrokSetting;
 import com.logdog.common.Parser.LogDogJsonParser;
 
-import android.util.Log;
 
-public class AppEngineAppender extends NetworkAppender {
+
+public class AppEngineAppender implements NetworkAppender {
 
 	AppEngineSetting m_AppEngineSetting;
-	public AppEngineAppender(AppEngineSetting setting ) {
-		// TODO Auto-generated constructor stub
-		m_AppEngineSetting = setting;
+	
+	public boolean InitAppender(NetwrokSetting Setting) {
+		
+		m_AppEngineSetting = (AppEngineSetting)Setting;
+		return false;
 	}
 	
-	@Override
+	public AppEngineAppender() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public boolean SendMessage(Map<String,String> SendData){
 		
 		String errorname 	  	= SendData.get("ErrorName");
@@ -88,7 +92,6 @@ public class AppEngineAppender extends NetworkAppender {
 	    return true;
 	}
 
-	@Override
 	public String GetClassName() {
 		// TODO Auto-generated method stub
 		return this.GetClassName();
@@ -273,4 +276,6 @@ public class AppEngineAppender extends NetworkAppender {
 		else
 			return false;
 	}
+
+
 }
