@@ -1,5 +1,7 @@
 package logdog.ErrorReport.Communicator;
 
+import java.net.URLDecoder;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -7,6 +9,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -17,6 +20,7 @@ import logdog.Common.BackendWork.DTO.BackendSettingData;
 import logdog.Common.Json.BooleanResult;
 import logdog.ErrorReport.Controller.ErrorReportRegister;
 import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.Controller.ServerSettingGetter;
 import logdog.ErrorReport.DTO.ClientReportData;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
 import logdog.ErrorReport.DTO.TypeMatchingInfo;
@@ -31,13 +35,12 @@ public class ErrorReport {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/LogSetting}")
+	@Path("/LogSetting")
 	public String isLogFile()
 	{	   
-		Gson gson = new Gson();
-		BooleanResult isType = new BooleanResult(true);
+		ServerSettingGetter ServerSetter = new ServerSettingGetter();
 		
-		return gson.toJson(isType);
+		return ServerSetter.getLogFileSetting();
 	}
 	
 	@GET
@@ -49,10 +52,21 @@ public class ErrorReport {
 			)
 	{	   
 		Gson gson = new Gson();
-		ErrorUniqueID errType = new ErrorUniqueID(errName,ClassName);
+		BooleanResult isType =new BooleanResult(false);
+		try{
+			
+		String Name = URLDecoder.decode(errName,"UTF-8"); 
+		String cName = URLDecoder.decode(ClassName,"UTF-8"); 
+		System.out.print(Name);
+		System.out.print(cName);
+		ErrorUniqueID errType = new ErrorUniqueID(Name,cName);
 		
 		ErrorTypeClassifier eTypeClassifier = new ErrorTypeClassifier();
-		BooleanResult isType = new BooleanResult(eTypeClassifier.IsErrorType(errType));
+		isType.setResult(eTypeClassifier.IsErrorType(errType));
+		}catch(Exception e)
+		{
+			throw new WebApplicationException(500);
+		}
 		
 		return gson.toJson(isType);
 	}

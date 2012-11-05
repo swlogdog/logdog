@@ -49,10 +49,10 @@ public class LogdogSetter {
 		return settingInfo.getLogdogSystemrKey();
 	}
 	
-	public void changeLogdogInfo(Key settingKey, LogdogSettingInfo settingInfo)
+	public void changeLogdogInfo(LogdogSettingInfo settingInfo)
 	{
 		jdoConnector = PMF.getPMF().getPersistenceManager();
-		
+		Key settingKey= getSettingKey();
 		try{	
 			LogdogSettingInfo Systemsetter = jdoConnector.getObjectById(LogdogSettingInfo.class, settingKey);
 			
@@ -107,7 +107,7 @@ public class LogdogSetter {
 	 * @author Karuana
 	 * @return Key(존재하지 않으면 null을 반환)
 	 */
-	public Key getSettingKey()
+	private Key getSettingKey()
 	{
 		jdoConnector = PMF.getPMF().getPersistenceManager();
 	

@@ -39,10 +39,11 @@ public class BackendWorkingSet {
 		
 		ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
 		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
-
-		errClassifier.InsertErrorType(uid);
-		
-		errClassifier.LinkCallStackData(callstack);		
+		if(errClassifier.IsErrorType(uid))
+		{
+			errClassifier.InsertErrorType(uid);		
+			errClassifier.LinkCallStackData(callstack);		
+		}
 		//백엔드로 타입 생
 		return Response.status(200).entity("ErrorType Create end").build();
  

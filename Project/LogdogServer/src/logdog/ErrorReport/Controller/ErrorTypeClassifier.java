@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.ws.rs.WebApplicationException;
 
 import logdog.Common.DataStore.PMF;
 import logdog.ErrorReport.DAO.ErrorReportInfo;
@@ -44,7 +45,7 @@ public class ErrorTypeClassifier {
 		}
 		catch(Exception e){
 				
-		
+			throw new WebApplicationException(500);
 		}
 		finally{
 			SearchQuery.closeAll();

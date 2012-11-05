@@ -5,7 +5,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ClientReportData {
-	
+		/**
+		 * 에러 발생 시간
+		 */	
+		public String ReportTime;
+
 		/**
 		* �ڵ��� �� ��
 		*/
