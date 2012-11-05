@@ -4,13 +4,13 @@ public class ClientReportData {
 
 	public ClientReportData() {
 		// TODO Auto-generated constructor stub
+		ReportTime 			= "unknown";
 		Model 				= "unknown";
 		National 			= "unknown";
 		ErrorName			= "";
 		ErrorClassName		= "";
 		AppVersion			= "unknown";
 		OSVersion			= "unknown";
-		ErrorLine			= -1;
 		GPS					= false;
 		WiFi				= false;
 		MobileNetwork		= false;
@@ -19,7 +19,10 @@ public class ClientReportData {
 		CallStackFileName 	= null;
 		LogFileName			= null;
 	}
-	
+	/**
+	 * 에러 발생 시간
+	 */
+	public String ReportTime;
 	/**
 	 * 핸드폰 모델 명
 	 */
@@ -48,10 +51,6 @@ public class ClientReportData {
 	public String OSVersion;
 	//public String CallStack;
 	//public String UserLog;
-	/**
-	 * 에러가 발생 한 라인
-	 */
-	public int ErrorLine;
 	
 	/**
 	 * GPS On/Off

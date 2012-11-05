@@ -11,7 +11,7 @@ import com.logdog.Setting.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public class Log4LogCat extends Log4Appender {
+public class Log4LogCat implements Log4Appender {
 
 	LogCatAppender appender;
 	
@@ -19,13 +19,11 @@ public class Log4LogCat extends Log4Appender {
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public void CreateAppender(LogDogSetting setting) {
 		// TODO Auto-generated method stub
 		appender = new LogCatAppender();
 	}
 
-	@Override
 	public Appender GetAppender() {
 		// TODO Auto-generated method stub
 		return appender;

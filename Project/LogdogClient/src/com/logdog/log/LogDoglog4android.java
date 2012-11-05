@@ -7,6 +7,7 @@ import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.Logger;
 import com.google.code.microlog4android.LoggerFactory;
 import com.google.code.microlog4android.appender.Appender;
+import com.google.code.microlog4android.format.Formatter;
 import com.google.code.microlog4android.format.PatternFormatter;
 
 import com.logdog.Setting.LogDogSetting;
@@ -70,6 +71,27 @@ public class LogDoglog4android {
 		}
 	}
 	
+	public void PrintLog(Level level, String log){
+		
+		switch(level.toInt()){
+		case Level.DEBUG_INT:
+			m_logger.debug(log);
+			break;
+		case Level.ERROR_INT:
+			m_logger.error(log);
+			break;
+		case Level.FATAL_INT:
+			m_logger.fatal(log);
+			break;
+		case Level.INFO_INT:
+			m_logger.info(log);
+			break;
+		case Level.WARN_INT:
+			m_logger.warn(log);
+			break;
+		}
+	}
+	
 	/**
 	 * 포맷터 설정하는데 모든 어펜더에 동일하게...
 	 * 각 어펜더 마다 포매터 설정
@@ -78,7 +100,7 @@ public class LogDoglog4android {
 	 * @author JeongSeungsu
 	 * @param formatter
 	 */
-	public void SetFormatter(PatternFormatter formatter){
+	public void SetFormatter(Formatter formatter){
 		for(int i =0 ; i < m_logger.getNumberOfAppenders(); i++)
 		{
 			m_logger.getAppender(i).setFormatter(formatter);

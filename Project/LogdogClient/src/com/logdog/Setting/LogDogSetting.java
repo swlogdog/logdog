@@ -1,5 +1,7 @@
 package com.logdog.Setting;
 
+import org.simpleframework.xml.Root;
+
 import android.content.Context;
 
 /**
@@ -8,33 +10,37 @@ import android.content.Context;
  * TODO
  * @author JeongSeungsu
  */
+@Root
 public final class LogDogSetting {
 
-	
-	private final String				m_StackTraceName 	= "StackTrace.txt";
-	 
-	
-	private final String				m_LogAppenderName 	= "Log4LogCat|Log4File";
-	private final String 				m_LogFileName		= "LogDog.txt";
-	
-	
-	private String						m_URL;
-	
-	private boolean 					m_SendLog;
+	/////////////////////Log 관련 셋팅/////////////////////////////
 	/**
 	 * 디폴트값 100 , 0이면 모든 로그 기록
 	 */
 	private int							m_ReadLogLine;			
-							
+	 
+	private boolean 					m_SendLog;
+	
+	private final String				m_LogAppenderName 	= "Log4LogCat|Log4File";
+	
+	private final String 				m_LogFileName		= "LogDog.txt";
+	
+	
+	/////////////////Network 관련 셋팅/////////////////////////////
+	private String						m_URL;
+	
+	
+	
+	////////////////기본 셋팅//////////////////
+	private final String				m_StackTraceName 	= "StackTrace.txt";
 	
 	private String						m_FileSaveDirectory;
 	
+	
+	
+	
 	public Context						m_Context;
-	
-	
-	
 
-	
 	public LogDogSetting() {
 		// TODO Auto-generated constructor stub
 		m_URL 		= null;

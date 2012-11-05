@@ -1,11 +1,9 @@
 package com.logdog.Handler;
 
-import com.logdog.ErrorReport.Collector.StackTraceCollector;
-import com.logdog.ErrorReport.ReportData.ClientReportData;
+
 import com.logdog.Process.LogDogProcess;
 
-import android.content.Context;
-import android.os.Process;
+
 
 public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
 
@@ -24,10 +22,7 @@ public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
 	public void uncaughtException(Thread thread, Throwable ex) {
 		// TODO Auto-generated method stub
 	
-		
-		
-		
-		
+		Process.CreateErrorReport(ex);
 		m_DefaultExceptionHandler.uncaughtException(thread, ex);
 		/*
 		android.os.Process.killProcess(android.os.Process.myPid());

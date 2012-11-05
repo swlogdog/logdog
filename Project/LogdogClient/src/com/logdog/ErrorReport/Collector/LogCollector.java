@@ -4,12 +4,14 @@ import android.util.Log;
 
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.util.FileControler;
+import com.logdog.common.File.FileControler;
 
 public class LogCollector {
 
 	LogDogSetting Setting;
-
+	private static String SendLogFileName = "SendLogFile.txt";
+	
+	
 	public LogCollector(LogDogSetting setting) {
 		// TODO Auto-generated constructor stub
 		Setting = setting;
@@ -21,9 +23,8 @@ public class LogCollector {
 
 			final int readline = Setting.GetReadLogLine();
 
-			FileControler fcon = new FileControler();
-
-			String totallog = fcon.FiletoString(Setting.GetSaveDirPath(),Setting.GetLogFileName());
+			
+			String totallog = FileControler.FiletoString(Setting.GetSaveDirPath(),Setting.GetLogFileName());
 			if(totallog == "")
 			{
 				Log.e("LOGDOG","Fail Read Log File");
@@ -43,7 +44,8 @@ public class LogCollector {
 			}
 			String SendLog = SendlogBuild.toString();
 			
-			OutputData.LogFileName = fcon.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , "SendLogFile.txt" );
+			OutputData.LogFileName = FileControler.SaveStringtoFile(SendLog, Setting.GetSaveDirPath() , 
+																	OutputData.ReportTime+SendLogFileName );
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

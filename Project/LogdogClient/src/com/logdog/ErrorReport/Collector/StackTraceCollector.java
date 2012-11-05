@@ -8,7 +8,7 @@ import java.io.Writer;
 
 import com.logdog.ErrorReport.ReportData.ClientReportData;
 import com.logdog.Setting.LogDogSetting;
-import com.logdog.util.FileControler;
+import com.logdog.common.File.FileControler;
 
 public class StackTraceCollector {
 
@@ -31,12 +31,14 @@ public class StackTraceCollector {
         String StackTraceString = stacktracewirter.toString();
         stacktraceprinter.close();
        
-        ParseStackTrace(outputdata,Errorthrow);
+        ParseStackTrace(outputdata,Errorthrow,StackTraceString);
         
-        outputdata.CallStackFileName = SaveFileData(StackTraceString);
+        outputdata.CallStackFileName = FileControler.SaveStringtoFile(StackTraceString, 
+        															  Setting.GetSaveDirPath(), 
+        															  outputdata.ReportTime + Setting.GetStackTraceFileName());
 	}
 	
-	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow){
+	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow,String StackTraceString){
 		boolean RunTimeError = false;
 		
         Throwable cause = Errorthrow.getCause();
@@ -49,19 +51,10 @@ public class StackTraceCollector {
         else
         	recordthrow = Errorthrow;
                 
-        outputdata.ErrorName = recordthrow.getMessage();
+        String [] errorname = StackTraceString.split("\n");
+        outputdata.ErrorName = errorname[0].toString(); 
         StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
         
-        outputdata.ErrorLine	  = ErrorElements[0].getLineNumber();
-        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(outputdata.ErrorLine) + ")";
+        outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(ErrorElements[0].getLineNumber()) + ")";
 	}
-	
-	private String SaveFileData(String StackTrace){
-		String FileName;
-		FileControler fcon = new FileControler();
-		FileName = fcon.SaveStringtoFile(StackTrace, Setting.GetSaveDirPath(), Setting.GetStackTraceFileName());
-		
-		return FileName;
-	}
-
 }
