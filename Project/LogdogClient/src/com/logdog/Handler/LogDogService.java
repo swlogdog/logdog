@@ -4,7 +4,7 @@ package com.logdog.Handler;
 
 
 
-import com.logdog.Process.LogDogProcess;
+import com.logdog.Worker.Worker;
 
 import android.app.Service;
 import android.content.Intent;
@@ -68,7 +68,7 @@ public class LogDogService extends Service implements Runnable {
             return;
         } else {
 
-        	if(LogDogProcess.getInstance().SendErrorReport())
+        	if(Worker.getInstance().SendErrorReport())
         		return;
         	else
         		m_Handler.postDelayed(this, CHECK_TIME);

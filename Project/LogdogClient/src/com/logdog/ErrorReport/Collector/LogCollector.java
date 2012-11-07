@@ -2,8 +2,8 @@ package com.logdog.ErrorReport.Collector;
 
 import android.util.Log;
 
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Setting.LogDogSetting;
+import com.logdog.Configuration.LogDogSetting;
+import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.common.File.FileControler;
 
 public class LogCollector {

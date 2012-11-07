@@ -1,13 +1,12 @@
-package com.logdog.Factory;
+package com.logdog.Worker.Factory;
 
-import java.io.File;
 
 import android.util.Log;
 
-import com.logdog.common.Network.LogDogNetwork;
+import com.logdog.common.Network.Network;
+import com.logdog.common.Network.NetworkAppender;
 import com.logdog.common.Network.NetworkSettingList;
 import com.logdog.common.Network.NetwrokSetting;
-import com.logdog.common.Network.Appender.NetworkAppender;
 import com.logdog.common.Parser.LogDogXmlParser;
 
 
@@ -34,9 +33,9 @@ public class NetworkFactory {
 		}
 		return appender;
 	}
-	public static LogDogNetwork CreateLogDogNetwork(String NetworkXml){
+	public static Network CreateLogDogNetwork(String NetworkXml){
 		
-		LogDogNetwork Network = new LogDogNetwork();
+		Network Network = new Network();
 		
 		NetworkSettingList list = (NetworkSettingList) LogDogXmlParser.fromXml(NetworkSettingList.class,NetworkXml);
 		

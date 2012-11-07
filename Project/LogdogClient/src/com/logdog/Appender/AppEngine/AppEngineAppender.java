@@ -1,4 +1,4 @@
-package com.logdog.common.Network.Appender;
+package com.logdog.Appender.AppEngine;
 
 
 import java.net.URLEncoder;
@@ -22,23 +22,30 @@ import org.apache.http.util.EntityUtils;
 
 
 
+import com.logdog.common.Network.NetworkAppender;
 import com.logdog.common.Network.NetwrokSetting;
 import com.logdog.common.Parser.LogDogJsonParser;
 
 
 
+/**
+ * 구글 앱엔진에 데이터를 보내는 어펜더
+ * @since 2012. 11. 5.오후 10:08:22
+ * TODO
+ * @author JeongSeungsu
+ */
 public class AppEngineAppender implements NetworkAppender {
 
 	AppEngineSetting m_AppEngineSetting;
+	
+	public AppEngineAppender() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public boolean InitAppender(NetwrokSetting Setting) {
 		
 		m_AppEngineSetting = (AppEngineSetting)Setting;
 		return false;
-	}
-	
-	public AppEngineAppender() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public boolean SendMessage(Map<String,String> SendData){
@@ -268,6 +275,14 @@ public class AppEngineAppender implements NetworkAppender {
 		return Response;
 	}
 	
+	/**
+	 * 202코드 == Reponse => 성공
+	 * @since 2012. 11. 5.오후 10:09:03
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param response
+	 * @return 리스폰코드가 202면 성공
+	 */
 	private boolean HttpSuccessResponsCode(HttpResponse response){
 		int Code = 202;
 		int getcode = response.getStatusLine().getStatusCode();

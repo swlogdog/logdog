@@ -1,7 +1,6 @@
-package com.logdog.log.Appender;
+package com.logdog.Appender;
 
-import com.google.code.microlog4android.appender.Appender;
-import com.logdog.Setting.LogDogSetting;
+import com.logdog.Configuration.LogDogSetting;
 
 
 
@@ -12,11 +11,11 @@ import com.logdog.Setting.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public interface Log4Appender 
+public interface Appender 
 {
 
 	public abstract void CreateAppender(LogDogSetting setting);
 	
-	public abstract Appender GetAppender();
+	public abstract com.google.code.microlog4android.appender.Appender GetAppender();
 	
 }

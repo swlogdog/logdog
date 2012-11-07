@@ -12,10 +12,10 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.Configuration.LogDogSetting;
+import com.logdog.ErrorReport.ClientReportData;
 
-import com.logdog.Setting.LogDogSetting;
-import com.logdog.common.Network.LogDogNetwork;
+import com.logdog.common.Network.Network;
 
 public class SystemInfoCollector {
 
@@ -37,8 +37,8 @@ public class SystemInfoCollector {
             OutPutData.AppVersion 			= packageinfo.versionName;
             //String APP_VERSIONCODE 		= String.valueOf(packageinfo.versionCode);
             //String APP_PACKAGE 			= packageinfo.packageName;
-            OutPutData.MobileNetwork 		= LogDogNetwork.Get3GNetwork(Setting.m_Context);
-            OutPutData.WiFi			 		= LogDogNetwork.GetWiFiNetwork(Setting.m_Context);
+            OutPutData.MobileNetwork 		= Network.Get3GNetwork(Setting.m_Context);
+            OutPutData.WiFi			 		= Network.GetWiFiNetwork(Setting.m_Context);
             OutPutData.National 			= GetNational(Setting.m_Context);
             OutPutData.GPS					= GetGps(Setting.m_Context);
             OutPutData.OSVersion			= android.os.Build.VERSION.RELEASE;

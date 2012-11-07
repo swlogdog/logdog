@@ -1,4 +1,4 @@
-package com.logdog.ErrorReport.ReportData;
+package com.logdog.ErrorReport;
 
 public class ClientReportData {
 

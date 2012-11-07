@@ -1,4 +1,4 @@
-package com.logdog.Process;
+package com.logdog.Worker;
 
 import java.io.File;
 import java.util.HashMap;
@@ -9,32 +9,32 @@ import android.content.Intent;
 
 import com.google.code.microlog4android.Level;
 
-import com.logdog.ErrorReport.ErrorReportFactory;
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Factory.NetworkFactory;
+import com.logdog.Configuration.LogDogSetting;
+import com.logdog.ErrorReport.ClientReportData;
 
-import com.logdog.Setting.LogDogSetting;
+import com.logdog.Worker.Factory.ErrorReportFactory;
+import com.logdog.Worker.Factory.NetworkFactory;
 import com.logdog.common.File.FileControler;
-import com.logdog.common.Network.LogDogNetwork;
+import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogJsonParser;
 
 
-public class LogDogProcess {
+public class Worker {
 	
-	private static LogDogProcess instance;
+	private static Worker instance;
 
-	public static LogDogProcess getInstance() {
+	public static Worker getInstance() {
 		if (instance == null) {
-			synchronized (LogDogProcess.class) { 
+			synchronized (Worker.class) { 
 				if (instance == null) 
-					instance = new LogDogProcess(); 
+					instance = new Worker(); 
 			}
 		}
 		return instance;
 	}
 
 	private LogDogSetting 			Setting;
-	private LogDogNetwork 			Network;
+	private Network 			Network;
 	private ErrorReportFactory		Factory;
 	
 	
@@ -43,7 +43,7 @@ public class LogDogProcess {
 	
 	private static final String ErrorReportFileName = "ErrorReport.txt";
 	
-	public LogDogProcess() {
+	public Worker() {
 		// TODO Auto-generated constructor stub
 		Setting 		 = new LogDogSetting();
 		

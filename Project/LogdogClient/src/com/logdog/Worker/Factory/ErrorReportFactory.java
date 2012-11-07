@@ -1,11 +1,11 @@
-package com.logdog.ErrorReport;
+package com.logdog.Worker.Factory;
 
+import com.logdog.Configuration.LogDogSetting;
+import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.ErrorReport.Collector.LogCollector;
 import com.logdog.ErrorReport.Collector.MemoryCollector;
 import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.Collector.SystemInfoCollector;
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Setting.LogDogSetting;
 import com.logdog.common.Date.Date;
 
 public class ErrorReportFactory {

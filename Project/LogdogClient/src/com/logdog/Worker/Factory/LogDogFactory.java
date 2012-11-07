@@ -1,4 +1,4 @@
-package com.logdog.Factory;
+package com.logdog.Worker.Factory;
 
 public class LogDogFactory {
 

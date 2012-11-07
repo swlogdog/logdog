@@ -14,8 +14,7 @@ import com.google.code.microlog4android.format.Formatter;
 
 
 import com.logdog.Handler.LogDogExceptionHandler;
-import com.logdog.Process.LogDogProcess;
-import com.logdog.log.LogDoglog4android;
+import com.logdog.Worker.Worker;
 
 
 import android.content.Context;
@@ -34,10 +33,10 @@ public final class LogDog {
 	}
 	
 	public static void LogDoginitialize(Context context,String NetworkXml) { 
-		LogDogProcess.getInstance().InitLogDogProcess(context,NetworkXml);
-		ExceptionHandler = new LogDogExceptionHandler(LogDogProcess.getInstance());
+		Worker.getInstance().InitLogDogProcess(context,NetworkXml);
+		ExceptionHandler = new LogDogExceptionHandler(Worker.getInstance());
 		Logger = new LogDoglog4android();
-		Logger.init(Level.DEBUG, LogDogProcess.getInstance().GetSetting());
+		Logger.init(Level.DEBUG, Worker.getInstance().GetSetting());
 	}
 	
 	public static void SetLogLever(Level level){
@@ -51,13 +50,13 @@ public final class LogDog {
 	}
 	
 	public static boolean SendingErrorReport(){
-		if(LogDogProcess.getInstance().SendErrorReport())
+		if(Worker.getInstance().SendErrorReport())
 			return true;
 		else
 			return false;
 	}
 	public static void CreateLog(Throwable throwdata){
-		LogDogProcess.getInstance().CreateErrorReport(throwdata);
+		Worker.getInstance().CreateErrorReport(throwdata);
 	}
 		
 }

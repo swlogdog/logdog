@@ -1,17 +1,17 @@
 package com.logdog.Handler;
 
 
-import com.logdog.Process.LogDogProcess;
+import com.logdog.Worker.Worker;
 
 
 
 public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
 
-	private LogDogProcess Process; 
+	private Worker Process; 
 	Thread.UncaughtExceptionHandler m_DefaultExceptionHandler;
 	
 	
-	public LogDogExceptionHandler(LogDogProcess process) {
+	public LogDogExceptionHandler(Worker process) {
 		// TODO Auto-generated constructor stub
 		m_DefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);

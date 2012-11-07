@@ -6,8 +6,8 @@ import java.io.Writer;
 
 
 
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Setting.LogDogSetting;
+import com.logdog.Configuration.LogDogSetting;
+import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.common.File.FileControler;
 
 public class StackTraceCollector {

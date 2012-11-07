@@ -5,20 +5,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.logdog.common.Network.Appender.AppEngineAppender;
-import com.logdog.common.Network.Appender.AppEngineSetting;
-import com.logdog.common.Network.Appender.NetworkAppender;
+import com.logdog.Appender.AppEngine.AppEngineAppender;
+import com.logdog.Appender.AppEngine.AppEngineSetting;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-public class LogDogNetwork {
+public class Network {
 
 	private List<NetworkAppender> m_NowNetworkAppenderList;
 	
-	public LogDogNetwork() {
+	public Network() {
 		// TODO Auto-generated constructor stub
 		m_NowNetworkAppenderList = new ArrayList<NetworkAppender>();
 	}

@@ -1,17 +1,16 @@
 
-package com.logdog.log;
+package com.logdog;
 
 import android.util.Log;
 
 import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.Logger;
 import com.google.code.microlog4android.LoggerFactory;
-import com.google.code.microlog4android.appender.Appender;
 import com.google.code.microlog4android.format.Formatter;
 import com.google.code.microlog4android.format.PatternFormatter;
 
-import com.logdog.Setting.LogDogSetting;
-import com.logdog.log.Appender.*;
+import com.logdog.Appender.*;
+import com.logdog.Configuration.LogDogSetting;
 
 
 
@@ -59,7 +58,7 @@ public class LogDoglog4android {
 
 			for (String s : StrArray) {
 
-				Appender appender = InitAppender(s,setting);
+				com.google.code.microlog4android.appender.Appender appender = InitAppender(s,setting);
 
 				appender.setFormatter(formatter);
 				m_logger.addAppender(appender);
@@ -126,18 +125,18 @@ public class LogDoglog4android {
 	 * @param appendername
 	 * @return
 	 */
-	private Appender InitAppender(String appendername,LogDogSetting setting) {
+	private com.google.code.microlog4android.appender.Appender InitAppender(String appendername,LogDogSetting setting) {
 
-		Log4Appender appender = null;
+		Appender appender = null;
 		String packagename;
 
 		try {
 			
-			packagename = Log4Appender.class.getName();
+			packagename = Appender.class.getName();
 			packagename = packagename.replace(".Log4Appender", ""); 
 			appendername = packagename + "." + appendername;
 			Class c = Class.forName(appendername);
-			appender = (Log4Appender) c.newInstance();
+			appender = (Appender) c.newInstance();
 			appender.CreateAppender(setting);
 
 		} catch (ClassNotFoundException e1) { //클래스 이름이 없다.
@@ -151,7 +150,7 @@ public class LogDoglog4android {
 			return null;
 		}
 
-		return appender.GetAppender();
+		return (com.google.code.microlog4android.appender.Appender) appender.GetAppender();
 	}
 
 	public void warn(String log){

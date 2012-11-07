@@ -1,8 +1,8 @@
-package com.logdog.log.Appender;
+package com.logdog.Appender;
 
-import com.google.code.microlog4android.appender.Appender;
-import com.google.code.microlog4android.appender.FileAppender;
-import com.logdog.Setting.LogDogSetting;
+
+
+import com.logdog.Configuration.LogDogSetting;
 
 
 /**
@@ -11,24 +11,24 @@ import com.logdog.Setting.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public class Log4File implements Log4Appender {
+public class FileAppender implements Appender {
 
-	FileAppender appender;
+	com.google.code.microlog4android.appender.FileAppender appender;
 	
-	public Log4File() {
+	public FileAppender() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public void CreateAppender(LogDogSetting setting) {
 		// TODO Auto-generated method stub
-		appender = new FileAppender();
+		appender = new com.google.code.microlog4android.appender.FileAppender();
 		appender.setAppend(true);
 		appender.setFileName(setting.GetSaveDirPath()+"/"+setting.GetLogFileName()); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 	}
 
-	public Appender GetAppender() {
+	public com.google.code.microlog4android.appender.Appender GetAppender() {
 		// TODO Auto-generated method stub
-		return appender;
+		return (com.google.code.microlog4android.appender.Appender) appender;
 	}
 
 }

@@ -1,9 +1,10 @@
-package com.logdog.common.Network.Appender;
+package com.logdog.Appender.AppEngine;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.logdog.common.Network.NetwrokSetting;
+
 
 @Root
 public class AppEngineSetting implements NetwrokSetting {
