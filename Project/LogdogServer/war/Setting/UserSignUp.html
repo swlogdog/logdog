@@ -1,0 +1,196 @@
+<html>
+  <head>
+    <title>LogDog -The only choice for your development -</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/docs.css" rel="stylesheet">
+    <link href="/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+ 
+
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+    
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+
+	<script>
+	var Request = function() {
+	    this.getParameter = function( name ) {
+	        var rtnval = '';
+	        var nowAddress = unescape(location.href);
+	        var parameters = (nowAddress.slice(nowAddress.indexOf('?')+1,nowAddress.length)).split('&');
+	        for(var i = 0 ; i < parameters.length ; i++)
+	        {
+	            var varName = parameters[i].split('=')[0];
+	            if(varName.toUpperCase() == name.toUpperCase())
+	            {
+	                rtnval = parameters[i].split('=')[1];
+	               	rtnval = rtnval.split('#')[0];
+	                break;
+	            }
+	        }
+	        return rtnval;
+	    };
+	};
+	</script>
+
+
+    </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+	<div class="navbar navbar-inverse navbar-fixed-top">
+    	<div class="navbar-inner">
+        	<div class="container-fluid">
+        		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            		<span class="icon-bar"></span>
+         		   	<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+          		</a>
+          		<a class="brand" href="#">Logdog</a>
+          		
+          		<div class="nav-collapse collapse">
+            			<p class="navbar-text pull-right">
+             			 Welcome!! <a href="#" class="navbar-link">
+             			 <script>var request = new Request();
+             			var param = request.getParameter("user");
+             			document.write(param);
+             	
+             			</script></a></p>
+     	       			<ul class="nav">
+        	    		 <li class="active"><a href="#">Intro</a></li>
+           	   			</ul>
+          		</div><!--/.nav-collapse -->
+        	</div>
+      	</div>
+    </div>
+    	
+	<header class="jumbotron subhead" id="overview">
+ 		 <div class="container">
+    		<h1>Welcome!!</h1>
+    		<p class="lead">LogDog Information and Setting for Starter</p>
+ 		 </div>
+	</header>
+	
+	<div class="container">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#intro"><i class="icon-chevron-right"></i>Introduction</a></li>
+          <li><a href="#license"><i class="icon-chevron-right"></i>License</a></li>
+          <li><a href="#setting"><i class="icon-chevron-right"></i>System Setting</a></li>
+        </ul>
+      </div>
+	<!-- 본문 -->
+		<div class="span9">
+		  <section id="intro">
+        	  <div class="page-header">
+        	    <h1>Introduction</h1>
+         	  </div>
+          
+			  	<h3>LogDog is...</h3>
+				<p>Bootstrap makes use of certain HTML elements and CSS properties that require the use of the HTML5 doctype. Include it at the beginning of all your projects.</p>
+
+		  </section>
+		
+		  <section id="license">
+        	  <div class="page-header">
+        	    <h1>License</h1>
+         	  </div>
+          
+			  	<h3>LogDog is...</h3>
+				<p>다음과 같은 오픈소스들을 바탕으로 하여 만들어졌습니다.</p>
+				<h3>Use Open Source and Licence</h3>
+  			        <p>Bootstrap sets basic global display, typography, and link styles. Specifically, we:</p>
+          		<ul>
+           			 <li><a href="http://code.google.com/p/microlog4android/">MicroLog4Android</a>: 안드로이드 용 로그 라이브러리로 우리는 이 오픈소스 라이브러리를 리팩토링하여 이 프로젝트의 로그 기능을 제작하였다. MicroLog4Android는 Apache License 2.0 라이센스이다.</li>
+					 <li><a href="http://www.highcharts.com/">HighCharts JS</a>: 우리는 웹 상에 그래프를 그리기 위하여 HighCharts를 이용하였다. 이 라이브러리는 <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>이다.</li>
+             		 <li><a href="http://www.trirand.com/blog/">JqGrid</a>: 우리는 웹 상에 테이블응 그리기 위하여 jqGrid 이용하였다. 이 라이브러리는 MIT license 이다.</li>
+            		 <li><a href="http://www.highcharts.com/">bootstrap</a>: 우리는 웹페이지 구성을 위하여 BootStap을 이용하였다. 이 오픈소스 라이브러리는 Apache License 2.0 라이센스이다.</li>
+          		</ul>
+          <p>추가로 이 Web Page는 Google App Engine for Java 기반으로 제작되었다.</p>
+		  </section>
+		  
+		  <section id="setting">
+        	  <div class="page-header">
+        	    <h1>System Setting</h1>
+         	  </div>
+          
+			  	<h3>LogFile Report Option</h3>
+				<p>Logdog은 Logdog이 탑제된 어플리케이션의 사용자 로그 파일을 에러 전송시 전송하는 기능을 제공합니다. 그러나 이 기능은 많은 트래픽을 유발하기 때문에 옵션을 통해 개발자가 끄거나 켤 수 있습니다. Logdog 시작 전에 이 기능을 사용할 것인지 결정해주시길 바랍니다. 이 기능은 설정에서 언제든지 끄거나 켤 수 있습니다. 
+				추가적으로 Web Setting이전에 접수된 에러에 대해서 자동적으로 LogFile  접수기능이 꺼져있으니 유의 하시길 바랍니다(LogFile은 GAE의 Blob Store에 저장됩니다).</p>
+				<p></p>
+		
+				
+ 				<form action="User/StarterSet" method="POST">
+           			 <label class="radio">
+             			 <input type="radio" name="LogSetting" id="optionsRadios1" value="true" checked>
+              			Use
+           			 </label>
+            		<label class="radio">
+             			 <input type="radio" name="LogSetting" id="optionsRadios2" value="false">
+             			Not Use
+            		</label>
+             		 <button class="btn btn-large btn-block btn-primary" type="submit" class="btn">Logdog Start</button>
+          		</form>
+		  </section>
+		  
+
+
+		</div>
+	</div>
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <ul class="footer-links">
+          <li><a href="http://blog.getbootstrap.com">Blog</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Issues</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
+        </ul>
+      </div>
+    </footer>
+
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/bootstrap-transition.js"></script>
+    <script src="/assets/js/bootstrap-alert.js"></script>
+    <script src="/assets/js/bootstrap-modal.js"></script>
+    <script src="/assets/js/bootstrap-dropdown.js"></script>
+    <script src="/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="/assets/js/bootstrap-tab.js"></script>
+    <script src="/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/assets/js/bootstrap-popover.js"></script>
+    <script src="/assets/js/bootstrap-button.js"></script>
+    <script src="/assets/js/bootstrap-collapse.js"></script>
+    <script src="/assets/js/bootstrap-carousel.js"></script>
+    <script src="/assets/js/bootstrap-typeahead.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+  </body>
+  
+</html>

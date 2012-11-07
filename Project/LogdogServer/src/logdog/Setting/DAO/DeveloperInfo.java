@@ -7,6 +7,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.users.User;
 
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
 public class DeveloperInfo {
@@ -16,19 +17,13 @@ public class DeveloperInfo {
 
 	@Persistent 
 	private String UserId;// Gmail Id 기준
-	@Persistent 
-	private int UserRange;
-	public DeveloperInfo(String userId, int userRange) {
+
+	public DeveloperInfo(String userId) {
 		super();
 		UserId = userId;
-		UserRange = userRange;
+
 	}
-	public int getUserRange() {
-		return UserRange;
-	}
-	public void setUserRange(int userRange) {
-		UserRange = userRange;
-	}
+
 	public Key getDeveloperKey() {
 		return DeveloperKey;
 	}

@@ -14,34 +14,12 @@ public class LogdogSettingInfo {
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Key LogdogSystemrKey;
 	@Persistent 
-	private String AppName;
-	@Persistent 
-	private String DeveloperTeam;
-	@Persistent 
 	private boolean LogFile;
 
-	public LogdogSettingInfo(String appName, String developerTeam,
-			boolean logFile) {
+	public LogdogSettingInfo(boolean logFile) {
 		super();
-		AppName = appName;
-		DeveloperTeam = developerTeam;
+
 		LogFile = logFile;
-	}
-
-	public String getAppName() {
-		return AppName;
-	}
-
-	public void setAppName(String appName) {
-		AppName = appName;
-	}
-
-	public String getDeveloperTeam() {
-		return DeveloperTeam;
-	}
-
-	public void setDeveloperTeam(String developerTeam) {
-		DeveloperTeam = developerTeam;
 	}
 
 	public boolean isLogFile() {
