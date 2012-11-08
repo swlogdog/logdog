@@ -1,6 +1,7 @@
 package com.logdog.Appender.AppEngine;
 
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
@@ -19,11 +20,14 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 
 import org.apache.http.util.EntityUtils;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 
-
-import com.logdog.common.Network.NetworkAppender;
-import com.logdog.common.Network.NetwrokSetting;
+import com.logdog.Appender.FileAppender;
+import com.logdog.Appender.IAppender;
+import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.common.File.FileControler;
 import com.logdog.common.Parser.LogDogJsonParser;
 
 
@@ -34,21 +38,33 @@ import com.logdog.common.Parser.LogDogJsonParser;
  * TODO
  * @author JeongSeungsu
  */
-public class AppEngineAppender implements NetworkAppender {
+@Root
+public class AppEngineAppender extends FileAppender implements IAppender {
 
-	AppEngineSetting m_AppEngineSetting;
+	@Element
+	private String URL;
 	
+	private final String ErrorCheckUrl = "ErrorType";
+	
+	private final String SendUserInfoUrl = "UserInfo";
+	
+	private final String LogSettingUrl = "LogSetting";
+	
+		
 	public AppEngineAppender() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean InitAppender(NetwrokSetting Setting) {
-		
-		m_AppEngineSetting = (AppEngineSetting)Setting;
-		return false;
+	public void SetURL(String url){ 
+		URL = url;
+	}
+	public String GetURL(){
+		return URL;
 	}
 	
-	public boolean SendMessage(Map<String,String> SendData){
+	public boolean NetworkProcess(Map<String, String> SendData) {
+		if(!super.NetworkProcess(SendData))
+			return false;
 		
 		String errorname 	  	= SendData.get("ErrorName");
 	    String errorclassname 	= SendData.get("ErrorClassName");
@@ -97,12 +113,33 @@ public class AppEngineAppender implements NetworkAppender {
 	    }
 	    
 	    return true;
+
+	}
+
+	public boolean ErrorReportProcess(ClientReportData Data) {
+		// TODO Auto-generated method stub
+		if(!super.ErrorReportProcess(Data))
+			return false;
+		
+		return true;
+	}
+
+	public void InitAppender() {
+		// TODO Auto-generated method stub
+		super.InitAppender();
+		
+	}
+
+	public com.google.code.microlog4android.appender.Appender GetAppender() {
+		// TODO Auto-generated method stub
+		return super.GetAppender();
 	}
 
 	public String GetClassName() {
 		// TODO Auto-generated method stub
 		return this.GetClassName();
 	}
+	
 	
 	/**
 	 * 서버에 이 에러가 있나 없나 체크 
@@ -114,9 +151,7 @@ public class AppEngineAppender implements NetworkAppender {
 	 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
 	 */
 	private BooleanResult HttpGetExistErrorCheck(String ErrorName,String ClassName) {
-		return HttpGetSend(m_AppEngineSetting.GetURL()
-				+ m_AppEngineSetting.GetErrorCheckUrl() + "/" + ErrorName + "/"
-				+ ClassName);
+		return HttpGetSend(URL + ErrorCheckUrl + "/" + ErrorName + "/" + ClassName);
 	}
 
 	/**
@@ -127,8 +162,7 @@ public class AppEngineAppender implements NetworkAppender {
 	 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
 	 */
 	private BooleanResult HttpGetLogSendCheck(){
-		return HttpGetSend(m_AppEngineSetting.GetURL()
-				+ m_AppEngineSetting.GetLogSettingUrl());
+		return HttpGetSend(URL + LogSettingUrl);
 	}
 	/**
 	 * 새로운 에러면 서버로 전송
@@ -153,7 +187,7 @@ public class AppEngineAppender implements NetworkAppender {
 		CallStackInfo info = new CallStackInfo(ErrorName, ClassName, callstackarray);
 		
 		String CallStackInfoJson = LogDogJsonParser.toJson(info); 
-		String SendUrl = m_AppEngineSetting.GetURL()+m_AppEngineSetting.GetErrorCheckUrl();
+		String SendUrl = URL + ErrorCheckUrl;
 		
 		String Response = HttpPostSendJson(SendUrl,CallStackInfoJson);
 		
@@ -172,7 +206,7 @@ public class AppEngineAppender implements NetworkAppender {
 	 * @return 실패시 null값 리턴 성공시 키값 가져옴
 	 */
 	private String HttpPostSendUserInfo(String ClientReportDataJson) {
-		String SendUrl = m_AppEngineSetting.GetURL() + m_AppEngineSetting.GetSendUserInfoUrl();
+		String SendUrl = URL +SendUserInfoUrl;
 		String Response = HttpPostSendJson(SendUrl,ClientReportDataJson);
 		
 		if(Response == null)
@@ -194,9 +228,7 @@ public class AppEngineAppender implements NetworkAppender {
 		 
 		try {
 		HttpClient client 	= new DefaultHttpClient(); 
-		HttpPut Put 		= new HttpPut(m_AppEngineSetting.GetURL()+
-									  	  m_AppEngineSetting.GetSendUserInfoUrl()+
-									  	  "/key="+Key);
+		HttpPut Put 		= new HttpPut(URL + SendUserInfoUrl+ "/key="+Key);
 		
 		StringEntity input = new StringEntity(LogData);
 		    input.setContentType("text/plain");
@@ -291,6 +323,5 @@ public class AppEngineAppender implements NetworkAppender {
 		else
 			return false;
 	}
-
 
 }

@@ -1,6 +1,8 @@
 package com.logdog.Appender;
 
-import com.logdog.Configuration.LogDogSetting;
+import java.util.Map;
+
+import com.logdog.ErrorReport.ClientReportData;
 
 
 /**
@@ -9,22 +11,35 @@ import com.logdog.Configuration.LogDogSetting;
  * TODO 
  * @author JeongSeungsu
  */
-public abstract class LogCatAppender implements Appender {
+public class LogCatAppender implements IAppender {
 
 	com.google.code.microlog4android.appender.LogCatAppender appender;
-	
-	public LogCatAppender() {
-		// TODO Auto-generated constructor stub
+
+	public boolean NetworkProcess(Map<String, String> SendData) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
-	public void LogCatAppender(LogDogSetting setting) {
+	public boolean ErrorReportProcess(ClientReportData Data) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public void InitAppender() {
 		// TODO Auto-generated method stub
 		appender = new com.google.code.microlog4android.appender.LogCatAppender();
 	}
 
 	public com.google.code.microlog4android.appender.Appender GetAppender() {
 		// TODO Auto-generated method stub
-		return (com.google.code.microlog4android.appender.Appender) appender;
+		return appender;
 	}
 
+	public String GetClassName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	
+	
 }

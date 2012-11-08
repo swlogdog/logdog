@@ -12,16 +12,16 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.logdog.Configuration.LogDogSetting;
+import com.logdog.Configuration.LogDogConfiguration;
 import com.logdog.ErrorReport.ClientReportData;
 
 import com.logdog.common.Network.Network;
 
 public class SystemInfoCollector {
 
-	LogDogSetting Setting;
+	LogDogConfiguration Setting;
 	
-	public SystemInfoCollector(LogDogSetting setting) {
+	public SystemInfoCollector(LogDogConfiguration setting) {
 		// TODO Auto-generated constructor stub
 		Setting = setting;
 	}

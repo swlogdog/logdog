@@ -7,13 +7,12 @@ import java.util.Map;
 import android.content.Context;
 import android.content.Intent;
 
-import com.google.code.microlog4android.Level;
-
-import com.logdog.Configuration.LogDogSetting;
+import com.logdog.Appender.AppenderManager;
+import com.logdog.Appender.IAppender;
+import com.logdog.Configuration.LogDogConfiguration;
 import com.logdog.ErrorReport.ClientReportData;
 
 import com.logdog.Worker.Factory.ErrorReportFactory;
-import com.logdog.Worker.Factory.NetworkFactory;
 import com.logdog.common.File.FileControler;
 import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogJsonParser;
@@ -33,19 +32,20 @@ public class Worker {
 		return instance;
 	}
 
-	private LogDogSetting 			Setting;
-	private Network 			Network;
+	private LogDogConfiguration 	Setting;
 	private ErrorReportFactory		Factory;
+	
+	AppenderManager					appendermanager;
 	
 	
 	
 	Map<String,String>	m_SendData;
 	
-	private static final String ErrorReportFileName = "ErrorReport.txt";
+	
 	
 	public Worker() {
 		// TODO Auto-generated constructor stub
-		Setting 		 = new LogDogSetting();
+		Setting 		 = new LogDogConfiguration();
 		
 		
 		Factory 		 = new ErrorReportFactory(Setting);
@@ -54,16 +54,7 @@ public class Worker {
 	}
 	
 	public void InitLogDogProcess(Context context,String NetworkXml){
-		
-		Network 		 = NetworkFactory.CreateLogDogNetwork(NetworkXml);
-		
 		Setting.m_Context = context;
-				
-		////////////////////////////////////////////
-        Setting.SetSaveDirPath("TESTlogdog");
-        Setting.SetReadLog(true);
- 
-        ////////////////////////////////////////////
 	}
 	
 	public boolean SendErrorReport(){
@@ -94,8 +85,11 @@ public class Worker {
 				AddSendData("ErrorClassName", Data.ErrorClassName);
 				
 				
-				if(!Network.SendData(GetSendData()))
-					return false;
+				for(IAppender appender : appendermanager.getAppenderList()){
+					if(!appender.NetworkProcess(GetSendData()))
+						return false;
+				}
+				
 				
 				//ErrorReportData, CallStackFile, LogFile 삭제..
 				file.delete();
@@ -109,7 +103,7 @@ public class Worker {
 	
 	
 	public void CreateErrorReport(Throwable throwadata){
-		ClientReportData data = Factory.CreateErrorReport(throwadata);
+		ClientReportData data = Factory.CreateErrorReport(appendermanager,throwadata);
 		SaveErrorReport(data);
 		Setting.m_Context.startService(new Intent("LogDogService"));
 		
@@ -121,7 +115,7 @@ public class Worker {
 		FileControler.SaveStringtoFile(ReportJSon, Setting.GetSaveDirPath(), data.ReportTime + ErrorReportFileName);
 	}
 	
-	public LogDogSetting GetSetting(){
+	public LogDogConfiguration GetSetting(){
 		return Setting;
 	}
 	
