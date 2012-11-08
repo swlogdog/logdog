@@ -6,19 +6,12 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import logdog.Common.DataStore.PMF;
-import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.Setting.DAO.LogdogSettingInfo;
 
 import com.google.appengine.api.datastore.Key;
 
 public class LogdogSetter {
-	private PersistenceManager jdoConnector;
-	
-	public LogdogSetter()
-	{
-		super();
-		jdoConnector=null;
-	}
+
 	/**
 	 *
 	 * @since 2012. 11. 3.오후 11:45:47
@@ -27,17 +20,20 @@ public class LogdogSetter {
 	 * @param settingInfo
 	 * @return Key(잘못되면 null을 반환)
 	 */
-	public Key InitLogdogSettingInfo(LogdogSettingInfo settingInfo)
+	public Key InitLogdogSettingInfo(boolean logfile)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
-
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		LogdogSettingInfo settingInfo = new LogdogSettingInfo(logfile);
 
 		try{	
-
-			jdoConnector.makePersistent(settingInfo);
+			if(this.getSettingKey() == null)	
+				jdoConnector.makePersistent(settingInfo);
+			else 
+				return getSettingKey();
 		}
 		catch(Exception e){
-				 
+			e.printStackTrace();
+			  System.out.println(e.getClass() + "  " + e.getCause());
 			return null;
 		}
 		finally{
@@ -49,22 +45,13 @@ public class LogdogSetter {
 		return settingInfo.getLogdogSystemrKey();
 	}
 	
-	public void changeLogdogInfo(Key settingKey, LogdogSettingInfo settingInfo)
+	public void changeLogdogInfo(boolean settingInfo)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
-		
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		Key settingKey= getSettingKey();
 		try{	
 			LogdogSettingInfo Systemsetter = jdoConnector.getObjectById(LogdogSettingInfo.class, settingKey);
-			
-			if(settingInfo.getDeveloperTeam()!=null)
-			{
-				Systemsetter.setDeveloperTeam(settingInfo.getDeveloperTeam());
-			}
-			if(settingInfo.getAppName()!=null)
-			{
-				Systemsetter.setAppName(settingInfo.getAppName());
-			}
-			Systemsetter.setLogFile(settingInfo.isLogFile());
+			Systemsetter.setLogFile(settingInfo);
 		}
 		catch(Exception e){
 				
@@ -80,7 +67,7 @@ public class LogdogSetter {
 	public final LogdogSettingInfo getLogdogSettingInfo()
 	{
 		
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 		
 		Query SearchQuery = jdoConnector.newQuery(LogdogSettingInfo.class);
 		List<LogdogSettingInfo> setting=null;
@@ -107,17 +94,18 @@ public class LogdogSetter {
 	 * @author Karuana
 	 * @return Key(존재하지 않으면 null을 반환)
 	 */
-	public Key getSettingKey()
+	private Key getSettingKey()
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 	
 		Query SearchQuery = jdoConnector.newQuery(LogdogSettingInfo.class);
 		List<LogdogSettingInfo> setting=null;
 		
-		LogdogSettingInfo settingInfo=null;
+		LogdogSettingInfo settingInfo = null;
 		try{	
 			setting = (List<LogdogSettingInfo>) SearchQuery.execute();
-			settingInfo = setting.get(0);
+			if(setting.size()>0)
+				settingInfo = setting.get(0);
 		}
 		catch(Exception e){
 				
@@ -126,6 +114,6 @@ public class LogdogSetter {
 		finally{
 			jdoConnector.close();
 		}
-		return (setting == null) ? null: settingInfo.getLogdogSystemrKey();
+		return (settingInfo == null) ? null: settingInfo.getLogdogSystemrKey();
 	}
 }

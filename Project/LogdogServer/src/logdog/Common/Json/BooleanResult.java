@@ -8,6 +8,7 @@ public class BooleanResult {
 	
 	@XmlAttribute
 	private boolean result;
+	
 	public BooleanResult(){}
 	public BooleanResult(boolean result) {
 		super();
