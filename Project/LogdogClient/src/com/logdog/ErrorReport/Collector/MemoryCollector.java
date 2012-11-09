@@ -1,6 +1,6 @@
 package com.logdog.ErrorReport.Collector;
 
-import com.logdog.ErrorReport.ReportData.ClientReportData;
+import com.logdog.ErrorReport.ClientReportData;
 
 public class MemoryCollector {
 

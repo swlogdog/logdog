@@ -5,18 +5,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 
-
-import com.logdog.ErrorReport.ReportData.ClientReportData;
-import com.logdog.Setting.LogDogSetting;
-import com.logdog.common.File.FileControler;
+import com.logdog.ErrorReport.ClientReportData;
 
 public class StackTraceCollector {
 
-	LogDogSetting Setting;
-	
-	public StackTraceCollector(LogDogSetting setting) {
+
+	public StackTraceCollector() {
 		// TODO Auto-generated constructor stub
-		Setting = setting;
 	}
 
 
@@ -33,9 +28,7 @@ public class StackTraceCollector {
        
         ParseStackTrace(outputdata,Errorthrow,StackTraceString);
         
-        outputdata.CallStackFileName = FileControler.SaveStringtoFile(StackTraceString, 
-        															  Setting.GetSaveDirPath(), 
-        															  outputdata.ReportTime + Setting.GetStackTraceFileName());
+        outputdata.CallStackFileName = StackTraceString;
 	}
 	
 	private void ParseStackTrace(ClientReportData outputdata,Throwable Errorthrow,String StackTraceString){
@@ -56,5 +49,7 @@ public class StackTraceCollector {
         StackTraceElement[] ErrorElements = recordthrow.getStackTrace();
         
         outputdata.ErrorClassName = ErrorElements[0].getClassName() + "(" + String.valueOf(ErrorElements[0].getLineNumber()) + ")";
+        
+        
 	}
 }

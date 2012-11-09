@@ -1,6 +1,8 @@
 package com.logdog.common.Parser;
 
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -39,6 +41,15 @@ public class LogDogXmlParser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
+	}
+	//<style[^>]*>.*</style>
+	static public String Separate(String XMLData, String Separate){
+		String RegularExpression = "(<"+Separate+">" + ".*" + "</" + Separate +">)";
+		Pattern XmlPattern = Pattern.compile(RegularExpression,Pattern.DOTALL);
+		Matcher matcher = XmlPattern.matcher(XMLData);
+		if(matcher.find())
+			return matcher.group(1);
 		return null;
 	}
 	
