@@ -12,9 +12,11 @@ import logdog.Common.BlobStore.BlobFileWriter;
 import logdog.Common.BlobStore.BlobWriterFactory;
 import logdog.ErrorReport.Controller.ErrorReportRegister;
 import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.Controller.ReportSummaryUpdaer;
 import logdog.ErrorReport.DTO.CallStackInfo;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
 import logdog.ErrorReport.DTO.TypeMatchingInfo;
+import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
@@ -62,7 +64,15 @@ public class BackendWorkingSet {
 		//System.out.print("Backend Start");
 		eReport.MatchingErrorType(ReportKey, uid);
 		
-		//백엔드로 타입 생
+		//타입 매칭 후 리포트를 갱신한다.
+		ReportSummaryUpdaer  rpoerter = new ReportSummaryUpdaer();
+		UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
+		
+		if(Temp != null)
+			rpoerter.UpdatedReportError(Temp);
+		else
+			return Response.status(400).entity("Matching Error").build();
+			
 		return Response.status(200).entity("ErrorTypeMatching end").build();
  
 	}

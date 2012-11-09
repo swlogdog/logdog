@@ -37,4 +37,29 @@ public class TimeUtil {
 	{
 			return a.after(b);
 	}
+	
+	public static int GetNowYear()
+	{
+		Date nowTime =GetNowDate();
+		int Year = nowTime.getYear()+1900;
+		
+		return Year;
+		
+	}
+	
+	/**
+	 *		MMDD형태로 반환된다. 
+	 * @since 2012. 11. 10.오전 12:35:37
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
+	public static int GetNowTimeCode()
+	{
+		Date nowTime =GetNowDate();
+		int Month = nowTime.getMonth()+1;
+		int date = nowTime.getDate();
+		int Timecode = Month*100 + date;
+		return Timecode;
+	}
 }
