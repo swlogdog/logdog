@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
          
-        <service android:name="com.logdog.Handler.LogDogService">
+        <service android:name="com.logdog.Handler.NetworkService">
             <intent-filter>
                 <action android:name="LogDogService">
             </action></intent-filter>

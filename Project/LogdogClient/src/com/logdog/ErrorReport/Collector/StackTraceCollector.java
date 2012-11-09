@@ -5,10 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 
-
-import com.logdog.Configuration.LogDogConfiguration;
 import com.logdog.ErrorReport.ClientReportData;
-import com.logdog.common.File.FileControler;
 
 public class StackTraceCollector {
 

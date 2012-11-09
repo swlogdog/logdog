@@ -1,16 +1,12 @@
 
-package com.logdog;
-
-import android.util.Log;
+package com.logdog.Worker.Log;
 
 import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.Logger;
 import com.google.code.microlog4android.LoggerFactory;
 import com.google.code.microlog4android.format.Formatter;
-import com.google.code.microlog4android.format.PatternFormatter;
 
 import com.logdog.Appender.*;
-import com.logdog.Configuration.LogDogConfiguration;
 
 
 
@@ -21,7 +17,7 @@ import com.logdog.Configuration.LogDogConfiguration;
  * TODO 
  * @author JeongSeungsu
  */
-public class LogDoglog4android {
+public class LogManager {
 
 	
 	/**
@@ -30,7 +26,7 @@ public class LogDoglog4android {
 	private Logger m_logger; 
 	
 	
-	public LogDoglog4android() {
+	public LogManager() {
 		// TODO Auto-generated constructor stub		
 		m_logger = LoggerFactory.getLogger();
 
@@ -46,9 +42,9 @@ public class LogDoglog4android {
 	 * @param loglevel 레벨 설정 debug, info, fetal, error, warn 설정 가능
 	 
 	 */
-	public void init(Level loglevel,LogDogConfiguration setting)
+/*	public void init(Level loglevel)
 	{
-/*		try {
+		try {
 			PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
 			formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
 			m_logger.setLevel(loglevel);
@@ -58,7 +54,7 @@ public class LogDoglog4android {
 
 			for (String s : StrArray) {
 
-				com.google.code.microlog4android.appender.Appender appender = InitAppender(s,setting);
+				com.google.code.microlog4android.appender.Appender appender = InitAppender(s);
 
 				appender.setFormatter(formatter);
 				m_logger.addAppender(appender);
@@ -66,9 +62,30 @@ public class LogDoglog4android {
 			
 			m_logger.info("LogDog log Init");
 		} catch (Exception e) { 
-			Log.e("LOG_ERROR", "FAIL Log4Andorid : " + setting.GetLogAppenderName());
+			Log.e("LOG_ERROR", "FAIL Log4Andorid : " );
 		}
-		*/
+	}
+*/
+
+	/**
+	 *
+	 * @since 2012. 11. 10.오전 12:59:24
+	 * TODO Formatter 추가해야됨
+	 * @author JeongSeungsu
+	 * @param appender
+	 */
+	public void AddAppender(AbstractAppender appender){
+		com.google.code.microlog4android.appender.Appender Appender = appender.GetAppender();
+		if(Appender== null)
+			return;
+		
+		m_logger.addAppender(Appender);
+		//ForMatter추가
+	}
+	public void InitLog(AppenderConfiguration configuration){
+		for(AbstractAppender appender : configuration.getAppenderList()){
+			AddAppender(appender);
+		}
 	}
 	
 	public void PrintLog(Level level, String log){
@@ -88,6 +105,26 @@ public class LogDoglog4android {
 			break;
 		case Level.WARN_INT:
 			m_logger.warn(log);
+			break;
+		}
+	}
+	public void PrintLog(Level level, Throwable t){
+	
+		switch(level.toInt()){
+		case Level.DEBUG_INT:
+			m_logger.debug("Exception",t);
+			break;
+		case Level.ERROR_INT:
+			m_logger.error("Exception",t);
+			break;
+		case Level.FATAL_INT:
+			m_logger.fatal("Exception",t);
+			break;
+		case Level.INFO_INT:
+			m_logger.info("Exception",t);
+			break;
+		case Level.WARN_INT:
+			m_logger.warn("Exception",t);
 			break;
 		}
 	}
@@ -114,45 +151,10 @@ public class LogDoglog4android {
 	 * @author JeongSeungsu
 	 * @param level 
 	 */
-	public void SetLogLever(Level level){
+	public void SetLogLevel(Level level){
 		m_logger.setLevel(level);
 	}
-	
-	/**
-	 * 어펜더 스트링을 이용하여 각 어펜더들을 초기화
-	 * @since 2012. 10. 13.오후 10:08:56
-	 * TODO 
-	 * @author JeongSeungsu
-	 * @param appendername
-	 * @return
-	 */
-	private com.google.code.microlog4android.appender.Appender InitAppender(String appendername, LogDogConfiguration setting) {
 
-		IAppender appender = null;
-		String packagename;
-
-		try {
-			
-			packagename = IAppender.class.getName();
-			packagename = packagename.replace(".Log4Appender", ""); 
-			appendername = packagename + "." + appendername;
-			Class c = Class.forName(appendername);
-			appender = (IAppender) c.newInstance();
-			appender.InitAppender(setting);
-
-		} catch (ClassNotFoundException e1) { //클래스 이름이 없다.
-			Log.e("LOGDOG", "Class is Not Found");
-			return null;
-		} catch (InstantiationException e2) { //인스턴스를 생성 할 수 없다.
-			Log.e("LOGDOG", "new Instance Fail");
-			return null;
-		} catch (IllegalAccessException e3) { //클래스 파일을 액세서 할 수 없다.
-			Log.e("LOGDOG", "Class File Access Error");
-			return null;
-		}
-
-		return (com.google.code.microlog4android.appender.Appender) appender.GetAppender();
-	}
 
 	public void warn(String log){
 		m_logger.warn(log);

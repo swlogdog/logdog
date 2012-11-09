@@ -1,17 +1,19 @@
-package com.logdog.Appender;
+package com.logdog.Appender.FileAppender;
 
 
 
-import java.util.Map;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import android.util.Log;
 
-import com.logdog.Configuration.LogDogConfiguration;
+
+import com.google.code.microlog4android.format.PatternFormatter;
+import com.logdog.Appender.AbstractAppender;
 import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.common.File.FileControler;
+import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogJsonParser;
 
 
@@ -22,7 +24,7 @@ import com.logdog.common.Parser.LogDogJsonParser;
  * @author JeongSeungsu
  */
 @Root
-public class FileAppender implements IAppender {
+public class FileAppender extends AbstractAppender{
 
 	com.google.code.microlog4android.appender.FileAppender appender;
 	
@@ -41,33 +43,41 @@ public class FileAppender implements IAppender {
 	private int							ReadLogLine;
 	
 	
-	public FileAppender() {
-		// TODO Auto-generated constructor stub
+	public FileAppender(){
+		super();
 	}
-	public void InitAppender() {
+	
+	public FileAppender(String appendername, String savedirname, String logfilename, int readlogline) {
+		// TODO Auto-generated constructor stub
+		super(appendername);
+		SaveDirName = savedirname;
+		LogFileName = logfilename;
+		ReadLogLine = readlogline;
+	}
+	
+	public void InitAppender(Network network) {
 		
 		appender = new com.google.code.microlog4android.appender.FileAppender();
 		appender.setAppend(true);
 		appender.setFileName(SaveDirName+"/"+LogFileName); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
+		PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
+		formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
+		appender.setFormatter(formatter);
 	}
 	
 	public com.google.code.microlog4android.appender.Appender GetAppender() {
 		// TODO Auto-generated method stub
-		return (com.google.code.microlog4android.appender.Appender) appender;
+		return appender;
 	}
 
-	public boolean NetworkProcess(Map<String, String> SendData) {
-		// TODO Auto-generated method stub
-		return true;
-	}
 
 	public boolean ErrorReportProcess(ClientReportData Data) {
 		// TODO Auto-generated method stub
-		
-		Data.CallStackFileName = FileControler.SaveStringtoFile(Data.CallStackFileName, 
-				SaveDirName, Data.ReportTime + StackTraceName);
 		try {
 
+			Data.CallStackFileName = FileControler.SaveStringtoFile(Data.CallStackFileName, 
+					SaveDirName, Data.ReportTime + StackTraceName);
+			
 			final int readline = ReadLogLine;
 
 			String totallog = FileControler.FiletoString(SaveDirName,LogFileName);
@@ -107,7 +117,7 @@ public class FileAppender implements IAppender {
 
 	public String GetClassName() {
 		// TODO Auto-generated method stub
-		return FileAppender.class.getName();
+		return this.GetClassName();
 	}
 
 	public String GetStackTraceFileName(){

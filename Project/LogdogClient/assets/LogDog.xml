@@ -1,7 +1,20 @@
-<NetworkSettingList>
-   <SettingList>
-      <NetwrokSetting class="com.logdog.common.Network.Setting.AppEngineSetting">
-      	<URL>http://swlogdog7.appspot.com/logdog/Report/</URL>
-   	  </NetwrokSetting>
-   </SettingList>
-</NetworkSettingList>
+<Log>
+   <Level>info</Level>
+</Log>
+
+<Appenders>
+   <AppenderList class="java.util.ArrayList">
+      
+      <Appender class="com.logdog.Appender.AppEngine.AppEngineAppender" AppenderName="AppEngine">
+         <LogFileName>log.txt</LogFileName>
+         <SaveDirName>LogDog</SaveDirName>
+         <ReadLogLine>100</ReadLogLine>
+         <AppComunicator CommunicatorName="AppEngineComm">
+            <URL>http://swlogdog7.appspot.com/logdog/Report/</URL>
+         </AppComunicator>
+      </Appender>
+      
+      <Appender class="com.logdog.Appender.LogCatAppender.LogCatAppender" AppenderName="LogCat"/>
+      
+   </AppenderList>
+</Appenders>

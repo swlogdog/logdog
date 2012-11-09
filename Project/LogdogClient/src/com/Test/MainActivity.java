@@ -1,17 +1,27 @@
 package com.Test;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
+import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
+import com.google.code.microlog4android.Level;
 import com.logdog.LogDog;
+import com.logdog.Appender.AppenderConfiguration;
+import com.logdog.Appender.AppEngine.AppEngineAppender;
+import com.logdog.Appender.AppEngine.AppEngineCommunicator;
+import com.logdog.Appender.LogCatAppender.LogCatAppender;
+import com.logdog.Worker.Log.LogConfiguration;
 import com.logdog.common.File.FileControler;
+import com.logdog.common.Parser.LogDogXmlParser;
 
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.res.AssetManager;
 import android.view.Menu;
 
 public class MainActivity extends Activity {
@@ -25,29 +35,38 @@ public class MainActivity extends Activity {
            //FileControler cont = new FileControler();
            
            //cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
-        
-        
-        
-		AssetManager am = getResources().getAssets();
-		InputStream is;
-		StringBuffer sb = null;
-		try {
-			is = am.open("Network.xml");
-			sb = new StringBuffer();
-			byte[] b = new byte[4096];
-			for (int n; (n = is.read(b)) != -1;) {
-				sb.append(new String(b, 0, n));
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String Build = sb.toString();
+        LogDog.LogDoginitialize(getApplicationContext(),"LogDog.xml");
 
-	  	  
-        LogDog.LogDoginitialize(getApplicationContext(),Build);
-
+ 
+       
+ /*       LogConfiguration conf = new LogConfiguration();
         
+        conf.SetLevel("DEbug");
+        
+        FileControler.SaveStringtoFile("", "", "test1.xml");
+        File file = FileControler.GetExternalStorageFile("", "test1.xml");
+        
+        
+        AppenderConfiguration confi = new AppenderConfiguration(); 
+        
+        
+        AppEngineCommunicator comm = new AppEngineCommunicator("AppEngineComm","URL!~!!~!@");
+        AppEngineAppender AppEngine = new AppEngineAppender("AppEngine","savedir","logfilename",100,comm);
+        
+        LogCatAppender logcat = new LogCatAppender("LogCat");
+        
+        confi.AddAppender(AppEngine);
+        confi.AddAppender(logcat);
+        
+        
+        
+        
+        LogDogXmlParser.toXml(confi, file);
+        
+        String Test = FileControler.FiletoString(file);
+        
+        int i = 10;
+        */
         
         /*
         logger.error("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
@@ -57,6 +76,12 @@ public class MainActivity extends Activity {
         logger.debug("zzzzzzzzzzzzzzzzzzzzzzz!!!@#$%SEDFGHs");
         */
         
+        LogDog.PrintLog(Level.DEBUG, "TestDebug");
+        LogDog.PrintLog(Level.INFO, "TestDebug");
+        LogDog.PrintLog(Level.ERROR, "TestDebug");
+        LogDog.PrintLog(Level.FATAL, "TestDebug");
+        LogDog.PrintLog(Level.WARN, "TestDebug");
+        
         
        try{
     	  String saef =null;
@@ -64,8 +89,7 @@ public class MainActivity extends Activity {
        }
        catch(Exception e){
     	  e.printStackTrace(); 
-    	  LogDog.CreateLog(e);
-    	  
+    	  LogDog.PrintLog(Level.DEBUG, e);
        }
        
        

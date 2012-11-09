@@ -5,13 +5,13 @@ import com.logdog.Worker.Worker;
 
 
 
-public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
+public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
 
 	private Worker Process; 
 	Thread.UncaughtExceptionHandler m_DefaultExceptionHandler;
 	
 	
-	public LogDogExceptionHandler(Worker process) {
+	public ExceptionHandler(Worker process) {
 		// TODO Auto-generated constructor stub
 		m_DefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(this);
@@ -29,6 +29,12 @@ public class LogDogExceptionHandler implements Thread.UncaughtExceptionHandler{
         System.exit(10);
         */
 
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		// TODO Auto-generated method stub
+		super.finalize();
 	}
 
 }

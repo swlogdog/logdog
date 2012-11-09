@@ -1,8 +1,13 @@
-package com.logdog.Appender;
+package com.logdog.Appender.LogCatAppender;
 
 import java.util.Map;
 
+import org.simpleframework.xml.Root;
+
+import com.google.code.microlog4android.format.PatternFormatter;
+import com.logdog.Appender.AbstractAppender;
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.common.Network.Network;
 
 
 /**
@@ -11,22 +16,29 @@ import com.logdog.ErrorReport.ClientReportData;
  * TODO 
  * @author JeongSeungsu
  */
-public class LogCatAppender implements IAppender {
+@Root
+public class LogCatAppender extends AbstractAppender {
 
 	com.google.code.microlog4android.appender.LogCatAppender appender;
-
-	public boolean NetworkProcess(Map<String, String> SendData) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public LogCatAppender(){
+		super();
+	}
+	public LogCatAppender(String AppenderName){
+		super(AppenderName);
 	}
 
 	public boolean ErrorReportProcess(ClientReportData Data) {
 		// TODO Auto-generated method stub
+		
 		return false;
 	}
-	public void InitAppender() {
+	public void InitAppender(Network network) {
 		// TODO Auto-generated method stub
 		appender = new com.google.code.microlog4android.appender.LogCatAppender();
+		PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
+		formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
+		appender.setFormatter(formatter);
 	}
 
 	public com.google.code.microlog4android.appender.Appender GetAppender() {

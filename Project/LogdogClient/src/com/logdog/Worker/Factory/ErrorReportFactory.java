@@ -1,8 +1,9 @@
 package com.logdog.Worker.Factory;
 
-import com.logdog.Appender.AppenderManager;
-import com.logdog.Appender.IAppender;
-import com.logdog.Configuration.LogDogConfiguration;
+import android.content.Context;
+
+import com.logdog.Appender.AbstractAppender;
+import com.logdog.Appender.AppenderConfiguration;
 import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.ErrorReport.Collector.MemoryCollector;
 import com.logdog.ErrorReport.Collector.StackTraceCollector;
@@ -15,15 +16,15 @@ public class ErrorReportFactory {
 	StackTraceCollector		m_StackCollector;
 	SystemInfoCollector		m_SysInfoCollector;
 	
-	LogDogConfiguration			Setting;
+	Context					m_Context;
 	
-	public ErrorReportFactory(LogDogConfiguration setting) {
+	public ErrorReportFactory(Context context) {
 		// TODO Auto-generated constructor stub
-		Setting = setting;
+		m_Context = context;
 		
 		
 		m_StackCollector	= new StackTraceCollector();
-		m_SysInfoCollector	= new SystemInfoCollector(Setting);
+		m_SysInfoCollector	= new SystemInfoCollector(context);
 		//m_MemoryCollector	= new MemoryCollector();
 		
 	}
@@ -36,16 +37,16 @@ public class ErrorReportFactory {
 	 * @author JeongSeungsu
 	 * @return
 	 */
-	public ClientReportData CreateErrorReport(AppenderManager appendermanager,Throwable errorthorw){
+	public ClientReportData CreateErrorReport(AppenderConfiguration appendermanager,Throwable errorthorw){
 		ClientReportData data = new ClientReportData();
 		
-		data.ReportTime = Date.GetDateYYMMDDHHMMSS(Setting.m_Context);
+		data.ReportTime = Date.GetDateYYMMDDHHMMSS(m_Context);
 		
 		m_StackCollector.DoCollectStackTrace(data, errorthorw);
 		m_SysInfoCollector.DoCollectSystemInfo(data);
 		//m_MemoryCollector.DoCollect(data);
 		
-		for(IAppender appender : appendermanager.getAppenderList()){
+		for(AbstractAppender appender : appendermanager.getAppenderList()){
 			appender.ErrorReportProcess(data);
 		}
 		return data; 

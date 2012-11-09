@@ -13,7 +13,7 @@ import android.os.IBinder;
 
 
 
-public class LogDogService extends Service implements Runnable {
+public class NetworkService extends Service implements Runnable {
 
 	private Handler m_Handler;
 	private boolean m_Running;

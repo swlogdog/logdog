@@ -1,21 +1,17 @@
 package com.logdog.Worker;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Context;
-import android.content.Intent;
 
-import com.logdog.Appender.AppenderManager;
-import com.logdog.Appender.IAppender;
-import com.logdog.Configuration.LogDogConfiguration;
-import com.logdog.ErrorReport.ClientReportData;
-
+import com.google.code.microlog4android.Level;
+import com.google.code.microlog4android.format.Formatter;
+import com.logdog.Appender.AbstractAppender;
+import com.logdog.Appender.AppenderConfiguration;
+import com.logdog.Worker.Factory.AppenderFactory;
 import com.logdog.Worker.Factory.ErrorReportFactory;
-import com.logdog.common.File.FileControler;
+import com.logdog.Worker.Factory.LogFactory;
+import com.logdog.Worker.Log.LogManager;
 import com.logdog.common.Network.Network;
-import com.logdog.common.Parser.LogDogJsonParser;
+import com.logdog.common.Parser.LogDogXmlParser;
 
 
 public class Worker {
@@ -32,101 +28,84 @@ public class Worker {
 		return instance;
 	}
 
-	private LogDogConfiguration 	Setting;
-	private ErrorReportFactory		Factory;
 	
-	AppenderManager					appendermanager;
+	private ErrorReportFactory						m_ErrorReportFactory;
 	
-	
-	
-	Map<String,String>	m_SendData;
-	
+	private AppenderConfiguration					m_AppenderConfiguration;
+		
+	private Network 								m_Network;
+	private LogManager								m_LogManager;
 	
 	
 	public Worker() {
 		// TODO Auto-generated constructor stub
-		Setting 		 = new LogDogConfiguration();
-		
-		
-		Factory 		 = new ErrorReportFactory(Setting);
-		m_SendData  	 = new HashMap<String, String>();
 		
 	}
 	
-	public void InitLogDogProcess(Context context,String NetworkXml){
-		Setting.m_Context = context;
+	public void InitLogDogProcess(Context context,String XmlData){
+		
+		
+		m_ErrorReportFactory 	= new ErrorReportFactory(context);
+		
+		m_Network		 		= new Network(context);
+		
+		/*
+		 *여기서부터 Appender처리 
+		 */
+		
+		String Log = LogDogXmlParser.Separate(XmlData, "Log");
+		String Appenders =LogDogXmlParser.Separate(XmlData, "Appenders");
+		
+		m_AppenderConfiguration = AppenderFactory.CreateAppender(Appenders);
+		InitAppenders(m_AppenderConfiguration,m_Network);
+		
+		m_LogManager			= LogFactory.CreateLogManager(Log,m_AppenderConfiguration);
 	}
-	
-	public boolean SendErrorReport(){
-		File[] SendFileList = FileControler.ExternalStorageDirectoryFileList(Setting.GetSaveDirPath());
-		
-		//보낼 파일이 없다면 그냥 성공
-		if(SendFileList.length == 0)
-			return true;
-		
-		//get해와야함..
-		
-		//post로 각각을 보내기 일단 먼저 에러리포트 전송
-		for (File file : SendFileList) {
-			
-			if(file.getName().matches("(?i).*"+ErrorReportFileName+".*")){
-				String Content 		  = FileControler.FiletoString(file);
-				ClientReportData Data = (ClientReportData) LogDogJsonParser.fromJson(Content, ClientReportData.class);
-				File callstackfile 	  = FileControler.GetExternalStorageFile(Setting.GetSaveDirPath(), 
-																			 Data.CallStackFileName);
-				File LogFile 		  = FileControler.GetExternalStorageFile(Setting.GetSaveDirPath(), 
-																			 Data.LogFileName);
-				
-				AllDeleteSendData();
-				AddSendData("JSon/ErrorReport", Content);
-				AddSendData("CallStack", FileControler.FiletoString(callstackfile));
-				AddSendData("Log", FileControler.FiletoString(LogFile));
-				AddSendData("ErrorName", Data.ErrorName);
-				AddSendData("ErrorClassName", Data.ErrorClassName);
-				
-				
-				for(IAppender appender : appendermanager.getAppenderList()){
-					if(!appender.NetworkProcess(GetSendData()))
-						return false;
-				}
-				
-				
-				//ErrorReportData, CallStackFile, LogFile 삭제..
-				file.delete();
-				FileControler.DeleteFile(Setting.GetSaveDirPath(), Data.CallStackFileName);
-				FileControler.DeleteFile(Setting.GetSaveDirPath(), Data.LogFileName);
-				
-			}
+	private void InitAppenders(AppenderConfiguration configuration,Network network){
+		for(AbstractAppender appender : configuration.getAppenderList()){
+			appender.InitAppender(network);
 		}
-		return true;
+	}
+	
+	
+	
+	/**
+	 * Service에서 콜하는 함수...
+	 * @since 2012. 11. 10.오전 1:35:54
+	 * TODO
+	 * @author JeongSeungsu
+	 * @return
+	 */
+	public boolean SendErrorReport(){
+		return m_Network.SendData();
 	}
 	
 	
 	public void CreateErrorReport(Throwable throwadata){
-		ClientReportData data = Factory.CreateErrorReport(appendermanager,throwadata);
-		SaveErrorReport(data);
-		Setting.m_Context.startService(new Intent("LogDogService"));
-		
+		m_ErrorReportFactory.CreateErrorReport(m_AppenderConfiguration,throwadata);
+		m_Network.StartService();
+	}
+
+	public void SetLogLever(Level level){
+		m_LogManager.SetLogLevel(level);
+	}
+	public void PrintLog(Level level,String log){
+		m_LogManager.PrintLog(level, log);
 	}
 	
-	public void SaveErrorReport(ClientReportData data){
-		String ReportJSon = LogDogJsonParser.toJson(data);
-		
-		FileControler.SaveStringtoFile(ReportJSon, Setting.GetSaveDirPath(), data.ReportTime + ErrorReportFileName);
+	public void PrintLog(Level level,Throwable t){
+		m_LogManager.PrintLog(level, t);
+		CreateErrorReport(t);
+	}
+	public void SetFormatter(Formatter formatter){
+		m_LogManager.SetFormatter(formatter);
 	}
 	
-	public LogDogConfiguration GetSetting(){
-		return Setting;
+	public void AddAppender(AbstractAppender appender){
+		m_AppenderConfiguration.AddAppender(appender);
 	}
 	
-	private void AddSendData(String Key,String Data){
-		m_SendData.put(Key, Data);
+	public boolean DeleteAppender(String AppenderName){
+		return m_AppenderConfiguration.DeleteAppender(AppenderName);
 	}
-	private void AllDeleteSendData(){
-		m_SendData.clear();
-	}
-	private Map<String,String> GetSendData(){
-		return m_SendData;
-	}
-	
 }
