@@ -7,6 +7,7 @@ import org.simpleframework.xml.Root;
 
 import com.logdog.Appender.FileAppender.FileAppender;
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.Formatter.IFormatter;
 import com.logdog.common.Network.Network;
 
 
@@ -29,8 +30,8 @@ public class AppEngineAppender extends FileAppender {
 		super();
 	}
 	public AppEngineAppender(String appendername, String savedirname, String logfilename, int readlogline,
-							AppEngineCommunicator communicator){
-		super(appendername, savedirname, logfilename, readlogline);
+							AppEngineCommunicator communicator,IFormatter formatter){
+		super(appendername, savedirname, logfilename, readlogline, formatter);
 		AppComunicator = communicator;
 	}
 

@@ -2,11 +2,13 @@ package com.logdog.Appender.LogCatAppender;
 
 import java.util.Map;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.google.code.microlog4android.format.PatternFormatter;
 import com.logdog.Appender.AbstractAppender;
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.Formatter.IFormatter;
 import com.logdog.common.Network.Network;
 
 
@@ -21,11 +23,15 @@ public class LogCatAppender extends AbstractAppender {
 
 	com.google.code.microlog4android.appender.LogCatAppender appender;
 	
+	@Element
+	IFormatter Formatter;
+	
 	public LogCatAppender(){
 		super();
 	}
-	public LogCatAppender(String AppenderName){
+	public LogCatAppender(String AppenderName,IFormatter formatter){
 		super(AppenderName);
+		Formatter = formatter;
 	}
 
 	public boolean ErrorReportProcess(ClientReportData Data) {
@@ -36,9 +42,9 @@ public class LogCatAppender extends AbstractAppender {
 	public void InitAppender(Network network) {
 		// TODO Auto-generated method stub
 		appender = new com.google.code.microlog4android.appender.LogCatAppender();
-		PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
-		formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
-		appender.setFormatter(formatter);
+		
+		Formatter.InitFormatter();
+		appender.setFormatter(Formatter.GetFormatter());
 	}
 
 	public com.google.code.microlog4android.appender.Appender GetAppender() {

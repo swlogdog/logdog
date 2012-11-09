@@ -15,6 +15,7 @@ import com.logdog.Appender.AppenderConfiguration;
 import com.logdog.Appender.AppEngine.AppEngineAppender;
 import com.logdog.Appender.AppEngine.AppEngineCommunicator;
 import com.logdog.Appender.LogCatAppender.LogCatAppender;
+import com.logdog.Formatter.PatternFormatter;
 import com.logdog.Worker.Log.LogConfiguration;
 import com.logdog.common.File.FileControler;
 import com.logdog.common.Parser.LogDogXmlParser;
@@ -38,8 +39,8 @@ public class MainActivity extends Activity {
         LogDog.LogDoginitialize(getApplicationContext(),"LogDog.xml");
 
  
-       
- /*       LogConfiguration conf = new LogConfiguration();
+       /*
+        LogConfiguration conf = new LogConfiguration();
         
         conf.SetLevel("DEbug");
         
@@ -49,11 +50,13 @@ public class MainActivity extends Activity {
         
         AppenderConfiguration confi = new AppenderConfiguration(); 
         
+        PatternFormatter formatter = new PatternFormatter("   %d{ISO8601}    [%P]  %m  %T  ");
+        formatter.InitFormatter();
         
         AppEngineCommunicator comm = new AppEngineCommunicator("AppEngineComm","URL!~!!~!@");
-        AppEngineAppender AppEngine = new AppEngineAppender("AppEngine","savedir","logfilename",100,comm);
+        AppEngineAppender AppEngine = new AppEngineAppender("AppEngine","savedir","logfilename",100,comm,formatter);
         
-        LogCatAppender logcat = new LogCatAppender("LogCat");
+        LogCatAppender logcat = new LogCatAppender("LogCat",formatter);
         
         confi.AddAppender(AppEngine);
         confi.AddAppender(logcat);

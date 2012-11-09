@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.code.microlog4android.format.PatternFormatter;
 import com.logdog.Appender.AbstractAppender;
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.Formatter.IFormatter;
 import com.logdog.common.File.FileControler;
 import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogJsonParser;
@@ -42,17 +43,20 @@ public class FileAppender extends AbstractAppender{
 	@Element
 	private int							ReadLogLine;
 	
+	@Element
+	IFormatter Formatter;
 	
 	public FileAppender(){
 		super();
 	}
 	
-	public FileAppender(String appendername, String savedirname, String logfilename, int readlogline) {
+	public FileAppender(String appendername, String savedirname, String logfilename, int readlogline , IFormatter formatter) {
 		// TODO Auto-generated constructor stub
 		super(appendername);
 		SaveDirName = savedirname;
 		LogFileName = logfilename;
 		ReadLogLine = readlogline;
+		Formatter	= formatter;
 	}
 	
 	public void InitAppender(Network network) {
@@ -60,9 +64,8 @@ public class FileAppender extends AbstractAppender{
 		appender = new com.google.code.microlog4android.appender.FileAppender();
 		appender.setAppend(true);
 		appender.setFileName(SaveDirName+"/"+LogFileName); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
-		PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
-		formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
-		appender.setFormatter(formatter);
+		Formatter.InitFormatter();
+		appender.setFormatter(Formatter.GetFormatter());
 	}
 	
 	public com.google.code.microlog4android.appender.Appender GetAppender() {

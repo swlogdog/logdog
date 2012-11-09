@@ -1,9 +1,11 @@
 package com.logdog.Appender;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.Formatter.IFormatter;
 import com.logdog.common.Network.Network;
 
 
