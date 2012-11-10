@@ -50,7 +50,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>DashBoardCommu</servlet-name>
-    <url-pattern>/dashboard/*</url-pattern>
+    <url-pattern>/Board/*</url-pattern>
   </servlet-mapping> 
   
   

@@ -23,8 +23,11 @@ public class ReportSummaryUpdaer {
 		List<VersionReportInfo> VSummary=null;
 		
 
-		try{	
-			VSummary = (List<VersionReportInfo>) SearchQuery.execute();
+		try{
+			SearchQuery.setFilter("AppVersion == Aver && OSVersion == Over");
+			SearchQuery.declareParameters("String Aver,String Over");
+			
+			VSummary = (List<VersionReportInfo>) SearchQuery.execute(reportInfo.getAppVersion(),reportInfo.getOSVersion());
 			if(VSummary.size()>0)
 			{
 				VersionReportInfo vSummary = VSummary.get(0);
@@ -59,7 +62,10 @@ public class ReportSummaryUpdaer {
 		
 
 		try{	
-			DSummary = (List<DayReportInfo>) SearchQuery.execute();
+			SearchQuery.setFilter("Year == year && MDay == Timecode");
+			SearchQuery.declareParameters("int year,int Timecode");
+			
+			DSummary = (List<DayReportInfo>) SearchQuery.execute(reportInfo.getYearCode(),reportInfo.getTimeCode());
 			if(DSummary.size()>0)
 			{
 				DayReportInfo dSummary = DSummary.get(0);
@@ -92,7 +98,10 @@ public class ReportSummaryUpdaer {
 		
 
 		try{	
-			CSummary = (List<CountryReportInfo>) SearchQuery.execute();
+			SearchQuery.setFilter("CountryCode ==code");
+			SearchQuery.declareParameters("String code");
+
+			CSummary = (List<CountryReportInfo>) SearchQuery.execute(reportInfo.getCountryName());
 			if(CSummary.size()>0)
 			{
 				CountryReportInfo cSummary = CSummary.get(0);
@@ -116,7 +125,7 @@ public class ReportSummaryUpdaer {
 		return true;
 	}
 	
-	public void ChkAppVersion(String AppV)
+	private void ChkAppVersion(String AppV)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 		
@@ -125,8 +134,11 @@ public class ReportSummaryUpdaer {
 		
 
 		try{	
-			CSummary = (List<AppVesionInfo>) SearchQuery.execute();
-			if(CSummary.size()==0)
+			SearchQuery.setFilter("Version == Aver");
+			SearchQuery.declareParameters("String Aver");
+			
+			CSummary = (List<AppVesionInfo>) SearchQuery.execute(AppV);
+			if(CSummary==null || CSummary.size()==0)
 			{
 				AppVesionInfo cSummary = new AppVesionInfo(AppV);
 				jdoConnector.makePersistent(cSummary);

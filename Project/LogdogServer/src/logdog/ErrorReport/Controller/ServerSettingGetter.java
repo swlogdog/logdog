@@ -35,6 +35,7 @@ public class ServerSettingGetter {
 		catch(Exception e){
 				
 		
+		
 		}
 		finally{
 			SearchQuery.closeAll();

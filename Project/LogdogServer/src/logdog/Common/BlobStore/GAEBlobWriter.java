@@ -55,7 +55,7 @@ public class GAEBlobWriter implements BlobFileWriter{
 		}
 		catch(Exception e)
 		{
-			System.out.print(e.getClass() + "    "+e.getMessage());
+			System.out.print(e.getClass() + "  Blob error  "+e.getMessage());
 		}
 		return blobKey;
 	}

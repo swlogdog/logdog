@@ -70,7 +70,7 @@ public class ErrorReportRegister {
 		}
 		catch(Exception e){
 				
-			System.out.print(e.getClass() + e.getMessage());
+			System.out.print(e.getClass() +"    매칭 에  "+ e.getMessage());
 				
 		}
 		finally{

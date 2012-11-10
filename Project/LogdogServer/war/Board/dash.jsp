@@ -108,60 +108,48 @@ var Request = function() {
               <div class="page-header">
             <h1>Error Info</h1>
            </div>
-         <div class="tabbable tabs-right">   
-           <ul id="myTab" class="nav nav-tabs">
-              <li class="active"><a href="#day" data-toggle="tab">Day</a></li>
-              <li><a href="#month" data-toggle="tab">Month</a></li>
-            </ul>
-           	 <div id="myTabContent" class="tab-content">
-              <div class="tab-pane fade in active" id="day" style="height: 400px">
-<script type='text/javascript'>//<![CDATA[ 
-$(function () { var chart = new Highcharts.Chart({
-        chart: {
-            renderTo: 'day',
-                style: {
-                   	 margin: '0 auto'
-                }
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-          title: {
-            text: 'Day Error Report'
-     
-        },
-        series: [{
-            data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]        
-        }]
-   	 });
-});
-//]]>  </script><p>
+
+              <div id="day" style="height: 400px">
+		<script type='text/javascript'>
+		//<![CDATA[ 
+		           $(function () {
+				var Daychart = new Highcharts.Chart({
+			        chart: {
+			            renderTo: 'day',
+			                style: {
+			                    margin: '0 auto'
+			                },
+							events: {
+								load: function(event) {
+
+								$.getJSON('/Board/summary/Day', function(data) {
+									$.each(data,function(key,value){
+									if('Day'==key)
+									{
+										Daychart.xAxis[0].setCategories(eval(value));
+									}
+									if('ReportRate'==key)
+									{
+										Daychart.addSeries({data: eval(value)});
+									
+									}
+							} );
+						});
+					}
+				}
+
+			        },
+			        title: {
+			            text: 'Date Error Report'
+			     
+			        },
+			     
+			    });
+				
+		           });
+			//]]>  </script>
               </div>
-              <div class="tab-pane fade" id="month" style="height: 400px">
-                <script type='text/javascript'>//<![CDATA[ 
-$(function () { var chart = new Highcharts.Chart({
-        chart: {
-            renderTo: 'month',
-                style: {
-                   	 margin: '0 auto'
-                }
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-          title: {
-            text: 'Month Error Report'
-     
-        },
-        series: [{
-            data: [10, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 1]        
-        }]
-   	 });
-});
-//]]>  </script>
-              </div>
-            </div>
-            </div><!--  Tab End  -->
+             
             
             <div class="row-fluid">
             <div class="span6" id="version" style="height: 400px">

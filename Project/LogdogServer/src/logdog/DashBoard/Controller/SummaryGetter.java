@@ -49,9 +49,7 @@ public class SummaryGetter {
 			DayReport report = new DayReport(); 
 			while ( iterator.hasNext() ){
 				DayReportInfo info = iterator.next();
-				int Month = info.getMDay()/100;
-				int day = info.getMDay()%100;
-				report.AddDay(Month+"/"+day);
+				report.AddDay(info.getMDay());
 				report.AddReportRate(info.getTotalOccurrences());
 			  }
 		 
@@ -96,8 +94,7 @@ public class SummaryGetter {
 				DayReportInfo info = iterator.next();
 				int Month = info.getMDay()/100;
 				int day = info.getMDay()%100;
-				report.AddDay(Month+"/"+day);
-				report.AddReportRate(info.getTotalOccurrences());
+
 			  }
 		 
 			Gson gson = new Gson();

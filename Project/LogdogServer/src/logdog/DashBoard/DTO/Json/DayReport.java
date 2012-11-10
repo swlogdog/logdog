@@ -12,9 +12,12 @@ public class DayReport {
 		ReportRate = new ArrayList<Integer>();
 		
 	}
-	public void AddDay(String DayName)
+	public void AddDay(int Daycode)
 	{
-		Day.add(DayName);
+		int Month=Daycode/100;
+		int Days = Daycode%100;
+		
+		Day.add(Month+" / "+Days);
 	}
 	
 	public void AddReportRate(int rate)

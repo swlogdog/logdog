@@ -44,7 +44,7 @@ public class ErrorTypeClassifier {
 				
 		}
 		catch(Exception e){
-				
+				e.printStackTrace();
 			throw new WebApplicationException(500);
 		}
 		finally{
@@ -75,7 +75,7 @@ public class ErrorTypeClassifier {
 				jdoConnector.makePersistent(eType);
 		}
 		catch(Exception e){
-				
+				e.printStackTrace();
 			return null;
 				
 		}
@@ -111,7 +111,7 @@ public class ErrorTypeClassifier {
 			
 		}
 		catch(Exception e){
-					
+					e.printStackTrace();
 			return false;
 		}
 		finally{
@@ -122,6 +122,14 @@ public class ErrorTypeClassifier {
 		return true;
 	}
 	
+	/**
+	 *	Backend에서 사용하는 
+	 * @since 2012. 11. 10.오전 9:50:51
+	 * TODO
+	 * @author Karuana
+	 * @param errorTypeid
+	 * @return
+	 */
 	public Key UpdateErrorType(ErrorUniqueID errorTypeid)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -137,14 +145,15 @@ public class ErrorTypeClassifier {
 				
 			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
 			SearchQuery.declareParameters("String errorId,String ClassName");
-	
+
 			ErrorTypeResults = (List<ErrorTypeInfo>) 
 								SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname());
+			
 			errType =ErrorTypeResults.get(0);
 			errType.updateError();
 		}
 		catch(Exception e){
-					
+					e.printStackTrace();
 			return null;
 		}
 		finally{
@@ -179,7 +188,7 @@ public class ErrorTypeClassifier {
 		}
 		catch(Exception e){
 				
-		
+			e.printStackTrace();
 		}
 		finally{
 			SearchQuery.closeAll();
@@ -206,7 +215,7 @@ public class ErrorTypeClassifier {
 			eType = jdoConnector.getObjectById(ErrorTypeInfo.class, ErrorKey);
 			}
 		catch(Exception e){
-					
+			e.printStackTrace();
 			return null;
 		}
 		finally{
@@ -244,7 +253,7 @@ public class ErrorTypeClassifier {
 			
 		}
 		catch(Exception e){
-					
+					e.printStackTrace();
 			
 		}
 		finally{
