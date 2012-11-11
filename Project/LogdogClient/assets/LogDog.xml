@@ -1,5 +1,5 @@
 <Log>
-   <Level>info</Level>
+   <Level>debug</Level>
 </Log>
 
 <Appenders>
@@ -10,7 +10,7 @@
             <PatternString>   %d{ISO8601}    [%P]  %m  %T  </PatternString>
          </Formatter>
          <LogFileName>log.txt</LogFileName>
-         <SaveDirName>LogDog</SaveDirName>
+         <SaveDirName>LogDog9</SaveDirName>
          <AppComunicator CommunicatorName="AppEngineComm">
             <URL>http://swlogdog7.appspot.com/logdog/Report/</URL>
          </AppComunicator>

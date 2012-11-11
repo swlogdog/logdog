@@ -121,6 +121,7 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 				AddSendData("Log", FileControler.FiletoString(LogFile));
 				AddSendData("ErrorName", Data.ErrorName);
 				AddSendData("ErrorClassName", Data.ErrorClassName);
+				AddSendData("ErrorLine", String.valueOf(Data.line));
 				
 				
 				if(!SendMessage(GetSendData()))
@@ -160,9 +161,11 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		// TODO Auto-generated method stub
 		String errorname 	  	= SendData.get("ErrorName");
 	    String errorclassname 	= SendData.get("ErrorClassName");
+	    int errorline			= Integer.parseInt(SendData.get("ErrorLine"));
 	    String CallStackString	= SendData.get("CallStack");
 	    String ClientReportJson = SendData.get("JSon/ErrorReport");
 	    String LogData			= SendData.get("Log");
+	    
 	    
 	    //URL에 관한 문자셋으로 변환
 	    String URLerrorname = null;
@@ -175,14 +178,14 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	    }
 	    
 	    //1 현재 에러가 서버에 존재하는지 체크
-	    BooleanResult result = HttpGetExistErrorCheck(URLerrorname,URLerrorclassname);
+	    BooleanResult result = HttpGetExistErrorCheck(URLerrorname, URLerrorclassname, errorline);
 		
 	    if(result == null)
 	    	return false;
 	    
 	    //2 성공시 콜스택과 에러정보를 보낸다.
 	    if(!result.isResult()){
-	    	if(!HttpPostSendNewError(errorname, errorclassname,CallStackString))
+	    	if(!HttpPostSendNewError(errorname, errorclassname, errorline, CallStackString))
 	    		return false;
 	    }
 	    
@@ -209,16 +212,17 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 
 	
 	/**
-	 * 서버에 이 에러가 있나 없나 체크 
-	 * @since 2012. 11. 5.오전 2:23:15
+	 * 서버에 이 에러가 있나 없나 체크
+	 * @since 2012. 11. 12.오전 1:19:08
 	 * TODO
 	 * @author JeongSeungsu
 	 * @param ErrorName
 	 * @param ClassName
+	 * @param errorline
 	 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
 	 */
-	private BooleanResult HttpGetExistErrorCheck(String ErrorName,String ClassName) {
-		return HttpGetSend(URL + ErrorCheckUrl + "/" + ErrorName + "/" + ClassName);
+	private BooleanResult HttpGetExistErrorCheck(String ErrorName,String ClassName, int errorline) {
+		return HttpGetSend(URL + ErrorCheckUrl + "/" + ErrorName + "/" + ClassName+ "/" + String.valueOf(errorline));
 	}
 
 	/**
@@ -231,17 +235,19 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	private BooleanResult HttpGetLogSendCheck(){
 		return HttpGetSend(URL + LogSettingUrl);
 	}
+
 	/**
 	 * 새로운 에러면 서버로 전송
-	 * @since 2012. 11. 5.오전 3:10:59
+	 * @since 2012. 11. 12.오전 1:19:33
 	 * TODO
 	 * @author JeongSeungsu
 	 * @param ErrorName
 	 * @param ClassName
+	 * @param errorline
 	 * @param CallStack
 	 * @return 성공하면 True 실패면 False;
 	 */
-	private boolean HttpPostSendNewError(String ErrorName, String ClassName,String CallStack) {
+	private boolean HttpPostSendNewError(String ErrorName, String ClassName,int errorline, String CallStack) {
 		
 		ArrayList<String> callstackarray = new ArrayList<String>();
 		
@@ -251,7 +257,7 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		for (String s : StrArray) {
 			callstackarray.add(s);
 		}
-		CallStackInfo info = new CallStackInfo(ErrorName, ClassName, callstackarray);
+		CallStackInfo info = new CallStackInfo(ErrorName, ClassName, errorline, callstackarray);
 		
 		String CallStackInfoJson = LogDogJsonParser.toJson(info); 
 		String SendUrl = URL + ErrorCheckUrl;
@@ -295,7 +301,7 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		 
 		try {
 		HttpClient client 	= new DefaultHttpClient(); 
-		HttpPut Put 		= new HttpPut(URL + SendUserInfoUrl+ "/key="+Key);
+		HttpPut Put 		= new HttpPut(URL + SendUserInfoUrl+ "/Key="+Key);
 		
 		StringEntity input = new StringEntity(LogData);
 		    input.setContentType("text/plain");

@@ -10,21 +10,30 @@ import java.util.ArrayList;
  */
 public class CallStackInfo {
 
-	
+
 	private String name;
 
 	private String classname;
 
+	private int Line;
+	
+
 	private ArrayList<String> Callstack;
 	
 	public CallStackInfo(){}
-	public CallStackInfo(String Name, String ClassName, ArrayList<String> data) {
+	
+	public CallStackInfo(String Name, String ClassName, int line, ArrayList<String> data) {
 		super();
 		this.name = Name;
 		this.classname = ClassName;
+		Line = line;
 		Callstack = data;
 	}
 	
+	
+	public int getLine() {
+		return Line;
+	}
 	public String getName() {
 		return name;
 	}
@@ -36,5 +45,4 @@ public class CallStackInfo {
 	public ArrayList<String> getCallstack() {
 		return Callstack;
 	}
-
 }

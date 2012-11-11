@@ -34,12 +34,19 @@ public class FileAppender extends AbstractAppender{
 	
 	private final String 				ErrorReportFileName = "ErrorReport.txt";
 	
+	private final String				SendLogFileName 	= "SendLogFile.txt";
+	
 	@Element
 	private String						SaveDirName;
 	
 	@Element
 	private String 						LogFileName;
 	
+	/**
+	 * 보낼 로그 라인수
+	 */
+	@Element
+	private int							ReadLogLine;
 	
 	
 	@Element
@@ -49,18 +56,21 @@ public class FileAppender extends AbstractAppender{
 		super();
 	}
 	
-	public FileAppender(String appendername, String savedirname, String logfilename, IFormatter formatter) {
+	public FileAppender(String appendername, String savedirname, String logfilename, int realdline, IFormatter formatter) {
 		// TODO Auto-generated constructor stub
 		super(appendername);
 		SaveDirName = savedirname;
 		LogFileName = logfilename;
 		Formatter	= formatter;
+		ReadLogLine = realdline;
 	}
 	
 	public void InitAppender(Network network) {
 		
 		appender = new com.google.code.microlog4android.appender.FileAppender();
 		appender.setAppend(true);
+		if(!FileControler.ExistsExternalStorageFile(SaveDirName, LogFileName))
+			FileControler.SaveStringtoFile("", SaveDirName, LogFileName);
 		appender.setFileName(SaveDirName+"/"+LogFileName); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 		Formatter.InitFormatter();
 		appender.setFormatter(Formatter.GetFormatter());
@@ -78,6 +88,34 @@ public class FileAppender extends AbstractAppender{
 
 			Data.CallStackFileName = FileControler.SaveStringtoFile(Data.CallStackFileName, 
 					SaveDirName, Data.ReportTime + StackTraceName);
+			
+
+			final int readline = ReadLogLine;
+
+			String totallog = FileControler.FiletoString(SaveDirName,LogFileName);
+			if(totallog == "")
+			{
+				Log.e("LOGDOG","Fail Read Log File");
+				return false;
+			}
+			
+			String[] StrArray;
+			StrArray = totallog.split("\\n");
+
+			int start = StrArray.length - readline;
+			if(start < 0)
+				start = 0;
+			
+			StringBuilder SendlogBuild = new StringBuilder(); 
+			for(int i = start; i < StrArray.length; i++){
+				SendlogBuild.append(StrArray[i]).append("\n");
+			}
+			String SendLog = SendlogBuild.toString();
+			
+			Data.LogFileName = FileControler.SaveStringtoFile(SendLog, SaveDirName , 
+																	Data.ReportTime+SendLogFileName);
+			
+			
 		
 			String ReportJSon = LogDogJsonParser.toJson(Data);
 			
@@ -109,7 +147,9 @@ public class FileAppender extends AbstractAppender{
 	public String GetLogFileName(){
 		return LogFileName;
 	}
-
+	public int GetRealLogLine(){
+		return ReadLogLine;
+	}
 	
 
 }
