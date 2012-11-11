@@ -10,12 +10,15 @@ public class TypeMatchingInfo {
 	@XmlAttribute
 	private String classname;
 	@XmlAttribute
+	private int line;
+	@XmlAttribute
 	private String ReportKey;
 	public TypeMatchingInfo() {	}
-	public TypeMatchingInfo(String name, String classname, String reportKey) {
+	public TypeMatchingInfo(String name, String classname, int cline, String reportKey) {
 		super();
 		this.name = name;
 		this.classname = classname;
+		this.line=cline;
 		ReportKey = reportKey;
 	}
 	public String getName() {
@@ -26,6 +29,9 @@ public class TypeMatchingInfo {
 	}
 	public String getReportKey() {
 		return ReportKey;
+	}
+	public int getLine() {
+		return line;
 	}
 	
 	

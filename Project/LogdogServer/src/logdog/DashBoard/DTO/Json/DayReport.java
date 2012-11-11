@@ -2,6 +2,8 @@ package logdog.DashBoard.DTO.Json;
 
 import java.util.ArrayList;
 
+import logdog.Common.TimeUtil;
+
 public class DayReport {
 	private ArrayList<String> Day;
 	private ArrayList<Integer> ReportRate;
@@ -24,4 +26,10 @@ public class DayReport {
 	{
 		ReportRate.add(rate);
 	}
+	
+	public int getSize()
+	{
+		return ReportRate.size();
+	}
+
 }

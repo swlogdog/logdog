@@ -21,7 +21,8 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="/assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
@@ -52,8 +53,7 @@ var Request = function() {
      <%
      UserService userService = UserServiceFactory.getUserService();
      if (!userService.isUserLoggedIn()) {
-  
-  response.sendRedirect(userService.createLoginURL("../Setting/UserSetting/LogIn"));
+  		response.sendRedirect(userService.createLoginURL("../Setting/UserSetting/LogIn"));
     } 
    %>
   </head>
@@ -75,7 +75,7 @@ var Request = function() {
             <p class="navbar-text pull-right">
              	 <a href="<%=userService.createLogoutURL("../index.jsp")%>" class="navbar-link">logout</a></p>
      	       <ul class="nav">
-        	    	 <li class="active"><a href="#">DashBoard</a></li>
+        	    	 <li class="active"><a href="/board/dash.jsp">DashBoard</a></li>
         	    	 <li><a href="#">Setting</a></li>
         	    	 <li><a href="#">About</a></li>
            	   </ul>
@@ -83,24 +83,23 @@ var Request = function() {
         </div>
       </div>
     </div>
-    
 
-    
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>DashBoard!!</h1>
-    <p class="lead">LogDog Information and Setting for Starter</p>
+    	<h1>DashBoard!!</h1>
+    	<p class="lead">LogDog Information and Setting for Starter</p>
  	 </div>
 </header>
+
 <div class="container-fluid">
     <!-- Docs nav
     ================================================== -->
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#intro"><i class="icon-chevron-right"></i>Introduction</a></li>
-          <li><a href="#license"><i class="icon-chevron-right"></i>License</a></li>
-          <li><a href="#setting"><i class="icon-chevron-right"></i>System Setting</a></li>
+          <li id="Temp"><a href="#intro"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
+          <li><a href="#license"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
+          <li><a href="#setting"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
         </ul>
       </div>
 <!--  본 -->
@@ -112,8 +111,10 @@ var Request = function() {
               <div id="day" style="height: 400px">
 		<script type='text/javascript'>
 		//<![CDATA[ 
-		           $(function () {
-				var Daychart = new Highcharts.Chart({
+		      
+		      $(function () {
+				 var categori;
+		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
 			            renderTo: 'day',
 			                style: {
@@ -127,23 +128,44 @@ var Request = function() {
 									if('Day'==key)
 									{
 										Daychart.xAxis[0].setCategories(eval(value));
+										categori=eval(value);
+									
 									}
 									if('ReportRate'==key)
 									{
-										Daychart.addSeries({data: eval(value)});
+										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
 									
 									}
-							} );
-						});
-					}
-				}
+									} );
+									});
+								}
+							}
 
+			        },
+			        yAxis: {
+		                min: 0,
+		                title: {
+		                    text: 'Error Rate'
+		                }
 			        },
 			        title: {
 			            text: 'Date Error Report'
 			     
 			        },
-			     
+			        plotOptions: {
+			            series: {
+			                cursor: 'pointer',
+			                events: {
+			                    click: function(event) {
+			            			var nameV = categori[event.point.x];
+			            		
+			                    	var loca = nameV.replace(' / ','-');
+			                
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
+			                    }
+			                }
+			            }
+			        }
 			    });
 				
 		           });
@@ -153,122 +175,147 @@ var Request = function() {
             
             <div class="row-fluid">
             <div class="span6" id="version" style="height: 400px">
-<script type='text/javascript'>
-//<![CDATA[ 
+			<script type='text/javascript'>
+				//<![CDATA[ 
 
-$(function () {
-    var chart= new Highcharts.Chart({
-            chart: {
-                renderTo: 'version',
-                type: 'column'
-            },
-            title: {
-                text: 'Version Error Rate'
-            },
-            xAxis: {
-                categories: ['App 1.0', 'App 2.0', 'App 3.0', 'App 4.0', 'App 5.0']//APP 버 
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'App Version Error Rate'
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                    }
-                }
-            },
-            legend: {
-                align: 'right',
-                x: -100,
-                verticalAlign: 'top',
-                y: 20,
-                floating: true,
-                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
-            tooltip: {
-                formatter: function() {
-                    return '<b>'+ this.x +'</b><br/>'+
-                        this.series.name +': '+ this.y +'<br/>'+
-                        'Total: '+ this.point.stackTotal;
-                }
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true,
-                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-                    }
-                }
-            },
-            series: [{
-                name: 'OS 2.0',
-                data: [5, 3, 4, 7, 2]
-            }, {
-                name: 'OS 3.0',
-                data: [2, 2, 3, 2, 1]
-            }, {
-                name: 'OS 4.1',
-                data: [3, 4, 4, 2, 5]
-            }]
-    });
-   
-});
-//]]> 
-</script>
+				$(function () {
+					var AppVer;
+					var OSVer;
+    				var chart= new Highcharts.Chart({
+           	 			chart: {
+                			renderTo: 'version',
+                			type: 'column',
+							events: {
+								load: function(event) {
+									$.getJSON('/Board/summary/Version', function(data) {
+										$.each(data,function(key,value){
+											if('AppVersions'==key)
+											{
+												chart.xAxis[0].setCategories(eval(value));
+												AppVer = eval(value);
+											}
+											if('OSErrors'==key)
+											{
+									
+												var i = 0;
+									
+												for(i=0;i<value.length;i++)
+													chart.addSeries(eval(value)[i]);
+								
+											}
+										} );
+									});
+								}	
+							}
+            			},
+          		  		title: {
+              				  text: 'Version Error Rate'
+           			 	},
+            			yAxis: {
+                			min: 0,
+                			title: {
+                    			text: 'App Version Error Rate'
+                			},
+                			stackLabels: {
+                    			enabled: true,
+                    			style: {
+                        			fontWeight: 'bold',
+                        			color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    			}
+                			}
+            			},
+            			legend: {
+               				 align: 'right',
+                			x: -100,
+                			verticalAlign: 'top',
+                			y: 20,
+                			floating: true,
+               				backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColorSolid) || 'white',
+                			borderColor: '#CCC',
+                			borderWidth: 1,
+                			shadow: false
+            			},
+            			tooltip: {
+              				  formatter: function() {
+                    				return '<b>'+ this.x +'</b><br/>'+
+                        			this.series.name +': '+ this.y +'<br/>'+
+                        			'Total: '+ this.point.stackTotal;
+                				}
+			            },
+        			    plotOptions: {
+                			column: {
+                			    stacking: 'normal',
+                   				 dataLabels: {
+                        			enabled: true,
+                    			    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+                   				 }
+			                },
+	    			        series: {
+	                			cursor: 'pointer',
+	                			events: {
+	                    			click: function(event) {
+	                    				
+	                    				location.href='/Report/VersionRateListView.html?AppVer='+AppVer[event.point.x]+'&OSVer='+this.name;
+	                    				
+	                		 	  	 }
+	               		 		}	
+	         		  	 	}
+            			}
+				    });
+		});//]]> 
+				</script>
             </div><!--/span-->
             <div class="span6"  id="classError" style="height: 400px">
-<script type='text/javascript'>
-//<![CDATA[ 
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'classError',
-            	   plotBackgroundColor: null,
-              plotBorderWidth: null,
-                plotShadow: false
-           	 },
-            title: {
-                text: 'Class Error Report Rate'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-                       	 }
-                   	 }
-             	   }
-         	  	 },
-           	 series: [{
-              	 type: 'pie',
-           	     name: 'Browser share',
-           	     data: [
-                    ['Firefox',   45.0],
-                    ['IE',       26.8],
-                   	 ['Safari',    8.5],
-                    ['Opera',     6.2],
-                    ['Others',   0.7]
-                ]
-           	 }]
-        });
-   	 });
-});
-//]]> </script>
+				<script type='text/javascript'>
+				//<![CDATA[ 
+					$(function () {
+	   				var chart;
+     			   	var ClassName;
+	   				chart = new Highcharts.Chart({
+            			chart: {
+               				renderTo: 'classError',
+            	 	  		plotBackgroundColor: null,
+             			 	plotBorderWidth: null,
+                			plotShadow: false,
+                			events: {
+								load: function(event) {
+
+								$.getJSON('/Board/summary/Class', function(data) {
+								
+									$.each(data,function(key,value){
+										
+									if('ClassErrors'==key)
+									{
+										chart.addSeries({
+				              				 type: 'pie',
+				            	     			name: 'Error Count', data: eval(value)});
+										ClassName=eval(value);
+										}
+								
+									} );
+									});
+								}
+							}
+
+           	 			},
+            			title: {
+                			text: 'Class Error Report Rate'
+            			},
+        			    plotOptions: {
+	    			        series: {
+	                			cursor: 'pointer',
+	                			events: {
+	                    			click: function(event) {
+	                    				
+	                    				location.href='/Report/ClassRateListView.html?ClassName='+ClassName[event.point.x][0];
+	                    				
+	                		 	  	 }
+	               		 		}	
+	         		  	 	}
+            			}
+        			});
+   			});
+			//]]> </script>
    
             </div><!--/span-->
             </div>

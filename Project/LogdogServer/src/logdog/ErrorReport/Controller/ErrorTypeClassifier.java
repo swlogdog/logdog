@@ -36,10 +36,10 @@ public class ErrorTypeClassifier {
 		boolean isError=false;
 
 		try{	
-			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
-			SearchQuery.declareParameters("String errorId,String ClassName");
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName && codeLine == line");
+			SearchQuery.declareParameters("String errorId,String ClassName, int line");
 	
-			ErrorTypeResults = (List<ErrorTypeInfo>) SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname());
+			ErrorTypeResults = (List<ErrorTypeInfo>) SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname(),errorTypeid.getLine());
 			isError = (ErrorTypeResults.size()==0) ? false: true; 
 				
 		}
@@ -98,11 +98,12 @@ public class ErrorTypeClassifier {
 	
 
 		try{		
-			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
-			SearchQuery.declareParameters("String errorId,String ClassName");
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName && codeLine == line");
+			SearchQuery.declareParameters("String errorId,String ClassName, int line");
+	
 	
 			ErrorTypeResults = (List<ErrorTypeInfo>) 
-								SearchQuery.execute(stackInfo.getName(), stackInfo.getClassname());
+								SearchQuery.execute(stackInfo.getName(), stackInfo.getClassname(),stackInfo.getLine());
 		
 			if(ErrorTypeResults.size()>0)
 			{
@@ -143,11 +144,11 @@ public class ErrorTypeClassifier {
 		try{
 			
 				
-			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
-			SearchQuery.declareParameters("String errorId,String ClassName");
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName && codeLine == line");
+			SearchQuery.declareParameters("String errorId,String ClassName, int line");
 
 			ErrorTypeResults = (List<ErrorTypeInfo>) 
-								SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname());
+								SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname(),errorTypeid.getLine());
 			
 			errType =ErrorTypeResults.get(0);
 			errType.updateError();
@@ -178,12 +179,11 @@ public class ErrorTypeClassifier {
 		try{
 		
 			
-			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
-			SearchQuery.declareParameters("String errorId,String ClassName");
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName && codeLine == line");
+			SearchQuery.declareParameters("String errorId,String ClassName, int line");
 	
 			ErrorTypeResults = (List<ErrorTypeInfo>) 
-								SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname());
-
+					SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname(),errorTypeid.getLine());
 				
 		}
 		catch(Exception e){
@@ -240,11 +240,11 @@ public class ErrorTypeClassifier {
 		Key ErrorKey=null;
 
 		try{		
-			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName");
-			SearchQuery.declareParameters("String errorId,String ClassName");
+			SearchQuery.setFilter("ErrorName == errorId && OccurrenceClass == ClassName && codeLine == line");
+			SearchQuery.declareParameters("String errorId,String ClassName, int line");
 	
 			ErrorTypeResults = (List<ErrorTypeInfo>) 
-								SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname());
+					SearchQuery.execute(errorTypeid.getName(), errorTypeid.getClassname(),errorTypeid.getLine());
 		
 			if(ErrorTypeResults.size()>0)
 			{

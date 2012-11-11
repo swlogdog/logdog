@@ -31,6 +31,11 @@ public class ClientReportData {
 		@XmlAttribute
 		public String ErrorClassName;
 		/**
+		 * Error Code Line 
+		 */
+		@XmlAttribute
+		public int line;
+		/**
 		* �� ����
 		*/
 		@XmlAttribute

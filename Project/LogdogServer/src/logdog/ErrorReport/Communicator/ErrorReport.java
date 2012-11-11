@@ -45,10 +45,11 @@ public class ErrorReport {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/ErrorType/{errName}/{className}")
+	@Path("/ErrorType/{errName}/{className}/{line}")
 	public String IsErrorType(
 			@PathParam("errName") final String errName,
-			@PathParam("className") final String ClassName
+			@PathParam("className") final String ClassName,
+			@PathParam("line") final String cLine
 			)
 	{	  
 		System.out.print("왔다 ㅇ");
@@ -59,14 +60,12 @@ public class ErrorReport {
 			
 		String Name = URLDecoder.decode(errName,"UTF-8"); 
 		String cName = URLDecoder.decode(ClassName,"UTF-8"); 
-		
-		ErrorUniqueID errType = new ErrorUniqueID(Name,cName);
-		
+		int line = new Integer(URLDecoder.decode(cLine,"UTF-8")); 
+		ErrorUniqueID errType = new ErrorUniqueID(Name,cName,line);
+		System.out.print(line);
 		ErrorTypeClassifier eTypeClassifier = new ErrorTypeClassifier();
 		isType.setResult(eTypeClassifier.IsErrorType(errType));
 	
-		
-		System.out.print(isType.isResult());
 		}catch(Exception e)
 		{
 			throw new WebApplicationException(500);
@@ -100,7 +99,7 @@ public class ErrorReport {
 		String reportKey_str = KeyFactory.keyToString(reportKey);
 		
 		Gson gson = new Gson();
-		TypeMatchingInfo matchingInfo= new TypeMatchingInfo(userInfo.ErrorName,userInfo.ErrorClassName,reportKey_str);
+		TypeMatchingInfo matchingInfo= new TypeMatchingInfo(userInfo.ErrorName,userInfo.ErrorClassName,userInfo.line,reportKey_str);
 
 		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
 		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/TypeMatching", Method.POST, gson.toJson(matchingInfo));

@@ -6,10 +6,11 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import logdog.Common.DataStore.PMF;
-import logdog.DashBoard.DAO.CountryReportInfo;
-import logdog.DashBoard.DAO.DayReportInfo;
-import logdog.DashBoard.DAO.VersionReportInfo;
 import logdog.ErrorReport.DAO.AppVesionInfo;
+import logdog.ErrorReport.DAO.VersionReportInfo;
+import logdog.ErrorReport.DAO.Summary.ClassErrorInfo;
+import logdog.ErrorReport.DAO.Summary.CountryReportInfo;
+import logdog.ErrorReport.DAO.Summary.DayReportInfo;
 import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 public class ReportSummaryUpdaer {
@@ -156,10 +157,47 @@ public class ReportSummaryUpdaer {
 
 	}
 	
-	public void UpdatedReportError(UserSummaryInfo reportInfo)
+	private boolean UpdateClassError(String className)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		Query SearchQuery = jdoConnector.newQuery(ClassErrorInfo.class);
+		List<ClassErrorInfo> CSummary=null;
+		
+
+		try{	
+			SearchQuery.setFilter("OccurrenceClass == classname");
+			SearchQuery.declareParameters("String classname");
+
+			CSummary = (List<ClassErrorInfo>) SearchQuery.execute(className);
+			if(CSummary.size()>0)
+			{
+				ClassErrorInfo cSummary = CSummary.get(0);
+				cSummary.UpdatedError();			
+			}
+			else
+			{
+				ClassErrorInfo cSummary = new ClassErrorInfo(className);
+				jdoConnector.makePersistent(cSummary);
+			}
+		}
+		catch(Exception e){
+				
+			e.printStackTrace();
+			return false;
+		}
+		finally{
+			SearchQuery.closeAll();
+			jdoConnector.close();
+		}
+		return true;
+	}
+	
+	public void UpdatedReportError(UserSummaryInfo reportInfo, String className)
 	{
 		UpdateVersionError(reportInfo);
 		UpdateDayReportInfo(reportInfo);
 		UpdateCountryReportInfo(reportInfo);
+		UpdateClassError(className);
 	}
 }

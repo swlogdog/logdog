@@ -40,7 +40,7 @@ public class BackendWorkingSet {
 	public Response RegistErrorType(CallStackInfo callstack) {
 		System.out.println("에러타입 백엔드 등");
 		ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
-		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
+		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname(),callstack.getLine());
 		if(!errClassifier.IsErrorType(uid))
 		{
 			errClassifier.InsertErrorType(uid);		
@@ -60,7 +60,7 @@ public class BackendWorkingSet {
 		System.out.println("타입 매칭 시작");
 		
 		
-		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname());
+		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname(),matchingdata.getLine());
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
 		
@@ -69,7 +69,7 @@ public class BackendWorkingSet {
 		UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
 		
 		if(Temp != null)
-			reporter.UpdatedReportError(Temp);
+			reporter.UpdatedReportError(Temp,matchingdata.getClassname());
 		else
 			return Response.status(400).entity("Matching Error").build();
 	
