@@ -66,16 +66,6 @@ public class Network {
 	}
 	
 	/**
-	 * 스타트를 돌려서 따로 전송하기 위한 로직 Process에서 처리 된다.
-	 * @since 2012. 11. 11.오후 11:56:16
-	 * TODO
-	 * @author JeongSeungsu
-	 */
-	public void StartService(){
-		m_Context.startService(new Intent("LogDogService"));
-	}
-
-	/**
 	 * 네트워크 상태를 얻어오기
 	 * @since 2012. 11. 11.오후 11:56:33
 	 * TODO

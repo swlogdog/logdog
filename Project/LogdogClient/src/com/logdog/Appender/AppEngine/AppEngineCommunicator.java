@@ -18,7 +18,8 @@ import org.apache.http.util.EntityUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import com.logdog.Appender.AbstractAppender;
+import android.util.Log;
+
 import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.common.File.FileControler;
 import com.logdog.common.Network.AbstractCommunicator;
@@ -57,8 +58,7 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	
 	private final String LogSettingUrl = "LogSetting";
 	
-	
-			
+
 	public AppEngineCommunicator() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -94,7 +94,9 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	public void SetURL(String url){
 		URL = url;
 	}
-	public boolean SendData() {
+	public synchronized boolean SendData() {
+		
+		Log.e("Service","SEndData");
 		// TODO Auto-generated method stub
 		File[] SendFileList = FileControler.ExternalStorageDirectoryFileList(SaveDir);
 		
@@ -110,34 +112,33 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 			if(file.getName().matches("(?i).*"+ErrorReportFileName+".*")){
 				String Content 		  = FileControler.FiletoString(file);
 				ClientReportData Data = (ClientReportData) LogDogJsonParser.fromJson(Content, ClientReportData.class);
-				File callstackfile 	  = FileControler.GetExternalStorageFile(SaveDir, 
-																			 Data.CallStackFileName);
-				File LogFile 		  = FileControler.GetExternalStorageFile(SaveDir, 
-																			 Data.LogFileName);
-				
-				AllDeleteSendData();
-				AddSendData("JSon/ErrorReport", Content);
-				AddSendData("CallStack", FileControler.FiletoString(callstackfile));
-				AddSendData("Log", FileControler.FiletoString(LogFile));
-				AddSendData("ErrorName", Data.ErrorName);
-				AddSendData("ErrorClassName", Data.ErrorClassName);
-				AddSendData("ErrorLine", String.valueOf(Data.line));
-				
-				
-				if(!SendMessage(GetSendData()))
-						return false;
-				
-				
-				
-				//ErrorReportData, CallStackFile, LogFile 삭제..
-				file.delete();
-				FileControler.DeleteFile(SaveDir, Data.CallStackFileName);
-				FileControler.DeleteFile(SaveDir, Data.LogFileName);
-				
+				EmergencySendData(Data);
 			}
 		}
+		Log.e("Service","SendDataEnd");
 		return true;
 	}
+	
+	public void EmergencySendData(ClientReportData data) {
+		
+		String Content 		  = LogDogJsonParser.toJson(data);
+		File callstackfile 	  = FileControler.GetExternalStorageFile(SaveDir, 
+																	 data.CallStackFileName);
+		File LogFile 		  = FileControler.GetExternalStorageFile(SaveDir, 
+																	  data.LogFileName);
+		
+		AllDeleteSendData();
+		AddSendData("JSon/ErrorReport", Content);
+		AddSendData("CallStack", FileControler.FiletoString(callstackfile));
+		AddSendData("Log", FileControler.FiletoString(LogFile));
+		AddSendData("ErrorName", data.ErrorName);
+		AddSendData("ErrorClassName", data.ErrorClassName);
+		AddSendData("ErrorLine", String.valueOf(data.line));
+
+		SendMessage(GetSendData());
+		
+	}
+	
 	private void AddSendData(String Key,String Data){
 		m_SendData.put(Key, Data);
 	}
@@ -158,245 +159,285 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	 * @return
 	 */
 	public boolean SendMessage(Map<String, String> SendData) {
-		// TODO Auto-generated method stub
-		String errorname 	  	= SendData.get("ErrorName");
-	    String errorclassname 	= SendData.get("ErrorClassName");
-	    int errorline			= Integer.parseInt(SendData.get("ErrorLine"));
-	    String CallStackString	= SendData.get("CallStack");
-	    String ClientReportJson = SendData.get("JSon/ErrorReport");
-	    String LogData			= SendData.get("Log");
-	    
-	    
-	    //URL에 관한 문자셋으로 변환
-	    String URLerrorname = null;
-	    String URLerrorclassname = null;
-	    try{
-	    	URLerrorname = URLEncoder.encode(errorname,"UTF-8");
-	    	URLerrorclassname = URLEncoder.encode(errorclassname,"UTF-8");
-	    }catch(Exception e){
-	    	e.printStackTrace();
-	    }
-	    
-	    //1 현재 에러가 서버에 존재하는지 체크
-	    BooleanResult result = HttpGetExistErrorCheck(URLerrorname, URLerrorclassname, errorline);
-		
-	    if(result == null)
-	    	return false;
-	    
-	    //2 성공시 콜스택과 에러정보를 보낸다.
-	    if(!result.isResult()){
-	    	if(!HttpPostSendNewError(errorname, errorclassname, errorline, CallStackString))
-	    		return false;
-	    }
-	    
-	    //2.1 유져 정보를 보낸다. 여기서 키값을 가져옴
-	    String LogKey = HttpPostSendUserInfo(ClientReportJson);
-	    
-	    if(LogKey == null)
-	    	return false;
-	    
-	    //3 서버에 로그를 전송할지 안할지 서버 셋팅에 따른 체크
-	    BooleanResult Logresult = HttpGetLogSendCheck(); 
-	    
-	    if(Logresult == null)
-	    	return false;
-	    
-	    //3.1 만약 서버에서 로그 받는걸 허용한다면 로그 전송 
-	    if(Logresult.isResult()){
-	    	if(!HttpPutSendLog(LogData, LogKey))
-	    		return false; 
-	    }
-	    
-	    return true;
-	}
 
-	
-	/**
-	 * 서버에 이 에러가 있나 없나 체크
-	 * @since 2012. 11. 12.오전 1:19:08
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param ErrorName
-	 * @param ClassName
-	 * @param errorline
-	 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
-	 */
-	private BooleanResult HttpGetExistErrorCheck(String ErrorName,String ClassName, int errorline) {
-		return HttpGetSend(URL + ErrorCheckUrl + "/" + ErrorName + "/" + ClassName+ "/" + String.valueOf(errorline));
+		HTTPSender Sender = new HTTPSender(SendData);
+		Sender.start();
+		return true;
+		
 	}
 
 	/**
-	 * 로그값을 받냐 안받냐 
-	 * @since 2012. 11. 5.오전 3:46:06
+	 * HTTPSenderThread 쓰레드를 이용해서 보낸다!
+	 * @since 2012. 11. 12.오전 5:31:53
 	 * TODO
 	 * @author JeongSeungsu
-	 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
 	 */
-	private BooleanResult HttpGetLogSendCheck(){
-		return HttpGetSend(URL + LogSettingUrl);
-	}
+	public class HTTPSender extends Thread {
 
-	/**
-	 * 새로운 에러면 서버로 전송
-	 * @since 2012. 11. 12.오전 1:19:33
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param ErrorName
-	 * @param ClassName
-	 * @param errorline
-	 * @param CallStack
-	 * @return 성공하면 True 실패면 False;
-	 */
-	private boolean HttpPostSendNewError(String ErrorName, String ClassName,int errorline, String CallStack) {
-		
-		ArrayList<String> callstackarray = new ArrayList<String>();
-		
-		String[] StrArray;
-		StrArray = CallStack.split("\n");
+		private Map<String, String> SendData;
 
-		for (String s : StrArray) {
-			callstackarray.add(s);
+		public HTTPSender(Map<String, String> senddata) {
+			// TODO Auto-generated constructor stub
+			SendData = senddata;
 		}
-		CallStackInfo info = new CallStackInfo(ErrorName, ClassName, errorline, callstackarray);
-		
-		String CallStackInfoJson = LogDogJsonParser.toJson(info); 
-		String SendUrl = URL + ErrorCheckUrl;
-		
-		String Response = HttpPostSendJson(SendUrl,CallStackInfoJson);
-		
-		if(Response == null)
-			return false;
-				
-	
-		return true;
-	}
-	/**
-	 * ClientErrorReport전송
-	 * @since 2012. 11. 5.오전 3:34:51
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param ClientReportDataJson
-	 * @return 실패시 null값 리턴 성공시 키값 가져옴
-	 */
-	private String HttpPostSendUserInfo(String ClientReportDataJson) {
-		String SendUrl = URL +SendUserInfoUrl;
-		String Response = HttpPostSendJson(SendUrl,ClientReportDataJson);
-		
-		if(Response == null)
-			return null;
-			
-		return Response;
-	}
-	
-	/**
-	 * 로그 전송 
-	 * @since 2012. 11. 5.오전 4:01:17
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param LogData
-	 * @param Key
-	 * @return 
-	 */
-	private boolean HttpPutSendLog(String LogData,String Key){
-		 
-		try {
-		HttpClient client 	= new DefaultHttpClient(); 
-		HttpPut Put 		= new HttpPut(URL + SendUserInfoUrl+ "/Key="+Key);
-		
-		StringEntity input = new StringEntity(LogData);
-		    input.setContentType("text/plain");
-		
-		Put.setEntity(input); 
-		
-		HttpResponse responsePut = client.execute(Put);
-		
-		if(!HttpSuccessResponsCode(responsePut))
-			return false;
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		return true;
-	}
-	
-	/**
-	 * 서버에 Get해서 URL에따라 셋팅값을 가져옴 
-	 * @since 2012. 11. 5.오전 3:41:35
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param Url 가져올 URL
-	 * @return BooleanResult => 값에 따라 설정, null = 완전 실패 
-	 */
-	private BooleanResult HttpGetSend(String Url){
-		try {
-			HttpClient client = new DefaultHttpClient();
-			
-			HttpGet get = new HttpGet(Url);
-			HttpResponse responseGet = client.execute(get);
-			HttpEntity resEntityGet = responseGet.getEntity();
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+
+			boolean fail = true;
+
+			String errorname = SendData.get("ErrorName");
+			String errorclassname = SendData.get("ErrorClassName");
+			int errorline = Integer.parseInt(SendData.get("ErrorLine"));
+			String CallStackString = SendData.get("CallStack");
+			String ClientReportJson = SendData.get("JSon/ErrorReport");
+			String LogData = SendData.get("Log");
 			
 			
-			if (resEntityGet != null) {
-				// 결과를 처리
-				String Result = EntityUtils.toString(resEntityGet);
-				BooleanResult isExist = (BooleanResult) LogDogJsonParser.fromJson(Result, BooleanResult.class);
-				return isExist;
+
+			// URL에 관한 문자셋으로 변환
+			String URLerrorname = null;
+			String URLerrorclassname = null;
+			try {
+				URLerrorname = URLEncoder.encode(errorname, "UTF-8");
+				URLerrorclassname = URLEncoder.encode(errorclassname, "UTF-8");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-	/**
-	 * Post방식으로 JsonData를 보낸다.
-	 * @since 2012. 11. 5.오전 3:20:12
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param Url
-	 * @param JsonData
-	 * @return ResponseString이 온다. 완전 실패시 Null
-	 */
-	private String HttpPostSendJson(String Url,String JsonData){
-		String Response = null;
-		try {
-			HttpClient client = new DefaultHttpClient();
-			HttpPost post = new HttpPost(Url);
-			
-		    StringEntity input = new StringEntity(JsonData);
-		    input.setContentType("application/json");
-			
-			post.setEntity(input);
-			HttpResponse responsePOST = client.execute(post);
-			HttpEntity resEntity = responsePOST.getEntity();
 
-			
-			if(!HttpSuccessResponsCode(responsePOST))
-				return null;
-			
-			Response = EntityUtils.toString(resEntity);
-		} catch (Exception e) {
-			e.printStackTrace();
+			// 1 현재 에러가 서버에 존재하는지 체크
+			BooleanResult result = HttpGetExistErrorCheck(URLerrorname,
+					URLerrorclassname, errorline);
+
+			if (result == null)
+				fail = false;
+
+			// 2 성공시 콜스택과 에러정보를 보낸다.
+			if (!result.isResult()) {
+				if (!HttpPostSendNewError(errorname, errorclassname, errorline,
+						CallStackString))
+					fail = false;
+			}
+
+			// 2.1 유져 정보를 보낸다. 여기서 키값을 가져옴
+			String LogKey = HttpPostSendUserInfo(ClientReportJson);
+
+			if (LogKey == null)
+				fail = false;
+
+			// 3 서버에 로그를 전송할지 안할지 서버 셋팅에 따른 체크
+			BooleanResult Logresult = HttpGetLogSendCheck();
+
+			if (Logresult == null)
+				fail = false;
+
+			// 3.1 만약 서버에서 로그 받는걸 허용한다면 로그 전송
+			if (Logresult.isResult()) {
+				if (!HttpPutSendLog(LogData, LogKey))
+					fail = false;
+			}
+
+			if(fail){
+				//ErrorReportData, CallStackFile, LogFile 삭제..
+				ClientReportData data = (ClientReportData) LogDogJsonParser.fromJson(ClientReportJson, ClientReportData.class);
+				FileControler.DeleteFile(SaveDir, data.ReportTime+ErrorReportFileName);
+				FileControler.DeleteFile(SaveDir, data.CallStackFileName);
+				FileControler.DeleteFile(SaveDir, data.LogFileName);
+			}
 		}
-		return Response;
-	}
-	
-	/**
-	 * 202코드 == Reponse => 성공
-	 * @since 2012. 11. 5.오후 10:09:03
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param response
-	 * @return 리스폰코드가 202면 성공
-	 */
-	private boolean HttpSuccessResponsCode(HttpResponse response){
-		int Code = 202;
-		int getcode = response.getStatusLine().getStatusCode();
-		if(getcode == Code)
+
+		/**
+		 * 서버에 이 에러가 있나 없나 체크
+		 * 
+		 * @since 2012. 11. 12.오전 1:19:08 TODO
+		 * @author JeongSeungsu
+		 * @param ErrorName
+		 * @param ClassName
+		 * @param errorline
+		 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
+		 */
+		private BooleanResult HttpGetExistErrorCheck(String ErrorName,
+				String ClassName, int errorline) {
+			return HttpGetSend(URL + ErrorCheckUrl + "/" + ErrorName + "/"
+					+ ClassName + "/" + String.valueOf(errorline));
+		}
+
+		/**
+		 * 로그값을 받냐 안받냐
+		 * 
+		 * @since 2012. 11. 5.오전 3:46:06 TODO
+		 * @author JeongSeungsu
+		 * @return null값을 리턴하면 전혀 통신이 안된것이고 True,False는 데이터가 존재하는지 안하는지 리턴..
+		 */
+		private BooleanResult HttpGetLogSendCheck() {
+			return HttpGetSend(URL + LogSettingUrl);
+		}
+
+		/**
+		 * 새로운 에러면 서버로 전송
+		 * 
+		 * @since 2012. 11. 12.오전 1:19:33 TODO
+		 * @author JeongSeungsu
+		 * @param ErrorName
+		 * @param ClassName
+		 * @param errorline
+		 * @param CallStack
+		 * @return 성공하면 True 실패면 False;
+		 */
+		private boolean HttpPostSendNewError(String ErrorName,
+				String ClassName, int errorline, String CallStack) {
+
+			ArrayList<String> callstackarray = new ArrayList<String>();
+
+			String[] StrArray;
+			StrArray = CallStack.split("\n");
+
+			for (String s : StrArray) {
+				callstackarray.add(s);
+			}
+			CallStackInfo info = new CallStackInfo(ErrorName, ClassName,
+					errorline, callstackarray);
+
+			String CallStackInfoJson = LogDogJsonParser.toJson(info);
+			String SendUrl = URL + ErrorCheckUrl;
+
+			String Response = HttpPostSendJson(SendUrl, CallStackInfoJson);
+
+			if (Response == null)
+				return false;
+
 			return true;
-		else
-			return false;
+		}
+
+		/**
+		 * ClientErrorReport전송
+		 * 
+		 * @since 2012. 11. 5.오전 3:34:51 TODO
+		 * @author JeongSeungsu
+		 * @param ClientReportDataJson
+		 * @return 실패시 null값 리턴 성공시 키값 가져옴
+		 */
+		private String HttpPostSendUserInfo(String ClientReportDataJson) {
+			String SendUrl = URL + SendUserInfoUrl;
+			String Response = HttpPostSendJson(SendUrl, ClientReportDataJson);
+
+			if (Response == null)
+				return null;
+
+			return Response;
+		}
+
+		/**
+		 * 로그 전송
+		 * 
+		 * @since 2012. 11. 5.오전 4:01:17 TODO
+		 * @author JeongSeungsu
+		 * @param LogData
+		 * @param Key
+		 * @return
+		 */
+		private boolean HttpPutSendLog(String LogData, String Key) {
+
+			try {
+				HttpClient client = new DefaultHttpClient();
+				HttpPut Put = new HttpPut(URL + SendUserInfoUrl + "/Key=" + Key);
+
+				StringEntity input = new StringEntity(LogData);
+				input.setContentType("text/plain");
+
+				Put.setEntity(input);
+
+				HttpResponse responsePut = client.execute(Put);
+
+				if (!HttpSuccessResponsCode(responsePut))
+					return false;
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		/**
+		 * 서버에 Get해서 URL에따라 셋팅값을 가져옴
+		 * 
+		 * @since 2012. 11. 5.오전 3:41:35 TODO
+		 * @author JeongSeungsu
+		 * @param Url
+		 *            가져올 URL
+		 * @return BooleanResult => 값에 따라 설정, null = 완전 실패
+		 */
+		private BooleanResult HttpGetSend(String Url) {
+			try {
+				HttpClient client = new DefaultHttpClient();
+
+				HttpGet get = new HttpGet(Url);
+				HttpResponse responseGet = client.execute(get);
+				HttpEntity resEntityGet = responseGet.getEntity();
+
+				if (resEntityGet != null) {
+					// 결과를 처리
+					String Result = EntityUtils.toString(resEntityGet);
+					BooleanResult isExist = (BooleanResult) LogDogJsonParser
+							.fromJson(Result, BooleanResult.class);
+					return isExist;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		/**
+		 * Post방식으로 JsonData를 보낸다.
+		 * 
+		 * @since 2012. 11. 5.오전 3:20:12 TODO
+		 * @author JeongSeungsu
+		 * @param Url
+		 * @param JsonData
+		 * @return ResponseString이 온다. 완전 실패시 Null
+		 */
+		private String HttpPostSendJson(String Url, String JsonData) {
+			String Response = null;
+			try {
+				HttpClient client = new DefaultHttpClient();
+				HttpPost post = new HttpPost(Url);
+
+				StringEntity input = new StringEntity(JsonData);
+				input.setContentType("application/json");
+
+				post.setEntity(input);
+				HttpResponse responsePOST = client.execute(post);
+				HttpEntity resEntity = responsePOST.getEntity();
+
+				if (!HttpSuccessResponsCode(responsePOST))
+					return null;
+
+				Response = EntityUtils.toString(resEntity);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return Response;
+		}
+
+		/**
+		 * 202코드 == Reponse => 성공
+		 * 
+		 * @since 2012. 11. 5.오후 10:09:03 TODO
+		 * @author JeongSeungsu
+		 * @param response
+		 * @return 리스폰코드가 202면 성공
+		 */
+		private boolean HttpSuccessResponsCode(HttpResponse response) {
+			int Code = 202;
+			int getcode = response.getStatusLine().getStatusCode();
+			if (getcode == Code)
+				return true;
+			else
+				return false;
+		}
+
 	}
-
-
 
 }

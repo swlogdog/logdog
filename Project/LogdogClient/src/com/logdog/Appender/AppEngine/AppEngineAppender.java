@@ -71,5 +71,7 @@ public class AppEngineAppender extends FileAppender {
 		return this.GetClassName();
 	}
 
-	
+	public AppEngineCommunicator GetCommunicator(){
+		return AppComunicator;
+	}
 }

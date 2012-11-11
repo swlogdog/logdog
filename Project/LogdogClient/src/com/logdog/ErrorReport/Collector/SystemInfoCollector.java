@@ -67,7 +67,7 @@ public class SystemInfoCollector {
 
 	private String GetNational(Context context){
 		Locale nowlocale = context.getResources( ).getConfiguration( ).locale;
-		return nowlocale.getDisplayName();
+		return nowlocale.getDisplayCountry();
 	}
 	private boolean GetGps(Context context) {
 		PackageManager packagemanager = context.getPackageManager();

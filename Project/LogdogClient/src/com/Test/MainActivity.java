@@ -24,9 +24,12 @@ import com.logdog.common.Parser.LogDogXmlParser;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
+	Button button1;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +96,15 @@ public class MainActivity extends Activity {
     	   e.printStackTrace();
     	   LogDog.PrintLog(Level.DEBUG, e);
        }
-      
        
+      
+  
     }
 
+    public void Test(){
+    	String saef =null;
+  	  saef.toUpperCase();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);

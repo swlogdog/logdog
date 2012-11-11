@@ -1,8 +1,10 @@
 package com.logdog.common.Parser;
 
+import java.io.StringReader;
 import java.lang.reflect.Type;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 /**
  * json 데이터를 시리얼라이즈, 디 시리얼라이즈 해주는 파서
@@ -24,7 +26,9 @@ public class LogDogJsonParser {
 	 * @return class 형태의 오브젝트 인스턴스를 리턴
 	 */
 	public static Object fromJson(String json, Class classOfT){
-		return gson.fromJson(json, classOfT);
+		JsonReader reader = new JsonReader(new StringReader(json));
+		reader.setLenient(true);
+		return gson.fromJson(reader, classOfT);
 	}
 	 public Object fromJson(String json, Type typeOfT){
 		 return gson.fromJson(json, typeOfT);

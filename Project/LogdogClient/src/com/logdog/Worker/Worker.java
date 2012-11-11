@@ -6,6 +6,8 @@ import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.format.Formatter;
 import com.logdog.Appender.AbstractAppender;
 import com.logdog.Appender.AppenderConfiguration;
+import com.logdog.Appender.AppEngine.AppEngineAppender;
+import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.Worker.Factory.AppenderFactory;
 import com.logdog.Worker.Factory.ErrorReportFactory;
 import com.logdog.Worker.Factory.LogFactory;
@@ -102,6 +104,9 @@ public class Worker {
 		return m_Network.SendData();
 	}
 	
+	public Network GetNetwork(){
+		return m_Network;
+	}
 	
 	/**
 	 * 에러 리포트 생성 및 네트워크 전송 서비스 시작
@@ -112,7 +117,26 @@ public class Worker {
 	 */
 	public void CreateErrorReport(Throwable throwadata){
 		m_ErrorReportFactory.CreateErrorReport(m_AppenderConfiguration,throwadata);
-		m_Network.StartService();
+		m_Network.SendData();
+	}
+	
+	/**
+	 * 앱이 사망할때만 보내는 리포트
+	 * @since 2012. 11. 12.오전 2:34:21
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param throwadata
+	 */
+	public void EmergencySendErrorRerport(Throwable throwadata){
+		ClientReportData data = m_ErrorReportFactory.CreateErrorReport(m_AppenderConfiguration,throwadata);
+		String AppEnginename = AppEngineAppender.class.getName();
+		AppEngineAppender app= null;
+		for( AbstractAppender appender : m_AppenderConfiguration.getAppenderList()){
+			if(appender.getClass().getName().equals(AppEnginename)){
+				app = (AppEngineAppender)appender;
+				app.GetCommunicator().EmergencySendData(data);
+			}
+		}
 	}
 
 	/**
