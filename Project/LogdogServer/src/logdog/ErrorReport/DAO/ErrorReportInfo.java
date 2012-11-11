@@ -1,7 +1,5 @@
 package logdog.ErrorReport.DAO;
 
-import java.util.Date;
-
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -10,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import logdog.Common.TimeUtil;
 import logdog.ErrorReport.DTO.ClientReportData;
+import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
@@ -57,7 +56,12 @@ public class ErrorReportInfo {
 	private int ScreanHeight;
 	
 	@Persistent
-	private Date UpdatedDate;
+	private int YearCode;
+	
+	@Persistent
+	private int TimeCode;
+	
+	
 
 	public ErrorReportInfo() {
 		super();
@@ -83,7 +87,8 @@ public class ErrorReportInfo {
 		ProviderNetworkState = report.MobileNetwork;
 		ScreanWidth = report.ScreenWidth;
 		ScreanHeight = report.ScreenHeight;
-		UpdatedDate=TimeUtil.GetNowDate();
+		YearCode = TimeUtil.GetNowYear();
+		TimeCode = TimeUtil.GetNowTimeCode();
 	}
 
 	public Key getE_ReportCode() {
@@ -105,19 +110,6 @@ public class ErrorReportInfo {
 	public BlobKey getLogBolbKey() {
 		return LogBolbKey;
 	}
-
-	public String getCountryName() {
-		return CountryName;
-	}
-
-	public String getAppVersion() {
-		return AppVersion;
-	}
-
-	public String getOSVersion() {
-		return OSVersion;
-	}
-
 	public String getDeviceName() {
 		return DeviceName;
 	}
@@ -142,5 +134,9 @@ public class ErrorReportInfo {
 		return ScreanHeight;
 	}
 	
+	public UserSummaryInfo getSummary()
+	{
+		return new UserSummaryInfo(CountryName,AppVersion,OSVersion, YearCode,TimeCode);
+	}
 	
 }

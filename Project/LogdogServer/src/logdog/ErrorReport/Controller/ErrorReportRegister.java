@@ -3,31 +3,30 @@ package logdog.ErrorReport.Controller;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 
 import logdog.Common.DataStore.PMF;
 import logdog.ErrorReport.DAO.ErrorReportInfo;
 import logdog.ErrorReport.DTO.ClientReportData;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
+import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 
 public class ErrorReportRegister {
 	
-	private PersistenceManager jdoConnector;
-	
+
 
 	
 	public ErrorReportRegister() {
 		super();
-		jdoConnector=null;
+
 		
 	}
-	
+
 	public Key insertErrorReport(ClientReportData reportInfo)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 		
 		ErrorReportInfo eInfo = new ErrorReportInfo(reportInfo);
 		
@@ -57,7 +56,7 @@ public class ErrorReportRegister {
 	 */
 	public void MatchingErrorType(Key reportKey, ErrorUniqueID uid)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
 	
 		try{
 			//System.out.print(reportKey);
@@ -71,7 +70,7 @@ public class ErrorReportRegister {
 		}
 		catch(Exception e){
 				
-			System.out.print(e.getClass() + e.getMessage());
+			System.out.print(e.getClass() +"    매칭 에  "+ e.getMessage());
 				
 		}
 		finally{
@@ -83,7 +82,7 @@ public class ErrorReportRegister {
 	}
 	public void MatchingLogFile(Key reportKey, BlobKey filekey)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
 
 		try{
 			
@@ -99,6 +98,27 @@ public class ErrorReportRegister {
 			jdoConnector.close();
 			
 		}
+	}
+	
+	public UserSummaryInfo getSummaryInfo(Key reportKey)
+	{
+		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
+		UserSummaryInfo summaryInfo = null;
+		try{
+			
+			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
+			summaryInfo=targetReport.getSummary();
+		}
+		catch(Exception e){
+				
+			
+				
+		}
+		finally{
+			jdoConnector.close();
+			
+		}
+		return summaryInfo;
 	}
 	
 	public List<ErrorReportInfo> getErrorReport(Key ErrorType)

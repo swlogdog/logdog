@@ -13,16 +13,11 @@ import com.google.gson.Gson;
 
 public class ServerSettingGetter {
 
-	private PersistenceManager jdoConnector;
-	
-	public ServerSettingGetter() {
-		super();
-		this.jdoConnector = null;
-	}
+
 
 	public String getLogFileSetting()
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 	
 		BooleanResult logfileResult = new BooleanResult(false);
 		Query SearchQuery = jdoConnector.newQuery(LogdogSettingInfo.class);
@@ -40,8 +35,10 @@ public class ServerSettingGetter {
 		catch(Exception e){
 				
 		
+		
 		}
 		finally{
+			SearchQuery.closeAll();
 			jdoConnector.close();
 		}
 		Gson gson = new Gson();

@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>LogDog -The only choice for your development -</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,8 +25,6 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
-    
-    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
 
 	<script>
 	var Request = function() {
@@ -48,18 +47,19 @@
 	};
 	</script>
 
-
-    </head>
+  </head>
   <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
 	<div class="navbar navbar-inverse navbar-fixed-top">
     	<div class="navbar-inner">
-        	<div class="container-fluid">
-        		<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        	<div class="container">
+       		   <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             		<span class="icon-bar"></span>
-         		   	<span class="icon-bar"></span>
             		<span class="icon-bar"></span>
-          		</a>
-          		<a class="brand" href="#">Logdog</a>
+            		<span class="icon-bar"></span>
+          		</button>
+
+          		<a class="brand" href="../index.jsp">Logdog</a>
           		
           		<div class="nav-collapse collapse">
             			<p class="navbar-text pull-right">
@@ -67,7 +67,6 @@
              			 <script>var request = new Request();
              			var param = request.getParameter("user");
              			document.write(param);
-             	
              			</script></a></p>
      	       			<ul class="nav">
         	    		 <li class="active"><a href="#">Intro</a></li>
@@ -84,10 +83,11 @@
  		 </div>
 	</header>
 	
-	<div class="container">
+	<div class="container-fluid">
+	
     <!-- Docs nav
     ================================================== -->
-    <div class="row">
+    <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
           <li><a href="#intro"><i class="icon-chevron-right"></i>Introduction</a></li>
@@ -106,7 +106,7 @@
 				<p>Bootstrap makes use of certain HTML elements and CSS properties that require the use of the HTML5 doctype. Include it at the beginning of all your projects.</p>
 
 		  </section>
-		
+		 		<hr class="bs-docs-separator">
 		  <section id="license">
         	  <div class="page-header">
         	    <h1>License</h1>
@@ -124,7 +124,7 @@
           		</ul>
           <p>추가로 이 Web Page는 Google App Engine for Java 기반으로 제작되었다.</p>
 		  </section>
-		  
+		   <hr class="bs-docs-separator"> <hr class="bs-docs-separator">
 		  <section id="setting">
         	  <div class="page-header">
         	    <h1>System Setting</h1>
@@ -136,7 +136,7 @@
 				<p></p>
 		
 				
- 				<form action="User/StarterSet" method="POST">
+ 				<form action="UserSetting/StarterSet" method="POST">
            			 <label class="radio">
              			 <input type="radio" name="LogSetting" id="optionsRadios1" value="true" checked>
               			Use
@@ -176,7 +176,9 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+ 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/google-code-prettify/prettify.js"></script>
     <script src="/assets/js/bootstrap-transition.js"></script>
     <script src="/assets/js/bootstrap-alert.js"></script>
     <script src="/assets/js/bootstrap-modal.js"></script>
@@ -189,6 +191,9 @@
     <script src="/assets/js/bootstrap-collapse.js"></script>
     <script src="/assets/js/bootstrap-carousel.js"></script>
     <script src="/assets/js/bootstrap-typeahead.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+    <script src="/assets/js/application.js"></script>
+
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<script src="http://code.highcharts.com/modules/exporting.js"></script>
   </body>

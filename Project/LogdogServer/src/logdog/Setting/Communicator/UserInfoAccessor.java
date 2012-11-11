@@ -92,5 +92,5 @@ public class UserInfoAccessor {
 		  return Response.seeOther(RedirectPath.build()).build();
 
 	  }
-	
+
 }

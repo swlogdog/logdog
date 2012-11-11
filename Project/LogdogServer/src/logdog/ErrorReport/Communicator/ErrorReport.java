@@ -50,19 +50,23 @@ public class ErrorReport {
 			@PathParam("errName") final String errName,
 			@PathParam("className") final String ClassName
 			)
-	{	   
+	{	  
+		System.out.print("왔다 ㅇ");
 		Gson gson = new Gson();
 		BooleanResult isType =new BooleanResult(false);
+
 		try{
 			
 		String Name = URLDecoder.decode(errName,"UTF-8"); 
 		String cName = URLDecoder.decode(ClassName,"UTF-8"); 
-		System.out.print(Name);
-		System.out.print(cName);
+		
 		ErrorUniqueID errType = new ErrorUniqueID(Name,cName);
 		
 		ErrorTypeClassifier eTypeClassifier = new ErrorTypeClassifier();
 		isType.setResult(eTypeClassifier.IsErrorType(errType));
+	
+		
+		System.out.print(isType.isResult());
 		}catch(Exception e)
 		{
 			throw new WebApplicationException(500);
@@ -75,7 +79,7 @@ public class ErrorReport {
 	@Path("/ErrorType")
 	@Consumes("application/json")
 	public Response CreateErrorType(String callstack) {
-
+		System.out.print("데이터 등록");
 		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
 		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/ErrorType", Method.POST, callstack);
 		backendService.CreateBackendWorkJson(BackendInfo);
@@ -114,7 +118,7 @@ public class ErrorReport {
 			@PathParam("key") final String reportKey,
 									String logData) {
 		
-		
+		System.out.println("로그 데이터 저장하기 호출");
 		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
 		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/LogUpdate/KEY="+reportKey, Method.PUT, logData);
 		backendService.CreateBackendWorkTextData(BackendInfo);

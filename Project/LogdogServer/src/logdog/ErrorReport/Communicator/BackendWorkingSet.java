@@ -12,9 +12,11 @@ import logdog.Common.BlobStore.BlobFileWriter;
 import logdog.Common.BlobStore.BlobWriterFactory;
 import logdog.ErrorReport.Controller.ErrorReportRegister;
 import logdog.ErrorReport.Controller.ErrorTypeClassifier;
+import logdog.ErrorReport.Controller.ReportSummaryUpdaer;
 import logdog.ErrorReport.DTO.CallStackInfo;
 import logdog.ErrorReport.DTO.ErrorUniqueID;
 import logdog.ErrorReport.DTO.TypeMatchingInfo;
+import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
@@ -36,10 +38,10 @@ public class BackendWorkingSet {
 	@Path("/ErrorType")
 	@Consumes("application/json")
 	public Response RegistErrorType(CallStackInfo callstack) {
-		
+		System.out.println("에러타입 백엔드 등");
 		ErrorTypeClassifier errClassifier = new ErrorTypeClassifier();
 		ErrorUniqueID uid = new ErrorUniqueID(callstack.getName(),callstack.getClassname());
-		if(errClassifier.IsErrorType(uid))
+		if(!errClassifier.IsErrorType(uid))
 		{
 			errClassifier.InsertErrorType(uid);		
 			errClassifier.LinkCallStackData(callstack);		
@@ -55,14 +57,26 @@ public class BackendWorkingSet {
 	@Consumes("application/json")
 	public Response ErrorTypeMatching(TypeMatchingInfo matchingdata) { 
 		
+		System.out.println("타입 매칭 시작");
+		
 		
 		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname());
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
+		
+		//타입 매칭  리포트를 갱신한다.
+		ReportSummaryUpdaer  reporter = new ReportSummaryUpdaer();
+		UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
+		
+		if(Temp != null)
+			reporter.UpdatedReportError(Temp);
+		else
+			return Response.status(400).entity("Matching Error").build();
+	
 		//System.out.print("Backend Start");
 		eReport.MatchingErrorType(ReportKey, uid);
 		
-		//백엔드로 타입 생
+
 		return Response.status(200).entity("ErrorTypeMatching end").build();
  
 	}
@@ -75,7 +89,7 @@ public class BackendWorkingSet {
 									String logData) { 
 		BlobFileWriter blobwriter = BlobWriterFactory.GetBlobService(ServiceType.GOOGLE_APP_ENGINE);
 		BlobKey FileKey = blobwriter.TextWrite(logData);	
-
+		System.out.print("Log");
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		eReport.MatchingLogFile(KeyFactory.stringToKey(reportKey), FileKey);
 		
