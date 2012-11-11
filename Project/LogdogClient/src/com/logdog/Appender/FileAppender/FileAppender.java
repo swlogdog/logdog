@@ -19,7 +19,7 @@ import com.logdog.common.Parser.LogDogJsonParser;
 
 
 /**
- * 파일에 저장할 수 있는 어펜더
+ * 파일에 저장할 수 있는 어펜더 Log,ErrorReport,CallStack이 저장된다.
  * @since 2012. 10. 13.오후 10:10:19
  * TODO 
  * @author JeongSeungsu
@@ -31,7 +31,7 @@ public class FileAppender extends AbstractAppender{
 	
 	
 	private final String				StackTraceName 		= "StackTrace.txt";
-	private final String				SendLogFileName 	= "SendLogFile.txt";
+	
 	private final String 				ErrorReportFileName = "ErrorReport.txt";
 	
 	@Element
@@ -40,8 +40,7 @@ public class FileAppender extends AbstractAppender{
 	@Element
 	private String 						LogFileName;
 	
-	@Element
-	private int							ReadLogLine;
+	
 	
 	@Element
 	IFormatter Formatter;
@@ -50,12 +49,11 @@ public class FileAppender extends AbstractAppender{
 		super();
 	}
 	
-	public FileAppender(String appendername, String savedirname, String logfilename, int readlogline , IFormatter formatter) {
+	public FileAppender(String appendername, String savedirname, String logfilename, IFormatter formatter) {
 		// TODO Auto-generated constructor stub
 		super(appendername);
 		SaveDirName = savedirname;
 		LogFileName = logfilename;
-		ReadLogLine = readlogline;
 		Formatter	= formatter;
 	}
 	
@@ -80,33 +78,7 @@ public class FileAppender extends AbstractAppender{
 
 			Data.CallStackFileName = FileControler.SaveStringtoFile(Data.CallStackFileName, 
 					SaveDirName, Data.ReportTime + StackTraceName);
-			
-			final int readline = ReadLogLine;
-
-			String totallog = FileControler.FiletoString(SaveDirName,LogFileName);
-			if(totallog == "")
-			{
-				Log.e("LOGDOG","Fail Read Log File");
-				return false;
-			}
-			
-			String[] StrArray;
-			StrArray = totallog.split("\\n");
-
-			int start = StrArray.length - readline;
-			if(start < 0)
-				start = 0;
-			
-			StringBuilder SendlogBuild = new StringBuilder(); 
-			for(int i = start; i < StrArray.length; i++){
-				SendlogBuild.append(StrArray[i]).append("\n");
-			}
-			String SendLog = SendlogBuild.toString();
-			
-			Data.LogFileName = FileControler.SaveStringtoFile(SendLog, SaveDirName , 
-																	Data.ReportTime+SendLogFileName );
-			
-			
+		
 			String ReportJSon = LogDogJsonParser.toJson(Data);
 			
 			FileControler.SaveStringtoFile(ReportJSon, SaveDirName, Data.ReportTime + ErrorReportFileName);
@@ -114,6 +86,7 @@ public class FileAppender extends AbstractAppender{
 		catch (Exception e) {
 			e.printStackTrace();
 			Log.e("LOGDOG", "LogReadError");
+			return false;
 		}
 		return true;
 	}
@@ -126,9 +99,7 @@ public class FileAppender extends AbstractAppender{
 	public String GetStackTraceFileName(){
 		return StackTraceName;
 	}
-	public String GetSendLogFileName(){
-		return SendLogFileName;
-	}
+
 	public String GetErrorReportFileName(){
 		return ErrorReportFileName;
 	}
@@ -138,10 +109,7 @@ public class FileAppender extends AbstractAppender{
 	public String GetLogFileName(){
 		return LogFileName;
 	}
-	public int GetRealLogLine(){
-		return ReadLogLine;
-	}
-	
+
 	
 
 }

@@ -24,14 +24,29 @@ import com.logdog.common.File.FileControler;
 import com.logdog.common.Network.AbstractCommunicator;
 import com.logdog.common.Parser.LogDogJsonParser;
 
+/**
+ * 구글 AppEngine과의 소통을 위한 커뮤니케이터(네트워크를 담당한다)
+ * @since 2012. 11. 11.오후 11:39:47
+ * TODO
+ * @author JeongSeungsu
+ */
 @Root
 public class AppEngineCommunicator extends AbstractCommunicator {
 	
 		
+	/**
+	 * AppEngine URL
+	 */
 	@Element
 	private String URL;
 	
+	/**
+	 * 보낼 파일들이 저장된 폴더
+	 */
 	String SaveDir;
+	/**
+	 * 보낼 에러 리포트 파일 이름
+	 */
 	String ErrorReportFileName;
 	
 	Map<String,String>		m_SendData;
@@ -49,6 +64,14 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		super();
 		m_SendData  	 = new HashMap<String, String>();
 	}
+	/**
+	 *
+	 * @since 2012. 11. 11.오후 11:40:45
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param CommunicatorName 커뮤니케이터 등록
+	 * @param url URL 등록
+	 */
 	public AppEngineCommunicator(String CommunicatorName,String url) {
 		// TODO Auto-generated constructor stub
 		super(CommunicatorName);
@@ -61,6 +84,13 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	public void SetSaveErrorReportFileName(String errorreportfilename){
 		ErrorReportFileName = errorreportfilename;
 	}
+	/**
+	 * URL 설정
+	 * @since 2012. 11. 11.오후 11:41:03
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param url
+	 */
 	public void SetURL(String url){
 		URL = url;
 	}
@@ -118,6 +148,14 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	}
 	
 	
+	/**
+	 * 여기서 앱엔진과의 통신을 한다.
+	 * @since 2012. 11. 11.오후 11:41:25
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param SendData 보낼데이터들
+	 * @return
+	 */
 	public boolean SendMessage(Map<String, String> SendData) {
 		// TODO Auto-generated method stub
 		String errorname 	  	= SendData.get("ErrorName");
@@ -267,12 +305,12 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		HttpResponse responsePut = client.execute(Put);
 		
 		if(!HttpSuccessResponsCode(responsePut))
-			return true;
+			return false;
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		return false;
+		return true;
 	}
 	
 	/**

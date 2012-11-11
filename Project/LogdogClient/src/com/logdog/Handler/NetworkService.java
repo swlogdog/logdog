@@ -13,6 +13,12 @@ import android.os.IBinder;
 
 
 
+/**
+ * 서버에 전송할때 켜지는 서비스
+ * @since 2012. 11. 12.오전 12:18:37
+ * TODO
+ * @author JeongSeungsu
+ */
 public class NetworkService extends Service implements Runnable {
 
 	private Handler m_Handler;
@@ -21,7 +27,7 @@ public class NetworkService extends Service implements Runnable {
 	/**
 	 * 15분마다 체크
 	 */
-	private static final int CHECK_TIME = 15 * (60*1000);
+	private static final int CHECK_TIME = 10 * (60*1000);
 	
 
 	@Override
@@ -49,15 +55,16 @@ public class NetworkService extends Service implements Runnable {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		
+		super.onStartCommand(intent, flags, startId);
+		
         if (!m_Running) {
-            // this : 서비스 처리의 본체인 run 메소드. Runnable 인터페이스를 구현 필요.
             // postDelayed : 일정시간마다 메소드 호출
         	m_Running = true;
-        	m_Handler.postDelayed(this, 0);
+        	m_Handler.postDelayed(this, 10);
       }
 		//m_Handler.postDelayed(this, CHECK_TIME);
 				
-		return super.onStartCommand(intent, flags, startId);
+		return START_NOT_STICKY;
 	}
 
 	public void run() {

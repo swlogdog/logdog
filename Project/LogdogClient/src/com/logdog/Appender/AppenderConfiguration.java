@@ -10,9 +10,18 @@ import org.simpleframework.xml.Root;
 
 
 
+/**
+ * 어펜더 설정 
+ * @since 2012. 11. 11.오후 11:53:26
+ * TODO
+ * @author JeongSeungsu
+ */
 @Root(name = "Appenders")
 public class AppenderConfiguration {
 
+	/**
+	 * 여기에 어펜더 리스트가 들어간다. 넣고 빼고 자유롭게
+	 */
 	@ElementList
 	List<AbstractAppender> AppenderList;
 

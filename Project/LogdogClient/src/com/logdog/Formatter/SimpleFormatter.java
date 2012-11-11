@@ -5,6 +5,12 @@ import org.simpleframework.xml.Root;
 
 import com.google.code.microlog4android.format.Formatter;
 
+/**
+ * 단순한 포맷 설정
+ * @since 2012. 11. 12.오전 12:17:31
+ * TODO
+ * @author JeongSeungsu
+ */
 @Root
 public class SimpleFormatter implements IFormatter {
 	@Element
@@ -14,6 +20,13 @@ public class SimpleFormatter implements IFormatter {
 	public SimpleFormatter() {
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * 앞에 붙을 delimiter를 설정한다.
+	 * @since 2012. 11. 12.오전 12:17:39
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param delimiter
+	 */
 	public SimpleFormatter(String delimiter) {
 		Delimiter = delimiter;
 	}

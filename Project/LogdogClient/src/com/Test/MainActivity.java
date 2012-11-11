@@ -86,15 +86,10 @@ public class MainActivity extends Activity {
         LogDog.PrintLog(Level.WARN, "TestDebug");
         
         
-       try{
+       
     	  String saef =null;
     	  saef.toUpperCase();
-       }
-       catch(Exception e){
-    	  e.printStackTrace(); 
-    	  LogDog.PrintLog(Level.DEBUG, e);
-       }
-       
+      
        
     }
 

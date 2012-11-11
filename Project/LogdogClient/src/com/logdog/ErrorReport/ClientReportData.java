@@ -1,5 +1,11 @@
 package com.logdog.ErrorReport;
 
+/**
+ * 서버나 로컬에 저장할 ErrorReport
+ * @since 2012. 11. 12.오전 12:15:06
+ * TODO
+ * @author JeongSeungsu
+ */
 public class ClientReportData {
 
 	public ClientReportData() {

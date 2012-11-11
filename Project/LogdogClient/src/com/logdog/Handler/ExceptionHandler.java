@@ -5,6 +5,12 @@ import com.logdog.Worker.Worker;
 
 
 
+/**
+ * 사용자가 차마 잡지 못한 Exception을 Catch해서 처리한다. 
+ * @since 2012. 11. 12.오전 12:17:53
+ * TODO
+ * @author JeongSeungsu
+ */
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
 
 	private Worker Process; 
@@ -23,11 +29,11 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
 		// TODO Auto-generated method stub
 	
 		Process.CreateErrorReport(ex);
-		m_DefaultExceptionHandler.uncaughtException(thread, ex);
-		/*
+		//m_DefaultExceptionHandler.uncaughtException(thread, ex);
+		
 		android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(10);
-        */
+        System.exit(0);
+        
 
 	}
 

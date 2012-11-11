@@ -5,6 +5,12 @@ import org.simpleframework.xml.Root;
 
 import com.google.code.microlog4android.Level;
 
+/**
+ * 전역적인 로그 설정에 관한 모든것
+ * @since 2012. 11. 12.오전 12:22:27
+ * TODO
+ * @author JeongSeungsu
+ */
 @Root(name = "Log")
 public class LogConfiguration {
 

@@ -1,5 +1,5 @@
 <Log>
-   <Level>error</Level>
+   <Level>info</Level>
 </Log>
 
 <Appenders>
@@ -11,16 +11,16 @@
          </Formatter>
          <LogFileName>log.txt</LogFileName>
          <SaveDirName>LogDog</SaveDirName>
-         <ReadLogLine>100</ReadLogLine>
          <AppComunicator CommunicatorName="AppEngineComm">
             <URL>http://swlogdog7.appspot.com/logdog/Report/</URL>
          </AppComunicator>
+         <ReadLogLine>100</ReadLogLine>
       </Appender>
       
-      <Appender class="com.logdog.Appender.LogCatAppender.LogCatAppender" AppenderName="LogCat"/>
+      <Appender class="com.logdog.Appender.LogCatAppender.LogCatAppender" AppenderName="LogCat">
       <Formatter class="com.logdog.Formatter.PatternFormatter">
             <PatternString>   %d{ISO8601}    [%P]  %m  %T  </PatternString>
       </Formatter>
-      
+      </Appender>
    </AppenderList>
 </Appenders>
