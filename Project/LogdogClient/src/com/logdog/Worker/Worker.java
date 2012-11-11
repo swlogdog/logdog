@@ -126,8 +126,9 @@ public class Worker {
 	 * TODO
 	 * @author JeongSeungsu
 	 * @param throwadata
+	 * @throws InterruptedException 
 	 */
-	public void EmergencySendErrorRerport(Throwable throwadata){
+	public void EmergencySendErrorRerport(Throwable throwadata) throws InterruptedException{
 		ClientReportData data = m_ErrorReportFactory.CreateErrorReport(m_AppenderConfiguration,throwadata);
 		String AppEnginename = AppEngineAppender.class.getName();
 		AppEngineAppender app= null;

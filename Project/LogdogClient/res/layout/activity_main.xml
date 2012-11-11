@@ -16,10 +16,22 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
         android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_marginRight="57dp"
         android:layout_marginTop="84dp"
-        android:text="Button"
-        android:onClick="Test" />
+        android:onClick="Test"
+        android:text="@string/button2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginLeft="41dp"
+        android:text="@string/button1"
+        android:onClick="Test1"/>
 
 </RelativeLayout>

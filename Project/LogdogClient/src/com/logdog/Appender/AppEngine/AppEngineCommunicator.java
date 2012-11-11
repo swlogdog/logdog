@@ -112,14 +112,13 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 			if(file.getName().matches("(?i).*"+ErrorReportFileName+".*")){
 				String Content 		  = FileControler.FiletoString(file);
 				ClientReportData Data = (ClientReportData) LogDogJsonParser.fromJson(Content, ClientReportData.class);
-				EmergencySendData(Data);
+				SendData(Data);
 			}
 		}
 		Log.e("Service","SendDataEnd");
 		return true;
 	}
-	
-	public void EmergencySendData(ClientReportData data) {
+	public void SendData(ClientReportData data) {
 		
 		String Content 		  = LogDogJsonParser.toJson(data);
 		File callstackfile 	  = FileControler.GetExternalStorageFile(SaveDir, 
@@ -136,6 +135,29 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		AddSendData("ErrorLine", String.valueOf(data.line));
 
 		SendMessage(GetSendData());
+		
+	}
+
+	
+	public void EmergencySendData(ClientReportData data) throws InterruptedException {
+		
+		String Content 		  = LogDogJsonParser.toJson(data);
+		File callstackfile 	  = FileControler.GetExternalStorageFile(SaveDir, 
+																	 data.CallStackFileName);
+		File LogFile 		  = FileControler.GetExternalStorageFile(SaveDir, 
+																	  data.LogFileName);
+		
+		AllDeleteSendData();
+		AddSendData("JSon/ErrorReport", Content);
+		AddSendData("CallStack", FileControler.FiletoString(callstackfile));
+		AddSendData("Log", FileControler.FiletoString(LogFile));
+		AddSendData("ErrorName", data.ErrorName);
+		AddSendData("ErrorClassName", data.ErrorClassName);
+		AddSendData("ErrorLine", String.valueOf(data.line));
+
+		HTTPSender Sender = new HTTPSender(GetSendData());
+		Sender.start();
+		Sender.join();
 		
 	}
 	

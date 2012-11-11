@@ -29,7 +29,12 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
 		// TODO Auto-generated method stub
 	
 		//Process.CreateErrorReport(ex);
-		Process.EmergencySendErrorRerport(ex);
+		try {
+			Process.EmergencySendErrorRerport(ex);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		m_DefaultExceptionHandler.uncaughtException(thread, ex);
 		
 		android.os.Process.killProcess(android.os.Process.myPid());
