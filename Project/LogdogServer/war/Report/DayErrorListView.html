@@ -12,7 +12,10 @@
     <link href="/assets/css/docs.css" rel="stylesheet">
     <link href="/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
  
-
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/js/ui.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ui.jqgrid.css" />
     
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -50,7 +53,7 @@ var Request = function() {
 var Today;
 var AppVersion;
 var OSVersion;
-var ClassName;
+var SelectDay;
 
 window.onload = function(){
 	
@@ -105,9 +108,10 @@ window.onload = function(){
     <h1>Day ErrorReport</h1>
     <p class="lead"><script>var request = new Request();
              			var param = request.getParameter("Day");
-             			var Redate = param.replace(' / ','-');
-             			document.write(Redate);
-             			</script> 에러 정보</p>
+             			var date = param.replace('-',' / ');
+             			SelectDay = param;
+             			document.write(date+'에 발생한 에러 정보');
+             			</script></p>
  	 </div>
 </header>
 <div class="container-fluid">
@@ -124,7 +128,7 @@ window.onload = function(){
 <!--  본 -->
 <div class="span8">
               <div class="page-header">
-            <h1>Error Info</h1>
+            <h1>Day Error List</h1>
            </div>
 
         <div id="day" style="height: 400px">
@@ -180,7 +184,7 @@ window.onload = function(){
 			            		
 			                    	var loca = nameV.replace(' / ','-');
 			                
-			                    	location.href='/Report/VersionRateListView.html?OSversion='+loca;
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
 			                    }
 			                }
 			            }
@@ -190,7 +194,45 @@ window.onload = function(){
 		           });
 			//]]>  </script>
               </div>
-             
+             <div class="span12" id="ErrorList" style="vertical-align:middle">
+        		<table id="list2" style="vertical-align:middle"></table>
+				<div id="pager2"></div>
+        	 <script type="text/javascript">
+			 jQuery(
+				function()
+				{
+				jQuery("#list2").jqGrid({
+				   	url:'/list/errlist/Day='+SelectDay,
+					datatype: "json",
+					autowidth: true,
+					autoheight:true,
+					jsonReader : { 
+						page: "page", 
+						total: "total", 
+						root: "errors",
+						repeatitems: false, 
+						id: "key"
+					},
+				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total(Weekly)','BugClear','key'],
+				   	colModel:[
+				   	
+				   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
+				   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
+				   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
+				   		{name:'day',index:'day', sortable:false,resizable:false},		
+				   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
+				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
+				   		{name:'key',index:'key' , sortable:false, hidden:true},
+				   	],		
+
+				    viewrecords: true,
+				    caption:"ErrorReport"
+				});
+				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+			}
+		);  		
+ </script>
+        	</div>
             
        
             
@@ -221,6 +263,7 @@ window.onload = function(){
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
  	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/google-code-prettify/prettify.js"></script>
@@ -238,7 +281,10 @@ window.onload = function(){
     <script src="/assets/js/bootstrap-typeahead.js"></script>
     <script src="/assets/js/bootstrap-affix.js"></script>
     <script src="/assets/js/application.js"></script>
- 
+ 	<script src="/assets/js/ui.multiselect.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.tablednd.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.contextmenu.js" type="text/javascript"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
   </body>

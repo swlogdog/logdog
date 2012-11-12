@@ -1,4 +1,4 @@
-package logdog.DashBoard.DTO.Json;
+package logdog.DashBoard.DTO.Json.Highcharts;
 
 import java.util.ArrayList;
 import java.util.Iterator;

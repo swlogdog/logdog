@@ -6,9 +6,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import logdog.DashBoard.Controller.SummaryGetter;
-import logdog.DashBoard.DTO.Json.ClassReportRate;
-import logdog.DashBoard.DTO.Json.DayReport;
-import logdog.DashBoard.DTO.Json.VersionReportRate;
+import logdog.DashBoard.DTO.Json.Highcharts.ClassReportRate;
+import logdog.DashBoard.DTO.Json.Highcharts.DayReport;
+import logdog.DashBoard.DTO.Json.Highcharts.VersionReportRate;
 
 import com.google.gson.Gson;
 

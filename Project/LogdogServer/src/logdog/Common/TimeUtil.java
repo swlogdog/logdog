@@ -1,5 +1,7 @@
 package logdog.Common;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -61,5 +63,12 @@ public class TimeUtil {
 		int date = nowTime.getDate();
 		int Timecode = Month*100 + date;
 		return Timecode;
+	} 
+	public static String GetTime2String(Date d)
+	{
+		DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		String tempDate = sdFormat.format(d);
+		return tempDate;
 	}
 }
