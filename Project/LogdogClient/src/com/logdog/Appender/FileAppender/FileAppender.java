@@ -73,10 +73,10 @@ public class FileAppender extends AbstractAppender{
 			FileControler.SaveStringtoFile("", SaveDirName, LogFileName);
 		appender.setFileName(SaveDirName+"/"+LogFileName); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 		Formatter.InitFormatter();
-		appender.setFormatter(Formatter.GetFormatter());
+		appender.setFormatter(Formatter.GetLog4Formatter());
 	}
 	
-	public com.google.code.microlog4android.appender.Appender GetAppender() {
+	public com.google.code.microlog4android.appender.Appender GetLog4Appender() {
 		// TODO Auto-generated method stub
 		return appender;
 	}
@@ -127,11 +127,6 @@ public class FileAppender extends AbstractAppender{
 			return false;
 		}
 		return true;
-	}
-
-	public String GetClassName() {
-		// TODO Auto-generated method stub
-		return this.GetClassName();
 	}
 
 	public String GetStackTraceFileName(){

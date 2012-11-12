@@ -9,10 +9,10 @@ import com.logdog.Appender.AbstractAppender;
 import com.logdog.Appender.AppenderConfiguration;
 import com.logdog.Appender.AppEngine.AppEngineAppender;
 import com.logdog.ErrorReport.ClientReportData;
+import com.logdog.Log.LogManager;
 import com.logdog.Worker.Factory.AppenderFactory;
 import com.logdog.Worker.Factory.ErrorReportFactory;
 import com.logdog.Worker.Factory.LogFactory;
-import com.logdog.Worker.Log.LogManager;
 import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogXmlParser;
 
@@ -51,8 +51,7 @@ public class Worker {
 	////
 	private static Context staticcontext;
 	private static String  staticXmlData;
-	
-	public Worker() {
+		public Worker() {
 		// TODO Auto-generated constructor stub
 		
 	}
@@ -81,40 +80,8 @@ public class Worker {
 		String Log = LogDogXmlParser.Separate(XmlData, "Log");
 		String Appenders =LogDogXmlParser.Separate(XmlData, "Appenders");
 		
-		m_AppenderConfiguration = AppenderFactory.CreateAppender(Appenders);
-		InitAppenders(m_AppenderConfiguration,m_Network);
-		
+		m_AppenderConfiguration = AppenderFactory.CreateAppender(Appenders,m_Network);
 		m_LogManager			= LogFactory.CreateLogManager(Log,m_AppenderConfiguration);
-	}
-	/**
-	 * Appender초기화 AppenderConfiguration에 의해 초기화 된다.
-	 * @since 2012. 11. 12.오전 12:24:19
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param configuration
-	 * @param network
-	 */
-	private void InitAppenders(AppenderConfiguration configuration,Network network){
-		for(AbstractAppender appender : configuration.getAppenderList()){
-			appender.InitAppender(network);
-		}
-	}
-	
-	
-	
-	/**
-	 * Service에서 콜하는 함수...
-	 * @since 2012. 11. 10.오전 1:35:54
-	 * TODO
-	 * @author JeongSeungsu
-	 * @return
-	 */
-	public boolean SendErrorReport(){
-		return m_Network.SendData();
-	}
-	
-	public Network GetNetwork(){
-		return m_Network;
 	}
 	
 	/**
@@ -159,6 +126,7 @@ public class Worker {
 	public void SetLogLever(Level level){
 		m_LogManager.SetLogLevel(level);
 	}
+	
 	/**
 	 * 로그 출력 
 	 * 전역 로그 레벨 설정에 의해 출력될지 안될지 결정
@@ -166,7 +134,7 @@ public class Worker {
 	 * TODO
 	 * @author JeongSeungsu
 	 * @param level 이 레벨값에 따라 출력되는 로그 
-	 * @param log
+	 * @param log 출력할 String 데이터
 	 */
 	public void PrintLog(Level level,String log){
 		m_LogManager.PrintLog(level, log);
@@ -174,11 +142,13 @@ public class Worker {
 	
 	/**
 	 * Exception을 받아서 로그 출력
+	 * 그리고 보낼 것이 있으면 쓰레드를 생성해서 보낸다.
+	 * Appender에 따라 보낼 행동이 달라짐
 	 * @since 2012. 11. 12.오전 12:25:48
 	 * TODO
 	 * @author JeongSeungsu
-	 * @param level
-	 * @param t
+	 * @param level 보일 레벨
+	 * @param t Exception 데이터
 	 */
 	public void PrintLog(Level level,Throwable t){
 		m_LogManager.PrintLog(level, t);
@@ -196,16 +166,6 @@ public class Worker {
 			Worker.getInstance().CreateErrorReport(throwable);
 		}
 	}
-	/**
-	 * 포맷터 설정
-	 * @since 2012. 11. 12.오전 12:26:02
-	 * TODO
-	 * @author JeongSeungsu
-	 * @param formatter
-	 */
-	public void SetFormatter(Formatter formatter){
-		m_LogManager.SetFormatter(formatter);
-	}
 	
 	/**
 	 * 어펜더 추가
@@ -216,17 +176,31 @@ public class Worker {
 	 */
 	public void AddAppender(AbstractAppender appender){
 		m_AppenderConfiguration.AddAppender(appender);
+		m_LogManager.AddAppender(appender);
 	}
 	
 	/**
 	 * 어펜더 삭제
+	 * 어펜더 이름에 의한 삭제
 	 * @since 2012. 11. 12.오전 12:26:45
 	 * TODO
 	 * @author JeongSeungsu
 	 * @param AppenderName xml에 설정한 Name에 의해 삭제 된다.
 	 * @return 
 	 */
-	public boolean DeleteAppender(String AppenderName){
-		return m_AppenderConfiguration.DeleteAppender(AppenderName);
+	public void RemoveAppender(String AppenderName){
+		m_AppenderConfiguration.RemoveAppender(AppenderName);
+		m_LogManager.RemoveAppender(m_AppenderConfiguration.GetAppender(AppenderName));
+	}
+	/**
+	 * 어펜더 삭제
+	 * @since 2012. 11. 13.오전 3:38:50
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appender
+	 */
+	public void RemoveAppender(AbstractAppender appender){
+		m_AppenderConfiguration.RemoveAppender(appender);
+		m_LogManager.RemoveAppender(appender);
 	}
 }

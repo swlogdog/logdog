@@ -1,4 +1,4 @@
-package com.logdog.Worker.Log;
+package com.logdog.Log;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

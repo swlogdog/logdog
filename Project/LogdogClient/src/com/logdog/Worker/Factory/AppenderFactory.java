@@ -1,6 +1,8 @@
 package com.logdog.Worker.Factory;
 
+import com.logdog.Appender.AbstractAppender;
 import com.logdog.Appender.AppenderConfiguration;
+import com.logdog.common.Network.Network;
 import com.logdog.common.Parser.LogDogXmlParser;
 
 /**
@@ -19,10 +21,13 @@ public class AppenderFactory {
 	 * @param Xml Xml String 데이터
 	 * @return AppenderConfiguration 어펜더 설정 값들 
 	 */
-	public static AppenderConfiguration CreateAppender(String Xml){
+	public static AppenderConfiguration CreateAppender(String Xml,Network network){
 		AppenderConfiguration conf = null;
 		try{
 			conf = (AppenderConfiguration) LogDogXmlParser.fromXml(AppenderConfiguration.class, Xml);
+			for(AbstractAppender appender : conf.getAppenderList()){
+				appender.InitAppender(network);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

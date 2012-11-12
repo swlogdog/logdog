@@ -33,10 +33,26 @@ public class AppenderConfiguration {
 		return AppenderList;
 	}
 	
+	public AbstractAppender GetAppender(String AppenderName){
+		
+		Iterator<AbstractAppender> iter = AppenderList.iterator();
+		
+		while(iter.hasNext()){
+			AbstractAppender appender = iter.next();
+			if(AppenderName.equalsIgnoreCase(appender.GetAppenderName())){
+				return appender;
+			}
+		}
+		return null;
+	}
+	
 	public void AddAppender(AbstractAppender Appender){
 		AppenderList.add(Appender);
 	}
-	public boolean DeleteAppender(String AppenderName){
+	public void RemoveAppender(AbstractAppender Appender){
+		AppenderList.remove(Appender);
+	}
+	public void RemoveAppender(String AppenderName){
 		
 		Iterator<AbstractAppender> iter = AppenderList.iterator();
 		
@@ -44,10 +60,9 @@ public class AppenderConfiguration {
 			AbstractAppender appender = iter.next();
 			if(AppenderName.equalsIgnoreCase(appender.GetAppenderName())){
 				iter.remove();
-				return true;
+				return;
 			}
 		}
-		return false;
 	}
 	
 	public void AllDeleteAppender(){

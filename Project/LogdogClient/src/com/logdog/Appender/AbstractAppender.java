@@ -69,10 +69,8 @@ public abstract class AbstractAppender
 	 * @author JeongSeungsu
 	 * @return Microlog4android의 어펜더 타입
 	 */
-	public com.google.code.microlog4android.appender.Appender GetAppender(){
+	public com.google.code.microlog4android.appender.Appender GetLog4Appender(){
 		return null;
 	}
-	
-	public abstract String GetClassName();
 	
 }

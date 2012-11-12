@@ -38,7 +38,7 @@ public class PatternFormatter implements IFormatter {
 		PatternString = pattern;
 	}
 
-	public Formatter GetFormatter() {
+	public Formatter GetLog4Formatter() {
 		// TODO Auto-generated method stub
 		return formatter;
 	}
