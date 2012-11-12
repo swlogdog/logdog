@@ -46,6 +46,31 @@ var Request = function() {
         return rtnval;
     };
 };
+
+var Today;
+var AppVersion;
+var OSVersion;
+var ClassName;
+
+window.onload = function(){
+	
+	var dayReport = document.getElementById('ToDayList');
+	dayReport.onclick = function(){
+		var loca = Today.replace(' / ','-');
+        
+    	location.href='/Report/DayErrorListView.html?Day='+loca;
+	};
+	
+	var VerReport = document.getElementById('VersionError');
+	VerReport.onclick = function(){
+		location.href='/Report/VersionRateListView.html?AppVer='+AppVersion+'&OSVer='+OSVersion;
+	};
+	var ClassReport = document.getElementById('ClassError');
+	ClassReport.onclick = function(){
+		location.href='/Report/ClassRateListView.html?ClassName='+ClassName;
+	};
+};
+
 </script>
   </head>
   
@@ -92,9 +117,9 @@ var Request = function() {
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#intro"><i class="icon-chevron-right"></i>Introduction</a></li>
-          <li><a href="#license"><i class="icon-chevron-right"></i>License</a></li>
-          <li><a href="#setting"><i class="icon-chevron-right"></i>System Setting</a></li>
+          <li><a id="ToDayList"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
+          <li><a id="VersionError"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
+          <li><a id="ClassError"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
         </ul>
       </div>
 <!--  본 -->
@@ -122,6 +147,7 @@ var Request = function() {
 											{
 												chart.xAxis[0].setCategories(eval(value));
 												AppVer = eval(value);
+												AppVersion =AppVer[0];
 											}
 											if('OSErrors'==key)
 											{
@@ -130,7 +156,7 @@ var Request = function() {
 									
 												for(i=0;i<value.length;i++)
 													chart.addSeries(eval(value)[i]);
-								
+												OSVersion=eval(value)[0].name;
 											}
 										} );
 									});

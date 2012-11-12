@@ -14,6 +14,7 @@ import logdog.DashBoard.DTO.Json.VersionReportRate;
 import logdog.ErrorReport.DAO.AppVesionInfo;
 import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.ErrorReport.DAO.VersionReportInfo;
+import logdog.ErrorReport.DAO.Summary.ClassErrorInfo;
 import logdog.ErrorReport.DAO.Summary.DayReportInfo;
 
 import com.google.gson.Gson;
@@ -103,8 +104,8 @@ public class SummaryGetter {
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 
-		Query SearchQuery = jdoConnector.newQuery(ErrorTypeInfo.class);
-		List<ErrorTypeInfo> ErrorTypeResults=null;
+		Query SearchQuery = jdoConnector.newQuery(ClassErrorInfo.class);
+		List<ClassErrorInfo> ErrorTypeResults=null;
 
 
 		try{
@@ -112,17 +113,15 @@ public class SummaryGetter {
 				
 			SearchQuery.setOrdering("TotalOccurrences descending");	
 			
-			ErrorTypeResults = (List<ErrorTypeInfo>) 
+			ErrorTypeResults = (List<ClassErrorInfo>) 
 								SearchQuery.execute();
 			
-			Iterator<ErrorTypeInfo> iterator = ErrorTypeResults.iterator();
-			DayReport report = new DayReport(); 
-			ClassReportRate Data = new ClassReportRate();
-			while ( iterator.hasNext() ){
-				ErrorTypeInfo info = iterator.next();
+			Iterator<ClassErrorInfo> iterator = ErrorTypeResults.iterator();
+			ClassReportRate report = new ClassReportRate(); 
 
-				Data.addClassRate(info.getOccurrenceClass(),info.getTotalOccurrences());
- 
+			while ( iterator.hasNext() ){
+				ClassErrorInfo info = iterator.next();
+				report.addClassRate(info.getOccurrenceClass(), info.getTotalOccurrences());
 			  }
 		 
 			Gson gson = new Gson();
@@ -167,11 +166,11 @@ public class SummaryGetter {
 				AppVesionInfo info = iterator.next();
 				Data.addAppVersion(info.getVersion());
 				List<VersionReportInfo> OSversion=null;
-				SearchQuery.setFilter("AppVersion == ver");
-				SearchQuery.declareParameters("String ver");
+				OSVSearch.setFilter("AppVersion == ver");
+				OSVSearch.declareParameters("String ver");
 			
 				OSversion = (List<VersionReportInfo>) 
-						SearchQuery.execute(info.getVersion());
+						OSVSearch.execute(info.getVersion());
 				
 				for(int i=0;i<OSversion.size();i++)
 				{
@@ -186,7 +185,7 @@ public class SummaryGetter {
 			return gson.toJson(Data);
 		}
 		catch(Exception e){
-					
+					e.printStackTrace();
 			return null;
 		}
 		finally{

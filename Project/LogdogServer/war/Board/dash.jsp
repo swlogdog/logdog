@@ -15,14 +15,14 @@
     <link href="/assets/css/docs.css" rel="stylesheet">
     <link href="/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
  
-
+	
     
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="/assets/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
@@ -49,6 +49,30 @@ var Request = function() {
         return rtnval;
     };
 };
+
+	var Today;
+	var AppVersion;
+	var OSVersion;
+	var ClassName;
+	
+	window.onload = function(){
+		
+		var dayReport = document.getElementById('ToDayList');
+		dayReport.onclick = function(){
+			var loca = Today.replace(' / ','-');
+            
+        	location.href='/Report/DayErrorListView.html?Day='+loca;
+		};
+		
+		var VerReport = document.getElementById('VersionError');
+		VerReport.onclick = function(){
+			location.href='/Report/VersionRateListView.html?AppVer='+AppVersion+'&OSVer='+OSVersion;
+		};
+		var ClassReport = document.getElementById('ClassError');
+		ClassReport.onclick = function(){
+			location.href='/Report/ClassRateListView.html?ClassName='+ClassName;
+		};
+	};
 </script>
      <%
      UserService userService = UserServiceFactory.getUserService();
@@ -97,9 +121,9 @@ var Request = function() {
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li id="Temp"><a href="#intro"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
-          <li><a href="#license"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
-          <li><a href="#setting"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
+          <li><a id="ToDayList"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
+          <li><a id="VersionError"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
+          <li><a id="ClassError"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
         </ul>
       </div>
 <!--  본 -->
@@ -129,12 +153,12 @@ var Request = function() {
 									{
 										Daychart.xAxis[0].setCategories(eval(value));
 										categori=eval(value);
-									
+										Today=categori[0];
 									}
 									if('ReportRate'==key)
 									{
 										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
-									
+										
 									}
 									} );
 									});
@@ -180,7 +204,6 @@ var Request = function() {
 
 				$(function () {
 					var AppVer;
-					var OSVer;
     				var chart= new Highcharts.Chart({
            	 			chart: {
                 			renderTo: 'version',
@@ -193,6 +216,7 @@ var Request = function() {
 											{
 												chart.xAxis[0].setCategories(eval(value));
 												AppVer = eval(value);
+												AppVersion =AppVer[0];
 											}
 											if('OSErrors'==key)
 											{
@@ -201,7 +225,8 @@ var Request = function() {
 									
 												for(i=0;i<value.length;i++)
 													chart.addSeries(eval(value)[i]);
-								
+												
+												OSVersion=eval(value)[0].name;
 											}
 										} );
 									});
@@ -270,7 +295,7 @@ var Request = function() {
 				//<![CDATA[ 
 					$(function () {
 	   				var chart;
-     			   	var ClassName;
+     			   	var ClassNameList;
 	   				chart = new Highcharts.Chart({
             			chart: {
                				renderTo: 'classError',
@@ -289,7 +314,8 @@ var Request = function() {
 										chart.addSeries({
 				              				 type: 'pie',
 				            	     			name: 'Error Count', data: eval(value)});
-										ClassName=eval(value);
+										ClassNameList=eval(value);
+										ClassName=ClassNameList[0][0];	
 										}
 								
 									} );
@@ -307,7 +333,7 @@ var Request = function() {
 	                			events: {
 	                    			click: function(event) {
 	                    				
-	                    				location.href='/Report/ClassRateListView.html?ClassName='+ClassName[event.point.x][0];
+	                    				location.href='/Report/ClassRateListView.html?ClassName='+ClassNameList[event.point.x][0];
 	                    				
 	                		 	  	 }
 	               		 		}	

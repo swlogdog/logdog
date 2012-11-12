@@ -29,6 +29,7 @@ public class ReportSummaryUpdaer {
 			SearchQuery.declareParameters("String Aver,String Over");
 			
 			VSummary = (List<VersionReportInfo>) SearchQuery.execute(reportInfo.getAppVersion(),reportInfo.getOSVersion());
+
 			if(VSummary.size()>0)
 			{
 				VersionReportInfo vSummary = VSummary.get(0);
@@ -139,8 +140,10 @@ public class ReportSummaryUpdaer {
 			SearchQuery.declareParameters("String Aver");
 			
 			CSummary = (List<AppVesionInfo>) SearchQuery.execute(AppV);
+			System.out.println("입력");
 			if(CSummary==null || CSummary.size()==0)
 			{
+				System.out.println("입력");
 				AppVesionInfo cSummary = new AppVesionInfo(AppV);
 				jdoConnector.makePersistent(cSummary);
 			}

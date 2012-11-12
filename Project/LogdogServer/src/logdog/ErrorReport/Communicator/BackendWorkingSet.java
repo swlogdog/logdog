@@ -57,9 +57,6 @@ public class BackendWorkingSet {
 	@Consumes("application/json")
 	public Response ErrorTypeMatching(TypeMatchingInfo matchingdata) { 
 		
-		System.out.println("타입 매칭 시작");
-		
-		
 		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname(),matchingdata.getLine());
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
@@ -67,7 +64,7 @@ public class BackendWorkingSet {
 		//타입 매칭  리포트를 갱신한다.
 		ReportSummaryUpdaer  reporter = new ReportSummaryUpdaer();
 		UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
-		
+
 		if(Temp != null)
 			reporter.UpdatedReportError(Temp,matchingdata.getClassname());
 		else
