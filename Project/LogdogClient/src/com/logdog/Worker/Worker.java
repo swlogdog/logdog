@@ -1,6 +1,7 @@
 package com.logdog.Worker;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.format.Formatter;
@@ -29,21 +30,27 @@ public class Worker {
 	public static Worker getInstance() {
 		if (instance == null) {
 			synchronized (Worker.class) { 
-				if (instance == null) 
-					instance = new Worker(); 
-			}
+				if (instance == null){
+					instance = new Worker();
+					}
+				
+				}
 		}
 		return instance;
 	}
 
 	
-	private ErrorReportFactory						m_ErrorReportFactory;
+	private static ErrorReportFactory						m_ErrorReportFactory;
 	
-	private AppenderConfiguration					m_AppenderConfiguration;
+	private static AppenderConfiguration					m_AppenderConfiguration;
 		
-	private Network 								m_Network;
-	private LogManager								m_LogManager;
+	private static Network 									m_Network;
+	private static LogManager								m_LogManager;
 	
+	
+	////
+	private static Context staticcontext;
+	private static String  staticXmlData;
 	
 	public Worker() {
 		// TODO Auto-generated constructor stub
@@ -60,6 +67,8 @@ public class Worker {
 	 */
 	public void InitLogDogProcess(Context context,String XmlData){
 		
+		staticcontext = context;
+		staticXmlData = XmlData;
 		
 		m_ErrorReportFactory 	= new ErrorReportFactory(context);
 		
@@ -115,7 +124,7 @@ public class Worker {
 	 * @author JeongSeungsu
 	 * @param throwadata
 	 */
-	public void CreateErrorReport(Throwable throwadata){
+	public synchronized void CreateErrorReport(Throwable throwadata){
 		m_ErrorReportFactory.CreateErrorReport(m_AppenderConfiguration,throwadata);
 		m_Network.SendData();
 	}
@@ -173,7 +182,19 @@ public class Worker {
 	 */
 	public void PrintLog(Level level,Throwable t){
 		m_LogManager.PrintLog(level, t);
-		CreateErrorReport(t);
+		//CreateErrorReport(t);
+		ErrorReportProcess process = new ErrorReportProcess(t);
+		process.start();
+	}
+	class ErrorReportProcess extends Thread{
+		Throwable throwable;
+		public ErrorReportProcess(Throwable t){
+			throwable = t;
+		}
+		@Override
+		public void run(){
+			Worker.getInstance().CreateErrorReport(throwable);
+		}
 	}
 	/**
 	 * 포맷터 설정

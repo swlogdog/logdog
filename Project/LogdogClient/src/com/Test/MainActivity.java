@@ -2,27 +2,13 @@ package com.Test;
 
 
 
-import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
 
 import com.google.code.microlog4android.Level;
 import com.logdog.LogDog;
-import com.logdog.Appender.AppenderConfiguration;
-import com.logdog.Appender.AppEngine.AppEngineAppender;
-import com.logdog.Appender.AppEngine.AppEngineCommunicator;
-import com.logdog.Appender.LogCatAppender.LogCatAppender;
-import com.logdog.Formatter.PatternFormatter;
-import com.logdog.Worker.Log.LogConfiguration;
-import com.logdog.common.File.FileControler;
-import com.logdog.common.Parser.LogDogXmlParser;
-
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -40,8 +26,9 @@ public class MainActivity extends Activity {
            //FileControler cont = new FileControler();
            
            //cont.SaveStringtoFile("srfdgsergserg", this.getPackageName(), "HAHA.txt");
-        LogDog.LogDoginitialize(getApplicationContext(),"LogDog.xml");
-
+        
+        
+   
  
        /*
         LogConfiguration conf = new LogConfiguration();
@@ -110,6 +97,11 @@ public class MainActivity extends Activity {
          }
     }
     
+    public void TestActivity(View view){
+    	Intent intent = new Intent(this,Test.class);
+    	startActivity(intent);
+    	finish();
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

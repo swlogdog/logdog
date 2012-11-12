@@ -41,6 +41,7 @@ public final class LogDog {
 	 * @param XMLFile XML 설정 데이터
 	 */
 	public static void LogDoginitialize(Context context,String XMLFile) { 
+	
 		String XMLString = GetXMLData(context,XMLFile);
 		if(XMLString == null){
 			Log.e("LOGDOG","FAIL INIT");
