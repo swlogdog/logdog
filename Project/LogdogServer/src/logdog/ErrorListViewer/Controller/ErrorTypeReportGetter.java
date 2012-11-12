@@ -56,7 +56,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences());
+				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);	
@@ -113,7 +113,10 @@ public class ErrorTypeReportGetter {
 			while ( iterator.hasNext() ){
 				ErrorReportInfo info = iterator.next();
 				if(!KeyList.contains(info.getE_ClassificationCode()))
-					KeyList.add(info.getE_ClassificationCode());
+				{
+					if(info.getE_ClassificationCode()!=null)
+						KeyList.add(info.getE_ClassificationCode());
+				}
 			  }
 			
 			ErrorTypeReport report = new ErrorTypeReport();  
@@ -125,7 +128,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences());
+				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -183,7 +186,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences());
+				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);

@@ -8,6 +8,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import logdog.Common.ServiceType;
+import logdog.Common.BackendWork.BackendFactory;
+import logdog.Common.BackendWork.BackendWorkingSet;
+import logdog.Common.BackendWork.DTO.BackendSettingData;
 import logdog.Common.BlobStore.BlobFileWriter;
 import logdog.Common.BlobStore.BlobWriterFactory;
 import logdog.ErrorReport.Controller.ErrorReportRegister;
@@ -21,9 +24,11 @@ import logdog.ErrorReport.DTO.UserSummaryInfo;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.taskqueue.TaskOptions.Method;
+import com.google.gson.Gson;
 
 @Path("/ReportBackend")
-public class BackendWorkingSet {
+public class BackendWorker {
 
 	
 	/**
@@ -60,18 +65,27 @@ public class BackendWorkingSet {
 		ErrorUniqueID uid = new ErrorUniqueID(matchingdata.getName(),matchingdata.getClassname(),matchingdata.getLine());
 		ErrorReportRegister eReport = new ErrorReportRegister();
 		Key ReportKey = KeyFactory.stringToKey(matchingdata.getReportKey());
-		
-		//타입 매칭  리포트를 갱신한다.
-		ReportSummaryUpdaer  reporter = new ReportSummaryUpdaer();
-		UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
+		if(matchingdata.isRematching()==false)
+		{
+			ReportSummaryUpdaer  reporter = new ReportSummaryUpdaer();
+			UserSummaryInfo Temp =eReport.getSummaryInfo(ReportKey);
 
-		if(Temp != null)
-			reporter.UpdatedReportError(Temp,matchingdata.getClassname());
-		else
-			return Response.status(400).entity("Matching Error").build();
+			if(Temp != null)
+				reporter.UpdatedReportError(Temp,matchingdata.getClassname());
+			else
+				return Response.status(400).entity("Matching Error").build();
+		}
+
 	
 		//System.out.print("Backend Start");
-		eReport.MatchingErrorType(ReportKey, uid);
+		if(eReport.MatchingErrorType(ReportKey, uid)==null)
+		{
+			Gson gson = new Gson();
+			matchingdata.setRematching(true);
+			BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
+			BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/TypeMatching", Method.POST, gson.toJson(matchingdata));
+			backendService.CreateBackendWorkJson(BackendInfo);
+		}
 		
 
 		return Response.status(200).entity("ErrorTypeMatching end").build();
