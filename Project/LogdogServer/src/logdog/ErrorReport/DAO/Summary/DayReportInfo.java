@@ -1,4 +1,4 @@
-package logdog.DashBoard.DAO;
+package logdog.ErrorReport.DAO.Summary;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
@@ -8,39 +8,36 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
-public class VersionReportInfo {
+public class DayReportInfo {
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Key VersionRateKey;
+	private Key DayRateKey;
 	@Persistent
-	String AppVersion;
+	int Year;//YYYY
 	@Persistent
-	String OSVersion;
+	int MDay;//MMDD
 	@Persistent 
 	private int TotalOccurrences;
-	public VersionReportInfo(){}
-	public VersionReportInfo(String appVersion, String oSVersion) {
+	public DayReportInfo(){}
+	public DayReportInfo(int year, int mDay) {
 		super();
-		AppVersion = appVersion;
-		OSVersion = oSVersion;
-		TotalOccurrences = 1;
+		Year = year;
+		MDay = mDay;
+		TotalOccurrences=1;
 	}
 	public void UpdatedError()
 	{
 		TotalOccurrences+=1;
 	}
-	public Key getVersionRateKey() {
-		return VersionRateKey;
+	public Key getDayRateKey() {
+		return DayRateKey;
 	}
-
-	public String getAppVersion() {
-		return AppVersion;
+	public int getYear() {
+		return Year;
 	}
-
-	public String getOSVersion() {
-		return OSVersion;
+	public int getMDay() {
+		return MDay;
 	}
-
 	public int getTotalOccurrences() {
 		return TotalOccurrences;
 	}

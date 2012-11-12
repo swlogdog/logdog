@@ -5,7 +5,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import logdog.DashBoard.Controller.SummaryGetter;
+import logdog.DashBoard.DTO.Json.ClassReportRate;
 import logdog.DashBoard.DTO.Json.DayReport;
+import logdog.DashBoard.DTO.Json.VersionReportRate;
 
 import com.google.gson.Gson;
 
@@ -16,24 +19,31 @@ public class SummaryInfo {
 	@Path("/Day")
 	public String getDaySummary()
 	{	   		
-		DayReport Test = new DayReport();
-		Test.AddDay(1110);
-		Test.AddDay(1109);
-		Test.AddDay(1108);
-		Test.AddDay(1107);
-		Test.AddDay(1106);
-		Test.AddDay(1105);
-	
-		Test.AddReportRate(5);
-		Test.AddReportRate(10);
-		Test.AddReportRate(5);
-		Test.AddReportRate(10);
-		Test.AddReportRate(20);
-		Test.AddReportRate(20);
-	
-		Gson gson = new Gson();
-
+		SummaryGetter getter = new SummaryGetter();
 		System.out.print("Json 요청");
-		return gson.toJson(Test);
+		return getter.getDayErrorRate();
 	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Version")
+	public String getVersionErrorRate()
+	{	   		
+		SummaryGetter getter = new SummaryGetter();
+		System.out.print("Json 요청");
+		return getter.getVersionRate();
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Class")
+	public String getClassErrorReport()
+	{	   		
+
+		SummaryGetter getter = new SummaryGetter();
+		System.out.print("Json 요청");
+		return getter.getClassErrorRate();
+		
+		
+	}
+	
 }
+

@@ -26,6 +26,9 @@ public class ErrorTypeInfo {
 	@Persistent
 	private String OccurrenceClass;
 	
+	@Persistent
+	private int codeLine;
+	
 	@Persistent 
 	private int TotalOccurrences;
 	
@@ -49,6 +52,7 @@ public class ErrorTypeInfo {
 		//데이터 초기화 
 		ErrorName = errinfo.getName();
 		OccurrenceClass = errinfo.getClassname();
+		codeLine = errinfo.getLine();
 		TotalOccurrences=0;
 		WeeklyOccurrences=0;
 		LastUpdateDay = TimeUtil.GetNowDate();
@@ -62,6 +66,10 @@ public class ErrorTypeInfo {
 	
 	public List<String> getCallstack() {
 		return Callstack;
+	}
+	
+	public int getCodeLine() {
+		return codeLine;
 	}
 	public void setCallstack(List<String> callstack) {
 		Callstack = callstack;

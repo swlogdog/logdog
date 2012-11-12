@@ -13,16 +13,24 @@ public class CallStackInfo {
 	@XmlAttribute
 	private String classname;
 	@XmlAttribute
+	private int Line;
+	
+	@XmlAttribute
 	private ArrayList<String> Callstack;
 	
 	public CallStackInfo(){}
 	public CallStackInfo(ErrorUniqueID uid, ArrayList<String> data) {
 		super();
 		this.name = uid.getName();
+		this.Line =uid.getLine();
 		this.classname=uid.getClassname();
 		Callstack = data;
 	}
 	
+	
+	public int getLine() {
+		return Line;
+	}
 	public String getName() {
 		return name;
 	}

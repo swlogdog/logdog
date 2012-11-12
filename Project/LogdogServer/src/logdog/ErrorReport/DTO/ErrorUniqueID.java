@@ -9,11 +9,14 @@ public class ErrorUniqueID {
 	private String name;
 	@XmlAttribute
 	private String classname;
+	@XmlAttribute
+	private int line;
 	public ErrorUniqueID()	{}
-	public ErrorUniqueID(String name, String classname) {
+	public ErrorUniqueID(String name, String classname,int line) {
 		super();
 		this.name = name;
 		this.classname = classname;
+		this.line=line;
 	}
 	
 	public String getName() {
@@ -27,5 +30,11 @@ public class ErrorUniqueID {
 	}
 	public void setClassname(String classname) {
 		this.classname = classname;
+	}
+	public int getLine() {
+		return line;
+	}
+	public void setLine(int line) {
+		this.line = line;
 	}
 }
