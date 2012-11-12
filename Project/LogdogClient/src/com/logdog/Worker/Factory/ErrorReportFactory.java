@@ -10,6 +10,12 @@ import com.logdog.ErrorReport.Collector.StackTraceCollector;
 import com.logdog.ErrorReport.Collector.SystemInfoCollector;
 import com.logdog.common.Date.Date;
 
+/**
+ * 에러 리포트 생성하는 팩토리
+ * @since 2012. 11. 12.오전 12:20:20
+ * TODO
+ * @author JeongSeungsu
+ */
 public class ErrorReportFactory {
 
 	MemoryCollector			m_MemoryCollector;

@@ -5,15 +5,19 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 
+import android.util.Log;
+
 import com.logdog.Appender.FileAppender.FileAppender;
 import com.logdog.ErrorReport.ClientReportData;
 import com.logdog.Formatter.IFormatter;
+import com.logdog.common.File.FileControler;
 import com.logdog.common.Network.Network;
 
 
 
 /**
  * 구글 앱엔진에 데이터를 보내는 어펜더
+ * FileAppender를 상속받아서 구현한다 
  * @since 2012. 11. 5.오후 10:08:22
  * TODO
  * @author JeongSeungsu
@@ -21,9 +25,19 @@ import com.logdog.common.Network.Network;
 @Root
 public class AppEngineAppender extends FileAppender {
 
+	
+	
+	/**
+	 * AppEngine과의 소통을 담당하는 커뮤니 케이터
+	 */
 	@Element
 	AppEngineCommunicator AppComunicator;
 	
+
+	
+	/**
+	 * Network객체에 등록하기 위한 더미
+	 */
 	Network	m_Network;
 
 	public AppEngineAppender(){
@@ -48,6 +62,7 @@ public class AppEngineAppender extends FileAppender {
 	public boolean ErrorReportProcess(ClientReportData Data) {
 		if(!super.ErrorReportProcess(Data))
 			return false;
+			
 		return true;
 	}
 	
@@ -55,5 +70,8 @@ public class AppEngineAppender extends FileAppender {
 		// TODO Auto-generated method stub
 		return this.GetClassName();
 	}
-	
+
+	public AppEngineCommunicator GetCommunicator(){
+		return AppComunicator;
+	}
 }

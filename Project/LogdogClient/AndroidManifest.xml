@@ -25,12 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         
-        <service android:name="com.logdog.Handler.NetworkService">
-            <intent-filter>
-                <action android:name="LogDogService">
-            </action></intent-filter>
-		</service>
-    </application>
+  
+     </application>
 
 </manifest>

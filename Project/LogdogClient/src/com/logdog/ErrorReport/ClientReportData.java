@@ -1,5 +1,11 @@
 package com.logdog.ErrorReport;
 
+/**
+ * 서버나 로컬에 저장할 ErrorReport
+ * @since 2012. 11. 12.오전 12:15:06
+ * TODO
+ * @author JeongSeungsu
+ */
 public class ClientReportData {
 
 	public ClientReportData() {
@@ -9,6 +15,7 @@ public class ClientReportData {
 		National 			= "unknown";
 		ErrorName			= "";
 		ErrorClassName		= "";
+		line				= -1;
 		AppVersion			= "unknown";
 		OSVersion			= "unknown";
 		GPS					= false;
@@ -37,10 +44,14 @@ public class ClientReportData {
 	public String ErrorName;
 	/**
 	 * 에러가 발생한 클래스 이름
-	 * ClassName(60)
-	 * 클래스 이름+(라인)
+	 * ClassName
+	 * 클래스 이름
 	 */
 	public String ErrorClassName;
+	/**
+	 * Error Code Line 
+	 */
+	public int line;
 	/**
 	 * 앱 버젼
 	 */

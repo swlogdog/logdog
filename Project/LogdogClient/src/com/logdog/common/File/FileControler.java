@@ -214,8 +214,9 @@ public class FileControler {
 		boolean Success = false;
 		try{
 			if(file.exists()){
-				file.delete();
-				Success = true;
+				if(file.delete())
+					Success = true;
+			
 			}
 		}
 		catch(Exception e){

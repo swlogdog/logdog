@@ -3,6 +3,12 @@ package com.logdog.common.Date;
 import java.text.SimpleDateFormat;
 import android.content.Context;
 
+/**
+ * 단순한 시간 Date값을 위한 클래스
+ * @since 2012. 11. 11.오후 11:53:51
+ * TODO
+ * @author JeongSeungsu
+ */
 public class Date {
 
 	/**

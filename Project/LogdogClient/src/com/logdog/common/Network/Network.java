@@ -10,8 +10,17 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
+/**
+ * 네트워크 관리하는 총괄 클래스
+ * @since 2012. 11. 11.오후 11:55:13
+ * TODO
+ * @author JeongSeungsu
+ */
 public class Network {
 	
+	/**
+	 * 커뮤니케이터 리스트를 가지고 있는다. 이것에 의해 관리된다
+	 */
 	private List<AbstractCommunicator> 	NetworkCommunicatorList;
 	
 	Context m_Context;
@@ -41,6 +50,13 @@ public class Network {
 		NetworkCommunicatorList.clear();
 	}
 	
+	/**
+	 * 모든 등록된 커뮤니케이터에 데이터를 전송한다.
+	 * @since 2012. 11. 11.오후 11:55:39
+	 * TODO
+	 * @author JeongSeungsu
+	 * @return 모든 어펜더가 성공하면 성공 아니면 실패
+	 */
 	public boolean SendData(){
 		for(AbstractCommunicator appendr : NetworkCommunicatorList){
 			if(!appendr.SendData())
@@ -49,10 +65,15 @@ public class Network {
 		return true;
 	}
 	
-	public void StartService(){
-		m_Context.startService(new Intent("LogDogService"));
-	}
-
+	/**
+	 * 네트워크 상태를 얻어오기
+	 * @since 2012. 11. 11.오후 11:56:33
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @param Type 모바일,wifi 
+	 * @return 가능하면 true, 아니면 false;
+	 */
 	static private boolean GetNetwork(Context context,int Type){
 		boolean use = false;
 		try {

@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.google.code.microlog4android.Level;
-import com.google.code.microlog4android.format.Formatter;
-
 
 import com.logdog.Handler.ExceptionHandler;
 import com.logdog.Worker.Worker;
@@ -23,11 +21,25 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+/**
+ * 사용자가 최종으로 사용하는 인터페이스 적인 객체
+ * @since 2012. 11. 12.오전 12:28:10
+ * TODO
+ * @author JeongSeungsu
+ */
 public final class LogDog {
 	
 	private static ExceptionHandler	ExceptionHandler;
 	
 
+	/**
+	 * 로그도그 초기화
+	 * @since 2012. 11. 12.오전 12:28:31
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context 
+	 * @param XMLFile XML 설정 데이터
+	 */
 	public static void LogDoginitialize(Context context,String XMLFile) { 
 		String XMLString = GetXMLData(context,XMLFile);
 		if(XMLString == null){
@@ -38,18 +50,50 @@ public final class LogDog {
 		ExceptionHandler = new ExceptionHandler(Worker.getInstance());
 	}
 	
+	/**
+	 * Log level 설정
+	 * @since 2012. 11. 12.오전 12:28:46
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level
+	 */
 	public static void SetLogLever(Level level){
 		Worker.getInstance().SetLogLever(level);
 	}
 	
+	/**
+	 * 로그 출력
+	 * @since 2012. 11. 12.오전 12:28:55
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level
+	 * @param log
+	 */
 	public static void PrintLog(Level level,String log){
 		Worker.getInstance().PrintLog(level, log);
 	}
 	
+	/**
+	 * Exception 출력
+	 * @since 2012. 11. 12.오전 12:29:05
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level
+	 * @param t
+	 */
 	public static void PrintLog(Level level,Throwable t){
 		Worker.getInstance().PrintLog(level, t);
 	}
 	
+	/**
+	 * Asset폴더에 존재하는 xml 파일 데이터를 가져온다.
+	 * @since 2012. 11. 12.오전 12:29:12
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @param XMLFile
+	 * @return xml 파일에 대한 String으로 변환
+	 */
 	private static String GetXMLData(Context context,String XMLFile){
 		AssetManager am = context.getResources().getAssets();
 		InputStream is;

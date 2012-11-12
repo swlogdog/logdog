@@ -14,6 +14,12 @@ import com.logdog.ErrorReport.ClientReportData;
 
 import com.logdog.common.Network.Network;
 
+/**
+ * 안드로이드 시스템 정보를 모으는 콜렉터
+ * @since 2012. 11. 12.오전 12:14:40
+ * TODO
+ * @author JeongSeungsu
+ */
 public class SystemInfoCollector {
 
 	Context m_Context;
@@ -23,6 +29,13 @@ public class SystemInfoCollector {
 		m_Context = context;
 	}
 
+	/**
+	 * 시스템 정보를 모은다.
+	 * @since 2012. 11. 12.오전 12:14:53
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param OutPutData
+	 */
 	public void DoCollectSystemInfo(ClientReportData OutPutData) {
 		// TODO Auto-generated method stub
  
@@ -54,7 +67,7 @@ public class SystemInfoCollector {
 
 	private String GetNational(Context context){
 		Locale nowlocale = context.getResources( ).getConfiguration( ).locale;
-		return nowlocale.getDisplayName();
+		return nowlocale.getDisplayCountry();
 	}
 	private boolean GetGps(Context context) {
 		PackageManager packagemanager = context.getPackageManager();

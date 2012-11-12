@@ -19,7 +19,7 @@ import com.logdog.common.Parser.LogDogJsonParser;
 
 
 /**
- * 파일에 저장할 수 있는 어펜더
+ * 파일에 저장할 수 있는 어펜더 Log,ErrorReport,CallStack이 저장된다.
  * @since 2012. 10. 13.오후 10:10:19
  * TODO 
  * @author JeongSeungsu
@@ -31,8 +31,10 @@ public class FileAppender extends AbstractAppender{
 	
 	
 	private final String				StackTraceName 		= "StackTrace.txt";
-	private final String				SendLogFileName 	= "SendLogFile.txt";
+	
 	private final String 				ErrorReportFileName = "ErrorReport.txt";
+	
+	private final String				SendLogFileName 	= "SendLogFile.txt";
 	
 	@Element
 	private String						SaveDirName;
@@ -40,8 +42,12 @@ public class FileAppender extends AbstractAppender{
 	@Element
 	private String 						LogFileName;
 	
+	/**
+	 * 보낼 로그 라인수
+	 */
 	@Element
 	private int							ReadLogLine;
+	
 	
 	@Element
 	IFormatter Formatter;
@@ -50,19 +56,21 @@ public class FileAppender extends AbstractAppender{
 		super();
 	}
 	
-	public FileAppender(String appendername, String savedirname, String logfilename, int readlogline , IFormatter formatter) {
+	public FileAppender(String appendername, String savedirname, String logfilename, int realdline, IFormatter formatter) {
 		// TODO Auto-generated constructor stub
 		super(appendername);
 		SaveDirName = savedirname;
 		LogFileName = logfilename;
-		ReadLogLine = readlogline;
 		Formatter	= formatter;
+		ReadLogLine = realdline;
 	}
 	
 	public void InitAppender(Network network) {
 		
 		appender = new com.google.code.microlog4android.appender.FileAppender();
 		appender.setAppend(true);
+		if(!FileControler.ExistsExternalStorageFile(SaveDirName, LogFileName))
+			FileControler.SaveStringtoFile("", SaveDirName, LogFileName);
 		appender.setFileName(SaveDirName+"/"+LogFileName); //파일이름 저장시 어떤 방식으로 저장할지 포맷 설정 해야함...
 		Formatter.InitFormatter();
 		appender.setFormatter(Formatter.GetFormatter());
@@ -81,6 +89,7 @@ public class FileAppender extends AbstractAppender{
 			Data.CallStackFileName = FileControler.SaveStringtoFile(Data.CallStackFileName, 
 					SaveDirName, Data.ReportTime + StackTraceName);
 			
+
 			final int readline = ReadLogLine;
 
 			String totallog = FileControler.FiletoString(SaveDirName,LogFileName);
@@ -104,9 +113,10 @@ public class FileAppender extends AbstractAppender{
 			String SendLog = SendlogBuild.toString();
 			
 			Data.LogFileName = FileControler.SaveStringtoFile(SendLog, SaveDirName , 
-																	Data.ReportTime+SendLogFileName );
+																	Data.ReportTime+SendLogFileName);
 			
 			
+		
 			String ReportJSon = LogDogJsonParser.toJson(Data);
 			
 			FileControler.SaveStringtoFile(ReportJSon, SaveDirName, Data.ReportTime + ErrorReportFileName);
@@ -114,6 +124,7 @@ public class FileAppender extends AbstractAppender{
 		catch (Exception e) {
 			e.printStackTrace();
 			Log.e("LOGDOG", "LogReadError");
+			return false;
 		}
 		return true;
 	}
@@ -126,9 +137,7 @@ public class FileAppender extends AbstractAppender{
 	public String GetStackTraceFileName(){
 		return StackTraceName;
 	}
-	public String GetSendLogFileName(){
-		return SendLogFileName;
-	}
+
 	public String GetErrorReportFileName(){
 		return ErrorReportFileName;
 	}
@@ -141,7 +150,6 @@ public class FileAppender extends AbstractAppender{
 	public int GetRealLogLine(){
 		return ReadLogLine;
 	}
-	
 	
 
 }
