@@ -44,17 +44,12 @@ public class LogCatAppender extends AbstractAppender {
 		appender = new com.google.code.microlog4android.appender.LogCatAppender();
 		
 		Formatter.InitFormatter();
-		appender.setFormatter(Formatter.GetFormatter());
+		appender.setFormatter(Formatter.GetLog4Formatter());
 	}
 
-	public com.google.code.microlog4android.appender.Appender GetAppender() {
+	public com.google.code.microlog4android.appender.Appender GetLog4Appender() {
 		// TODO Auto-generated method stub
 		return appender;
-	}
-
-	public String GetClassName() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 

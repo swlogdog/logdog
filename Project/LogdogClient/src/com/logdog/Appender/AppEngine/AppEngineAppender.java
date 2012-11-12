@@ -66,11 +66,6 @@ public class AppEngineAppender extends FileAppender {
 		return true;
 	}
 	
-	public String GetClassName() {
-		// TODO Auto-generated method stub
-		return this.GetClassName();
-	}
-
 	public AppEngineCommunicator GetCommunicator(){
 		return AppComunicator;
 	}

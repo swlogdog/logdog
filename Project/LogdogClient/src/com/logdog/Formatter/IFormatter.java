@@ -27,5 +27,5 @@ public interface IFormatter {
 	 * @author JeongSeungsu
 	 * @return  Microlog4android 의 Formatter
 	 */
-	public com.google.code.microlog4android.format.Formatter GetFormatter();
+	public com.google.code.microlog4android.format.Formatter GetLog4Formatter();
 }

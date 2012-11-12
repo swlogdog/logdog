@@ -37,7 +37,7 @@ public class SimpleFormatter implements IFormatter {
 		formatter.setDelimeter(Delimiter);
 	}
 
-	public Formatter GetFormatter() {
+	public Formatter GetLog4Formatter() {
 		// TODO Auto-generated method stub
 		return formatter;
 	}

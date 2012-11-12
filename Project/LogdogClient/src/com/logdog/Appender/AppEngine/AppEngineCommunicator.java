@@ -96,7 +96,6 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	}
 	public synchronized boolean SendData() {
 		
-		Log.e("Service","SEndData");
 		// TODO Auto-generated method stub
 		File[] SendFileList = FileControler.ExternalStorageDirectoryFileList(SaveDir);
 		
@@ -112,13 +111,12 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 			if(file.getName().matches("(?i).*"+ErrorReportFileName+".*")){
 				String Content 		  = FileControler.FiletoString(file);
 				ClientReportData Data = (ClientReportData) LogDogJsonParser.fromJson(Content, ClientReportData.class);
-				SendData(Data);
+				OneSendData(Data);
 			}
 		}
-		Log.e("Service","SendDataEnd");
 		return true;
 	}
-	public void SendData(ClientReportData data) {
+	public void OneSendData(ClientReportData data) {
 		
 		String Content 		  = LogDogJsonParser.toJson(data);
 		File callstackfile 	  = FileControler.GetExternalStorageFile(SaveDir, 

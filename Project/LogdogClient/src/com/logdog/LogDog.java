@@ -13,6 +13,7 @@ import java.io.InputStream;
 
 import com.google.code.microlog4android.Level;
 
+import com.logdog.Appender.AbstractAppender;
 import com.logdog.Handler.ExceptionHandler;
 import com.logdog.Worker.Worker;
 
@@ -41,6 +42,7 @@ public final class LogDog {
 	 * @param XMLFile XML 설정 데이터
 	 */
 	public static void LogDoginitialize(Context context,String XMLFile) { 
+	
 		String XMLString = GetXMLData(context,XMLFile);
 		if(XMLString == null){
 			Log.e("LOGDOG","FAIL INIT");
@@ -83,6 +85,28 @@ public final class LogDog {
 	 */
 	public static void PrintLog(Level level,Throwable t){
 		Worker.getInstance().PrintLog(level, t);
+	}
+	
+	/**
+	 * 어펜더 추가
+	 * @since 2012. 11. 13.오전 3:40:25
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appender 추가할 어펜더
+	 */
+	public static void AddAppender(AbstractAppender appender){
+		Worker.getInstance().AddAppender(appender);
+	}
+	
+	/**
+	 * 어펜더 삭제
+	 * @since 2012. 11. 13.오전 3:40:35
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appender 지울 어펜더
+	 */
+	public static void RemoveAppender(AbstractAppender appender){
+		Worker.getInstance().RemoveAppender(appender);
 	}
 	
 	/**

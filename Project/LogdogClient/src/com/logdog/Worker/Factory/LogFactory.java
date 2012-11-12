@@ -2,8 +2,8 @@ package com.logdog.Worker.Factory;
 
 
 import com.logdog.Appender.AppenderConfiguration;
-import com.logdog.Worker.Log.LogConfiguration;
-import com.logdog.Worker.Log.LogManager;
+import com.logdog.Log.LogConfiguration;
+import com.logdog.Log.LogManager;
 import com.logdog.common.Parser.LogDogXmlParser;
 
 /**

@@ -34,4 +34,14 @@
         android:text="@string/button1"
         android:onClick="Test1"/>
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="75dp"
+        android:text="TestActivity"
+        android:onClick="TestActivity" />
+
 </RelativeLayout>

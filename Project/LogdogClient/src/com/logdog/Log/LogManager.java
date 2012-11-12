@@ -1,5 +1,5 @@
 
-package com.logdog.Worker.Log;
+package com.logdog.Log;
 
 import com.google.code.microlog4android.Level;
 import com.google.code.microlog4android.Logger;
@@ -11,7 +11,7 @@ import com.logdog.Appender.*;
 
 
 /**
- * 로그4안드로이드 랩퍼 클래스
+ * 로그 관리하는 매니져 클래스
  * 랩퍼 클래스로 간단한 꼭 필요한 인터페이스만 제공한다.
  * @since 2012. 10. 13.오후 9:44:41
  * TODO 
@@ -33,61 +33,72 @@ public class LogManager {
 	}
 		
 	/**
-	 * 로그 남기는 클래스 초기화
-	 * appender를 선택하여 필요한것과 보여줄 로그의 레벨 설정 
-	 * @since 2012. 10. 13.오후 10:02:25
-	 * TODO 
-	 * @author JeongSeungsu
-	 * @param appendernames 쓸 어펜더 이름 "Log4LogCat|Log4File" 예제 중간에 | 넣어줘서 분리함
-	 * @param loglevel 레벨 설정 debug, info, fetal, error, warn 설정 가능
-	 
-	 */
-/*	public void init(Level loglevel)
-	{
-		try {
-			PatternFormatter formatter = new PatternFormatter();     //포맷터 설정 부분 변경 필요...
-			formatter.setPattern("   %d{ISO8601}    [%P]  %m  %T  ");
-			m_logger.setLevel(loglevel);
-
-			String[] StrArray;
-			StrArray = setting.GetLogAppenderName().split("\\|");
-
-			for (String s : StrArray) {
-
-				com.google.code.microlog4android.appender.Appender appender = InitAppender(s);
-
-				appender.setFormatter(formatter);
-				m_logger.addAppender(appender);
-			}
-			
-			m_logger.info("LogDog log Init");
-		} catch (Exception e) { 
-			Log.e("LOG_ERROR", "FAIL Log4Andorid : " );
-		}
-	}
-*/
-
-	/**
-	 *
+	 * 어펜더 추가
 	 * @since 2012. 11. 10.오전 12:59:24
-	 * TODO Formatter 추가해야됨
+	 * TODO 
 	 * @author JeongSeungsu
 	 * @param appender
 	 */
 	public void AddAppender(AbstractAppender appender){
-		com.google.code.microlog4android.appender.Appender Appender = appender.GetAppender();
+		com.google.code.microlog4android.appender.Appender Appender = appender.GetLog4Appender();
 		if(Appender== null)
 			return;
 		
 		m_logger.addAppender(Appender);
 		//ForMatter추가
 	}
+	
+	/**
+	 * 어펜더 연결해제
+	 * @since 2012. 11. 13.오전 3:23:52
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appender
+	 */
+	public boolean RemoveAppender(AbstractAppender appender){
+		if(appender == null)
+			return false;
+		com.google.code.microlog4android.appender.Appender Appender = appender.GetLog4Appender();
+		if(Appender== null)
+			return false;
+		
+		m_logger.removeAppender(Appender);
+		return true;
+	}
+	
+	/**
+	 * 모든 들어 있는 어펜더 연결해제
+	 * @since 2012. 11. 13.오전 3:24:25
+	 * TODO
+	 * @author JeongSeungsu
+	 */
+	public void ClearAppenders(){
+		m_logger.removeAllAppenders();
+	}
+	
+	/**
+	 * AppenderConfiguration에 의한 초기화 
+	 * Appender들을 로거 객체에 넣어준다.
+	 * @since 2012. 11. 13.오전 3:21:38
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param configuration
+	 */
 	public void InitLog(AppenderConfiguration configuration){
 		for(AbstractAppender appender : configuration.getAppenderList()){
 			AddAppender(appender);
 		}
 	}
 	
+	/**
+	 * 로그 출력
+	 * String 데이터를 출력한다.
+	 * @since 2012. 11. 13.오전 3:25:28
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level 설정할 Level 값
+	 * @param log 출력할 String 데이터
+	 */
 	public void PrintLog(Level level, String log){
 		
 		switch(level.toInt()){
@@ -108,6 +119,14 @@ public class LogManager {
 			break;
 		}
 	}
+	/**
+	 * Exception 데이터를 출력한다.
+	 * @since 2012. 11. 13.오전 3:25:58
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level 출력할 레벨값 설정
+	 * @param t 출력할 Exception데이터
+	 */
 	public void PrintLog(Level level, Throwable t){
 	
 		switch(level.toInt()){
@@ -126,21 +145,6 @@ public class LogManager {
 		case Level.WARN_INT:
 			m_logger.warn("Exception",t);
 			break;
-		}
-	}
-	
-	/**
-	 * 포맷터 설정하는데 모든 어펜더에 동일하게...
-	 * 각 어펜더 마다 포매터 설정
-	 * @since 2012. 10. 13.오후 10:08:20
-	 * TODO 
-	 * @author JeongSeungsu
-	 * @param formatter
-	 */
-	public void SetFormatter(Formatter formatter){
-		for(int i =0 ; i < m_logger.getNumberOfAppenders(); i++)
-		{
-			m_logger.getAppender(i).setFormatter(formatter);
 		}
 	}
 	
