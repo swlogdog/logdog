@@ -74,8 +74,8 @@ var SelectDay;
           <div class="nav-collapse collapse">
     
      	       <ul class="nav">
-        	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
-        	    	 <li><a href="#">Setting</a></li>
+        	    	 <li><a href="/Board/dash.jsp">DashBoard</a></li>
+        	    	 <li class="active"><a href="#">Setting</a></li>
         	    	 <li><a href="#">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
@@ -87,13 +87,7 @@ var SelectDay;
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>Day ErrorReport</h1>
-    <p class="lead"><script>var request = new Request();
-             			var param = request.getParameter("Day");
-             			var date = param.replace('-',' / ');
-             			SelectDay = param;
-             			document.write(date+'에 발생한 에러 정보');
-             			</script></p>
+    <h1>LogDog Setting</h1>
  	 </div>
 </header>
 <div class="container-fluid">
@@ -102,128 +96,56 @@ var SelectDay;
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#daystatistics"><i class="icon-chevron-right"></i>그래프</a></li>
-          <li><a href="#daytable"><i class="icon-chevron-right"></i>리스트</a></li>
+          <li><a href="#log"><i class="icon-chevron-right"></i>로그 전송</a></li>
+          <li><a href="#daytable"><i class="icon-chevron-right"></i>계정 추가</a></li>
         </ul>
       </div>
 <!--  본 -->
-<div class="span8">
-       <section id="daystatistics">
-          <div class="page-header">
-            <h1>Day Error Statistics</h1>
-           </div>
-
-        <div id="day" style="height: 400px">
-		<script type='text/javascript'>
-		//<![CDATA[ 
-		      
-		      $(function () {
-				 var categori;
-		    	 var Daychart = new Highcharts.Chart({
-			        chart: {
-			            renderTo: 'day',
-			                style: {
-			                    margin: '0 auto'
-			                },
-							events: {
-								load: function(event) {
-
-								$.getJSON('/Board/summary/Day', function(data) {
-									$.each(data,function(key,value){
-									if('Day'==key)
-									{
-										Daychart.xAxis[0].setCategories(eval(value));
-										categori=eval(value);
-										Today=categori[0];
-									}
-									if('ReportRate'==key)
-									{
-										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
-									
-									}
-									} );
-									});
-								}
-							}
-
-			        },
-			        yAxis: {
-		                min: 0,
-		                title: {
-		                    text: 'Error Rate'
-		                }
-			        },
-			        title: {
-			            text: 'Date Error Report'
-			     
-			        },
-			        plotOptions: {
-			            series: {
-			                cursor: 'pointer',
-			                events: {
-			                    click: function(event) {
-			            			var nameV = categori[event.point.x];
-			            		
-			                    	var loca = nameV.replace(' / ','-');
-			                
-			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
-			                    }
-			                }
-			            }
-			        }
-			    });
+		<div class="span9">
+            
+       		  <section id="log">
+        	  <div class="page-header">
+        	    <h1>LogSetting</h1>
+         	  </div>
+          
+			  	<h3>LogFile Report Option</h3>
+				<p>Logdog은 Logdog이 탑제된 어플리케이션의 사용자 로그 파일을 에러 전송시 전송하는 기능을 제공합니다. 그러나 이 기능은 많은 트래픽을 유발하기 때문에 옵션을 통해 개발자가 끄거나 켤 수 있습니다. Logdog 시작 전에 이 기능을 사용할 것인지 결정해주시길 바랍니다. 이 기능은 설정에서 언제든지 끄거나 켤 수 있습니다. 
+				추가적으로 Web Setting이전에 접수된 에러에 대해서 자동적으로 LogFile  접수기능이 꺼져있으니 유의 하시길 바랍니다(LogFile은 GAE의 Blob Store에 저장됩니다).</p>
+				<p></p>
+		
 				
-		           });
-			//]]>  </script>
-              </div>
-              </section>
-              <section id="daytable">
-             <div class="span12" id="ErrorList" style="vertical-align:middle">
-        		<table id="list2" style="vertical-align:middle"></table>
-				<div id="pager2"></div>
-        	 <script type="text/javascript">
-			 jQuery(
-				function()
-				{
-				jQuery("#list2").jqGrid({
-				   	url:'/list/errlist/Day='+SelectDay,
-					datatype: "json",
-					autowidth: true,
-					autoheight:true,
-					jsonReader : { 
-						page: "page", 
-						total: "total", 
-						root: "errors",
-						repeatitems: false, 
-						id: "key"
-					},
-				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total(Weekly)','BugClear','key'],
-				   	colModel:[
-				   	
-				   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
-				   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
-				   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
-				   		{name:'day',index:'day', sortable:false,resizable:false},		
-				   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
-				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
-				   		{name:'key',index:'key' , sortable:false, hidden:true},
-				   	],		
-
-				    viewrecords: true,
-				    ondblClickRow: function(id){ location.href='/DetailView/ErrorDetailView.html?Key='+id;},
-				    caption:"ErrorReport"
-				    
-				});
-				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
-			}
-		);  		
-	 </script>
-	 </section>
-        	</div>
-            
-       
-            
-</div>
+ 					<form action="System/logchage" method="POST">
+           				 <label class="radio">
+             				 <input type="radio" name="LogSetting" id="optionsRadios1" value="true" checked>
+              				Use
+           				 </label>
+            			<label class="radio">
+             			 <input type="radio" name="LogSetting" id="optionsRadios2" value="false">
+             				Not Use
+            			</label>
+             		 	<button class="btn btn-large btn-block btn-primary" type="submit" class="btn">Logdog Start</button>
+          			</form>
+		  		
+		  		</section>
+		  		
+		  	<section id="log">
+        	  <div class="page-header">
+        	    <h1>관리자 추가</h1>
+         	  </div>
+          
+			  	<h3>개발에 참여할 관리자를 추가합니다.</h3>
+				<p>개발에 참여하고 있는 관리자를 추가하여 해당 관리자가 접근 가능하도록 만듭니다. 현재는 관리자 추가 기능만을 지원합니다. 삭제는 추후 지원 예정입니다</p>
+				<p></p>
+		
+				<form class="form-inline" action="System/addUser" method="POST">
+            		<input type="text" name="user" class="input-small" placeholder="Email">
+           			 <button type="submit" class="btn">Add</button>
+          		</form>
+		  		
+		  		</section>
+		  
+       </div>     
+	</div>
 
 
 </div>

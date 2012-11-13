@@ -99,8 +99,8 @@ var Request = function() {
             <p class="navbar-text pull-right">
              	 <a href="<%=userService.createLogoutURL("../index.jsp")%>" class="navbar-link">logout</a></p>
      	       <ul class="nav">
-        	    	 <li class="active"><a href="/board/dash.jsp">DashBoard</a></li>
-        	    	 <li><a href="#">Setting</a></li>
+        	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
+        	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
         	    	 <li><a href="#">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
@@ -110,8 +110,8 @@ var Request = function() {
 
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    	<h1>DashBoard!!</h1>
-    	<p class="lead">LogDog Information and Setting for Starter</p>
+    	<h1>DashBoard</h1>
+    	<p class="lead">The only choice for your development productivity</p>
  	 </div>
 </header>
 
@@ -129,7 +129,7 @@ var Request = function() {
 <!--  본 -->
 <div class="span8">
               <div class="page-header">
-            <h1>Error Info</h1>
+            <h1>Error Statistics</h1>
            </div>
 
               <div id="day" style="height: 400px">

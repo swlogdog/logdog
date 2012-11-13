@@ -1,8 +1,8 @@
-<!-- Indices written at Tue, 13 Nov 2012 04:51:57 KST -->
+<!-- Indices written at Wed, 14 Nov 2012 06:36:28 KST -->
 
 <datastore-indexes>
 
-    <!-- Used 5 times in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="DayReportInfo" ancestor="false" source="auto">
         <property name="Year" direction="asc"/>
         <property name="MDay" direction="desc"/>

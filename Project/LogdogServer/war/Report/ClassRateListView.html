@@ -55,24 +55,7 @@ var AppVersion;
 var OSVersion;
 var ClassName;
 var SelectClass;
-window.onload = function(){
-	
-	var dayReport = document.getElementById('ToDayList');
-	dayReport.onclick = function(){
-		var loca = Today.replace(' / ','-');
-        
-    	location.href='/Report/DayErrorListView.html?Day='+loca;
-	};
-	
-	var VerReport = document.getElementById('VersionError');
-	VerReport.onclick = function(){
-		location.href='/Report/VersionRateListView.html?AppVer='+AppVersion+'&OSVer='+OSVersion;
-	};
-	var ClassReport = document.getElementById('ClassError');
-	ClassReport.onclick = function(){
-		location.href='/Report/ClassRateListView.html?ClassName='+ClassName;
-	};
-};
+
 </script>
   </head>
   
@@ -119,17 +102,16 @@ window.onload = function(){
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a id="ToDayList"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
-          <li><a id="VersionError"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
-          <li><a id="ClassError"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
+          <li><a href="#classstat"><i class="icon-chevron-right"></i>그래프</a></li>
+          <li><a href="#classtable"><i class="icon-chevron-right"></i>리스트</a></li>
         </ul>
       </div>
 <!--  본 -->
 <div class="span8">
-              <div class="page-header">
-            <h1>Class Error List</h1>
+           <section id="classstat">
+           <div class="page-header">
+            <h1>Class Error Statistics</h1>
            </div>
-
            <div class="span12"  id="classError" style="height: 400px">
 				<script type='text/javascript'>
 				//<![CDATA[ 
@@ -184,6 +166,8 @@ window.onload = function(){
 			//]]> </script>
    
             </div><!--/span-->
+            </section>
+            <section id="classtable">
         	<div class="span12" id="ErrorList" style="vertical-align:middle">
         		<table id="list2" style="vertical-align:middle"></table>
 				<div id="pager2"></div>
@@ -214,15 +198,18 @@ window.onload = function(){
 				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
 				   		{name:'key',index:'key' , sortable:false, hidden:true},
 				   	],		
-
+				   
+					ondblClickRow: function(id){ location.href='/DetailView/ErrorDetailView.html?Key='+id;},
+					
 				    viewrecords: true,
 				    caption:"ErrorReport"
 				});
 				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
 			}
 		);  		
- </script>
-        	</div>
+ 		</script>
+        </div>
+   </section>
 </div>
 
 

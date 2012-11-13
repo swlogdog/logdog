@@ -8,6 +8,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import logdog.Common.TimeUtil;
 import logdog.ErrorReport.DTO.ClientReportData;
+import logdog.ErrorReport.DTO.UserReportData;
 import logdog.ErrorReport.DTO.UserSummaryInfo;
 
 import com.google.appengine.api.blobstore.BlobKey;
@@ -110,28 +111,10 @@ public class ErrorReportInfo {
 	public BlobKey getLogBolbKey() {
 		return LogBolbKey;
 	}
-	public String getDeviceName() {
-		return DeviceName;
-	}
 
-	public boolean isGPSState() {
-		return GPSState;
-	}
-
-	public boolean isWifiState() {
-		return WifiState;
-	}
-
-	public boolean isProviderNetworkState() {
-		return ProviderNetworkState;
-	}
-
-	public int getScreanWidth() {
-		return ScreanWidth;
-	}
-
-	public int getScreanHeight() {
-		return ScreanHeight;
+	public UserReportData getUserData()
+	{
+		return new UserReportData(DeviceName,GPSState,WifiState, ProviderNetworkState,ScreanWidth,ScreanHeight);
 	}
 	
 	public UserSummaryInfo getSummary()
