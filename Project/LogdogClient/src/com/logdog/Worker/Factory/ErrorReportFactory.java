@@ -24,6 +24,13 @@ public class ErrorReportFactory {
 	
 	Context					m_Context;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 6:03:57
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 */
 	public ErrorReportFactory(Context context) {
 		// TODO Auto-generated constructor stub
 		m_Context = context;

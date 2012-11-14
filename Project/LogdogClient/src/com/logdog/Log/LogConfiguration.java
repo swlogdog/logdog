@@ -18,17 +18,43 @@ public class LogConfiguration {
 	String LevelString;
 	
 	Level	m_Level;
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 6:03:09
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public LogConfiguration() {
 		// TODO Auto-generated constructor stub
 	}
+	/**
+	 * 레벨 설정
+	 * @since 2012. 11. 15.오전 6:03:10
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param level
+	 */
 	public void SetLevel(Level level){
 		m_Level = level;
 	}
 
+	/**
+	 * 레벨 설정 String Data로 받아서 파싱
+	 * @since 2012. 11. 15.오전 6:03:15
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param levelstring
+	 */
 	public void SetLevel(String levelstring){
 		LevelString = levelstring;
 		ConverterStringtoLevel();
 	}
+	/**
+	 * 설정한 스트링 데이터를 파싱해준다.
+	 * @since 2012. 11. 15.오전 6:03:26
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public void ConverterStringtoLevel(){
 		if(LevelString == null)
 			return;
@@ -46,6 +72,13 @@ public class LogConfiguration {
 			m_Level = Level.ERROR;
 		
 	}
+	/**
+	 * 레벨을 가져옴
+	 * @since 2012. 11. 15.오전 6:03:38
+	 * TODO
+	 * @author JeongSeungsu
+	 * @return
+	 */
 	public Level GetLevel(){
 		return m_Level;
 	}

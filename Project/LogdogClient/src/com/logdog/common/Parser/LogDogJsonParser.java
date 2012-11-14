@@ -30,7 +30,16 @@ public class LogDogJsonParser {
 		reader.setLenient(true);
 		return gson.fromJson(reader, classOfT);
 	}
-	 public Object fromJson(String json, Type typeOfT){
+	 /**
+	 * Json 데이터를 Object로 바꿔준다.
+	 * @since 2012. 11. 15.오전 5:59:28
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param json String Json 데이터
+	 * @param typeOfT 변환할 Obj 타입 
+	 * @return Obj인스턴스
+	 */
+	public Object fromJson(String json, Type typeOfT){
 		 return gson.fromJson(json, typeOfT);
 	 }
 	 /**

@@ -52,10 +52,27 @@ public class FileAppender extends AbstractAppender{
 	@Element
 	IFormatter Formatter;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:57:35
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public FileAppender(){
 		super();
 	}
 	
+	/**
+	 * 
+	 * @since 2012. 11. 15.오전 5:57:36
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appendername
+	 * @param savedirname
+	 * @param logfilename
+	 * @param realdline
+	 * @param formatter
+	 */
 	public FileAppender(String appendername, String savedirname, String logfilename, int realdline, IFormatter formatter) {
 		// TODO Auto-generated constructor stub
 		super(appendername);

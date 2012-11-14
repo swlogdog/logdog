@@ -40,17 +40,27 @@ public class Worker {
 	}
 
 	
+	/**
+	 *  에러리포트 생성하는 팩토리
+	 */
 	private static ErrorReportFactory						m_ErrorReportFactory;
 	
+	/**
+	 * 어펜더 설정값들을 가지고 있는 객체
+	 */
 	private static AppenderConfiguration					m_AppenderConfiguration;
 		
+	/**
+	 * 네트워크 담당 객체
+	 */
 	private static Network 									m_Network;
+	/**
+	 * 로그 담당 객체
+	 */
 	private static LogManager								m_LogManager;
 	
 	
-	////
-	private static Context staticcontext;
-	private static String  staticXmlData;
+
 		public Worker() {
 		// TODO Auto-generated constructor stub
 		
@@ -66,8 +76,6 @@ public class Worker {
 	 */
 	public void InitLogDogProcess(Context context,String XmlData){
 		
-		staticcontext = context;
-		staticXmlData = XmlData;
 		
 		m_ErrorReportFactory 	= new ErrorReportFactory(context);
 		

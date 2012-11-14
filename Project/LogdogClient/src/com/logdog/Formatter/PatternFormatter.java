@@ -23,6 +23,12 @@ public class PatternFormatter implements IFormatter {
 	com.google.code.microlog4android.format.PatternFormatter formatter;
 	
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 6:02:24
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public PatternFormatter(){
 		PatternString = "";
 	}

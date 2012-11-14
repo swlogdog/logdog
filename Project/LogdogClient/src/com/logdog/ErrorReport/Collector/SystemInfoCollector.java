@@ -65,10 +65,30 @@ public class SystemInfoCollector {
 
 
 
+	/**
+	 * 나라 코드를 가져온다.
+	 * @since 2012. 11. 15.오전 6:00:49
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return 나라코드가 제대로 안될시 Unknown반환 아니면 kr 같은 나라코드 반환
+	 */
 	private String GetNational(Context context){
 		Locale nowlocale = context.getResources( ).getConfiguration( ).locale;
-		return nowlocale.getDisplayCountry();
+		String isNull = "";
+		if(isNull.equals(nowlocale.getCountry()))
+			return "unknown";
+		else
+			return nowlocale.getCountry(); 
 	}
+	/**
+	 * Gps 상태를 가져온다.
+	 * @since 2012. 11. 15.오전 6:01:19
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return true 사용중 false 면 비사용
+	 */
 	private boolean GetGps(Context context) {
 		PackageManager packagemanager = context.getPackageManager();
 		if (packagemanager.checkPermission("android.permission.ACCESS_FINE_LOCATION",context.getPackageName()) == 0) {
@@ -80,10 +100,26 @@ public class SystemInfoCollector {
 		}
 		return false;
 	}
+	/**
+	 * 가로 스크린 사이즈를 가져온다.
+	 * @since 2012. 11. 15.오전 6:01:42
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return 가로 스크린 크기
+	 */
 	private int GetWidthScreenSize(Context context){
 		Display display = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		return display.getWidth();
 	}
+	/**
+	 * 세로 스크린 사이즈를 가져온다.
+	 * @since 2012. 11. 15.오전 6:01:58
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return 세로 스크린 크기
+	 */
 	private int GetHeightScreenSize(Context context){
 		Display display = ((WindowManager)context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		return display.getHeight();
