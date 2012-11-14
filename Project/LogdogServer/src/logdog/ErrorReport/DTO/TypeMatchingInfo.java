@@ -13,6 +13,9 @@ public class TypeMatchingInfo {
 	private int line;
 	@XmlAttribute
 	private String ReportKey;
+	@XmlAttribute
+	private boolean rematching;
+	
 	public TypeMatchingInfo() {	}
 	public TypeMatchingInfo(String name, String classname, int cline, String reportKey) {
 		super();
@@ -20,6 +23,7 @@ public class TypeMatchingInfo {
 		this.classname = classname;
 		this.line=cline;
 		ReportKey = reportKey;
+		rematching=false;
 	}
 	public String getName() {
 		return name;
@@ -32,6 +36,12 @@ public class TypeMatchingInfo {
 	}
 	public int getLine() {
 		return line;
+	}
+	public boolean isRematching() {
+		return rematching;
+	}
+	public void setRematching(boolean rematching) {
+		this.rematching = rematching;
 	}
 	
 	

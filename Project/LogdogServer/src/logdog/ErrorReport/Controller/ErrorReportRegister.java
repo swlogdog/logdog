@@ -54,18 +54,19 @@ public class ErrorReportRegister {
 	 * @param reportKey
 	 * @param uid
 	 */
-	public void MatchingErrorType(Key reportKey, ErrorUniqueID uid)
+	public Key MatchingErrorType(Key reportKey, ErrorUniqueID uid)
 	{
 		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
-	
+		Key ErrTypeKey =null;
 		try{
 			//System.out.print(reportKey);
 			
 		 	ErrorTypeClassifier TypeClassifier = new ErrorTypeClassifier();
-			Key ErrTypeKey = TypeClassifier.UpdateErrorType(uid);
+		 	ErrTypeKey = TypeClassifier.UpdateErrorType(uid);
 				
 			ErrorReportInfo targetReport = jdoConnector.getObjectById(ErrorReportInfo.class, reportKey);
 			targetReport.setE_ClassificationCode(ErrTypeKey);
+			
 		//	System.out.print(targetReport.getE_ClassificationCode());
 		}
 		catch(Exception e){
@@ -78,6 +79,7 @@ public class ErrorReportRegister {
 			jdoConnector.close();
 			
 		}
+		return ErrTypeKey;
 	
 	}
 	public void MatchingLogFile(Key reportKey, BlobKey filekey)

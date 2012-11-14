@@ -8,9 +8,9 @@ import javax.jdo.Query;
 
 import logdog.Common.TimeUtil;
 import logdog.Common.DataStore.PMF;
-import logdog.DashBoard.DTO.Json.ClassReportRate;
-import logdog.DashBoard.DTO.Json.DayReport;
-import logdog.DashBoard.DTO.Json.VersionReportRate;
+import logdog.DashBoard.DTO.Json.Highcharts.ClassReportRate;
+import logdog.DashBoard.DTO.Json.Highcharts.DayReport;
+import logdog.DashBoard.DTO.Json.Highcharts.VersionReportRate;
 import logdog.ErrorReport.DAO.AppVesionInfo;
 import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.ErrorReport.DAO.VersionReportInfo;
@@ -42,7 +42,7 @@ public class SummaryGetter {
 			SearchQuery.setFilter("Year == year && MDay <= Timecode");
 			SearchQuery.declareParameters("int year,int Timecode");
 			SearchQuery.setRange(0,6);
-			SearchQuery.setOrdering("MDay ascending");	
+			SearchQuery.setOrdering("MDay descending");	
 			
 			int YearCode = TimeUtil.GetNowYear();
 			int TimeCode = TimeUtil.GetNowTimeCode();
@@ -58,8 +58,9 @@ public class SummaryGetter {
 			int TCode = TimeUtil.GetNowTimeCode();//오늘의 타임코드를 얻어온다.
 			while ( iterator.hasNext() ){
 				DayReportInfo info = iterator.next();
-				int NonData= (prevData==null) ? TCode - info.getMDay() : prevData.getMDay() - info.getMDay();
-				int code = (prevData==null) ? TCode: prevData.getMDay();
+				
+				int NonData= (prevData==null) ? TCode - info.getMDay() : prevData.getMDay() - info.getMDay()-1;//1일이상 차이나는지 체크
+				int code = (prevData==null) ? TCode: info.getMDay();
 				for(int i=0;i<NonData;i++)
 				{
 					report.AddDay(code-i);
@@ -71,9 +72,10 @@ public class SummaryGetter {
 				prevData = info;
 			  }
 			int StartDate = (prevData==null) ? TCode:prevData.getMDay();
-			for(int i=0+ErrorTypeResults.size();i<7;i++)
+			int j=1;
+			for(int i=ErrorTypeResults.size();i<7;i++)
 			{
-				report.AddDay(StartDate-(i));
+				report.AddDay(StartDate-(j++));
 				report.AddReportRate(0);
 			}
 			
@@ -106,7 +108,7 @@ public class SummaryGetter {
 
 		Query SearchQuery = jdoConnector.newQuery(ClassErrorInfo.class);
 		List<ClassErrorInfo> ErrorTypeResults=null;
-
+		
 
 		try{
 			

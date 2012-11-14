@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LogDog -The only choice for your development -</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+
+    
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/assets/css/docs.css" rel="stylesheet">
+    <link href="/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/js/ui.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ui.jqgrid.css" />
+	<link rel="stylesheet" type="text/css" href="/assets/css/detailReport.css" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="/assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
+    
+<script>
+var Request = function() {
+    this.getParameter = function( name ) {
+        var rtnval = '';
+        var nowAddress = unescape(location.href);
+        var parameters = (nowAddress.slice(nowAddress.indexOf('?')+1,nowAddress.length)).split('&');
+        for(var i = 0 ; i < parameters.length ; i++)
+        {
+            var varName = parameters[i].split('=')[0];
+            if(varName.toUpperCase() == name.toUpperCase())
+            {
+                rtnval = parameters[i].split('=')[1];
+              rtnval = rtnval.split('#')[0];
+                break;
+            }
+        }
+        return rtnval;
+    };
+};
+
+var Key;
+$(document).ready(function(){
+	var request = new Request();
+    Key = request.getParameter("Key");
+  
+    
+	$.getJSON('/DetailView/error/type/Key='+Key,function(data){
+		$.each(data,function(key,value){
+			if(key=='ErrorName')
+				$('#ErrorName').append(value);
+			else if(key=='ErrorClass')
+				$('#ErrorClass').append(value);
+			else if(key=='CodeLine')
+				$('#CodeLine').append(value);
+			else if(key=='LastUpdated')
+				$('#LastUpdated').append(value);
+			else if(key=='ReportCount')
+				$('#ReportCount').append(value);
+			else if(key=='BugClear')
+				$('#BugClear').append(value);
+		});
+	});
+});
+</script>
+  </head>
+  
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+       	   <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <a class="brand" href="#">Logdog</a>
+          
+          <div class="nav-collapse collapse">
+            <p class="navbar-text pull-right">
+     	       <ul class="nav">
+        	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
+        	    	 <li><a href="#">Setting</a></li>
+        	    	 <li><a href="#">About</a></li>
+           	   </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    
+
+    
+<header class="jumbotron subhead" id="overview">
+ 	 <div class="container">
+    <h1>Detail View</h1>
+ 	 </div>
+</header>
+<div class="container-fluid">
+    <!-- Docs nav
+    ================================================== -->
+    <div class="row-fluid">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav">
+          <li><a href="#typeinfo"><i class="icon-chevron-right"></i>타입 정보</a></li>
+          <li><a href="#callstack"><i class="icon-chevron-right"></i>콜스텍 정보</a></li>
+          <li><a href="#userdata"><i class="icon-chevron-right"></i>리포트 정보</a></li>
+          <li><a href="#errorrate"><i class="icon-chevron-right"></i>에러 접수량</a></li>
+        </ul>
+      </div>
+<!--  본 -->
+<div class="span8">
+		 
+		  <section id="typeinfo">
+        	  <div class="page-header">
+        	    <h1>1. Error Type Info</h1>
+         	  </div>
+         	
+         	<div class="row-fluid span12">
+         	  <div class="logdog-errname span11">
+         	     <table class="table table-bordered table-striped" style="font-size: 13pt;">
+                	<tr>
+                		<td><h3 id='ErrorName' style="  text-align:center;"></h3></td>
+                	</tr>
+                </table>
+         	  </div>
+     
+           </div>
+         	<div class="row-fluid span12">
+         	  <div class="logdog-errname span8">
+         	     <table class="table table-bordered table-striped" style="font-size: 13pt;">
+                	<tr>
+                		<td><h4 id='ErrorClass' style="  text-align:center;"></h4></td>
+                	</tr>
+                </table>
+         	  </div>
+         	  
+         	  <div class="logdog-errname span3">
+         	     <table class="table table-bordered table-striped" style="font-size: 13pt;">
+                	<tr>
+                		<td><h4 id='CodeLine' style="  text-align:center;"></h4></td>
+                	</tr>
+                </table>
+         	  </div>
+  		
+           </div>  
+           	<div class="row-fluid span12">
+         	  <div class="logdog-others span11">
+         	     <table class="table table-bordered table-striped" style="text-align:center;">
+                	<thead>
+                		<tr>
+                			<th style="text-align:center;">Last Updated</th>
+                			<th style="text-align:center;">Report Count</th>
+                			<th style="text-align:center;">BugClear</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+	               		<tr>
+							<td id='LastUpdated' style="text-align:center;"></td>
+							<td id='ReportCount' style="text-align:center;"></td>
+							<td id='BugClear' style="text-align:center;" ></td>
+    	            	</tr>
+                	</tbody>
+                </table>
+         	  </div>
+
+           </div>   
+		  </section>
+		  <br>
+		 <hr class="bs-docs-separator">
+		  <section id="callstack">
+        	  <div class="page-header">
+        	    <h1>2. CallStack</h1>
+         	  </div>
+         	  <div class="span12" style=" margin-bottom: 10x;">
+         	  <div class="span11" style=" margin-bottom: 10x;">
+        		<table id="list2" style="vertical-align:middle"></table>
+				<div id="pager2"></div>
+        	 <script type="text/javascript">
+			 jQuery(
+				function()
+				{
+				jQuery("#list2").jqGrid({
+				   	url:'/DetailView/error/callstack/Key='+Key,
+					datatype: "json",
+					autowidth: true,
+				
+					jsonReader : { 
+						page: "page", 
+						total: "total", 
+						root: "callstack",
+						repeatitems: false, 
+						id: "line"
+					},
+				   	colNames:['Line', 'Stack'],
+				   	colModel:[
+				   	
+				   		{name:'line',index:'line' , align:"center" , width:15, sortable:false, resizable:false},
+				   		{name:'stack',index:'stack' , align:"center" ,sortable:false, resizable:false},
+				   	],		
+				   
+
+				    viewrecords: true,
+				    caption:"CallStack"
+				});
+				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+				}
+			);  		
+			 </script>
+        	</div>
+         
+         	</div>  
+		  </section>
+		  		  <br>
+		   <hr class="bs-docs-separator"> <hr class="bs-docs-separator">
+		  <section id="userdata">
+        	  <div class="page-header">
+        	    <h1>3. User Report Data</h1>
+         	  </div>
+         	  <div class="span12">
+					<div class="span11">
+						<table id="list" style="vertical-align:middle"></table>
+         		<script type="text/javascript">
+   				 jQuery(function()
+   					{
+   						jQuery("#list").jqGrid({
+   					    	url:'/DetailView/error/summary/Key='+Key,
+   							 datatype: "json",
+   							 autowidth: true,
+   							 jsonReader : { 
+   								 page: "page", 
+   								 total: "total", 
+   								 root: "summary",
+   					 			 repeatitems: false, 
+   								 id: "key"
+   							 },
+   						     colNames:['Update date', 'App Version','OS Version','Country','key'],
+   						     colModel :[ 
+   						       {name:'date', index:'date', width:100, align:"center", sortable:false}, 
+   						       {name:'app', index:'app', width:80,align:"center",sortable:false}, 
+   						       {name:'os', index:'os', width:80, align:"center",sortable:false}, 
+   						       {name:'country', index:'country', width:80, align:"center",sortable:false}, 
+   						       {name:'key',index:'key' , sortable:false, hidden:true}
+   						     ],
+   						
+   						     viewrecords: true,
+   						     caption: 'User Data',
+	   						  subGrid: true,
+	   						subGridRowExpanded: function(subgrid_id, row_id) {
+							       var subgrid_table_id;
+							       subgrid_table_id = subgrid_id+"_t";
+												       
+									jQuery("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table>");
+									
+								      jQuery("#"+subgrid_table_id).jqGrid({
+								    	  url:"/DetailView/error/detail/Key="+row_id,
+								         datatype: "json",
+								      	 jsonReader : { 
+			   								 page: "page", 
+			   								 total: "total", 
+			   								 root: "userReport",
+			   					 			 repeatitems: false, 
+			   								 id: "blobkey"
+			   							 },
+								           colNames: ['Device','GPS','Wifi','3G','Screan','Blob'],
+								           colModel: [
+								             {name:'device',index:'device', align:"center", sortable:false},
+								             {name:'gps',index:'gps', align:"center", sortable:false},
+								             {name:'wifi',index:'wifi', align:"center", sortable:false},
+								             {name:'provider',index:'provider', align:"center", sortable:false},      
+								             {name:'screan',index:'screan', align:"center", sortable:false},
+								             {name:'blobkey',index:'blobkey', sortable:false, hidden:true},
+								           ],
+								           height: '100%',
+								           ondblClickRow: function(id){ 
+								        	   if(id!='null')
+								        		   window.open('/BlobData/BlobViewer.jsp?blob-key='+id,"Log","toolbar=no,location=no,status=no,menubar=no,scrollbars=yes, resizable=no, width=300,height=300"); 
+								        	   	
+								        	   },
+								           viewrecords: true
+								       });
+					   		},	
+   						});
+   					});
+				</script>
+					</div>
+				</div>
+
+		  </section>
+			<section id="errorrate">
+        	  <div class="page-header">
+        	    <h1>4. Error rate</h1>
+         	  </div>
+         	  <div class="span11
+         	  ">
+              <div id="day" style="height: 400px">
+		<script type='text/javascript'>
+		//<![CDATA[ 
+		      
+		      $(function () {
+				 var categori;
+		    	 var Daychart = new Highcharts.Chart({
+			        chart: {
+			            renderTo: 'day',
+			                style: {
+			                    margin: '0 auto'
+			                },
+							events: {
+								load: function(event) {
+
+								$.getJSON('/DetailView/error/Day/Key='+Key, function(data) {
+									$.each(data,function(key,value){
+									if('Day'==key)
+									{
+										Daychart.xAxis[0].setCategories(eval(value));
+										categori=eval(value);
+										Today=categori[0];
+									}
+									if('ReportRate'==key)
+									{
+										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
+										
+									}
+									} );
+									});
+								}
+							}
+
+			        },
+			        yAxis: {
+		                min: 0,
+		                title: {
+		                    text: 'Error Rate'
+		                }
+			        },
+			        title: {
+			            text: 'Date Error Report'
+			     
+			        }
+			    });
+				
+		           });
+			//]]>  </script>
+              </div>
+				</div>
+
+		  </section>
+
+		</div>
+</div>
+
+
+</div>
+    <!-- Footer
+    ================================================== -->
+    <footer class="footer">
+      <div class="container">
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+        <ul class="footer-links">
+          <li><a href="http://blog.getbootstrap.com">Blog</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Issues</a></li>
+          <li class="muted">&middot;</li>
+          <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
+        </ul>
+      </div>
+    </footer>
+
+
+
+   <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+ 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/google-code-prettify/prettify.js"></script>
+    <script src="/assets/js/bootstrap-transition.js"></script>
+    <script src="/assets/js/bootstrap-alert.js"></script>
+    <script src="/assets/js/bootstrap-modal.js"></script>
+    <script src="/assets/js/bootstrap-dropdown.js"></script>
+    <script src="/assets/js/bootstrap-scrollspy.js"></script>
+    <script src="/assets/js/bootstrap-tab.js"></script>
+    <script src="/assets/js/bootstrap-tooltip.js"></script>
+    <script src="/assets/js/bootstrap-popover.js"></script>
+    <script src="/assets/js/bootstrap-button.js"></script>
+    <script src="/assets/js/bootstrap-collapse.js"></script>
+    <script src="/assets/js/bootstrap-carousel.js"></script>
+    <script src="/assets/js/bootstrap-typeahead.js"></script>
+    <script src="/assets/js/bootstrap-affix.js"></script>
+    <script src="/assets/js/application.js"></script>
+	<script src="/assets/js/ui.multiselect.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.tablednd.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.contextmenu.js" type="text/javascript"></script>
+	<script src="/assets/js/subgrid_grid.js" type="text/javascript"> </script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+  </body>
+  
+</html>

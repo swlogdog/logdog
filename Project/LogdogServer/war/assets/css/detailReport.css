@@ -1,0 +1,158 @@
+/* Base class */
+.logdog-errname {
+  position: relative;
+  margin: 15px 0;
+  padding: 39px 19px 14px;
+  *padding-top: 19px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+/* Echo out a label for the example */
+.logdog-errname:after {
+  content: "Error Name";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+.logdog-errname + .prettyprint {
+  margin-top: -20px;
+  padding-top: 15px;
+}
+
+/* Tweak examples
+------------------------- */
+.logdog-errname > p:last-child {
+  margin-bottom: 0;
+}
+.logdog-errname .table,
+.logdog-errname .progress,
+.logdog-errname .well,
+.logdog-errname .alert,
+.logdog-errname .hero-unit,
+.logdog-errname .pagination,
+.logdog-errname .navbar,
+.logdog-errname > .nav,
+.logdog-errname blockquote {
+  margin-bottom: 5px;
+}
+.logdog-errname .pagination {
+  margin-top: 0;
+}
+.logdog-classname {
+  position: relative;
+  margin: 15px 0;
+  padding: 39px 19px 14px;
+  *padding-top: 19px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+/* Echo out a label for the example */
+.logdog-classname:after {
+  content: "Class Name";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+.logdog-classname + .prettyprint {
+  margin-top: -20px;
+  padding-top: 15px;
+}
+
+/* Tweak examples
+------------------------- */
+.logdog-classname > p:last-child {
+  margin-bottom: 0;
+}
+.logdog-classname .table,
+.logdog-classname .progress,
+.logdog-classname .well,
+.logdog-classname .alert,
+.logdog-classname .hero-unit,
+.logdog-classname .pagination,
+.logdog-classname .navbar,
+.logdog-classname > .nav,
+.logdog-classname blockquote {
+  margin-bottom: 5px;
+}
+.logdog-classname .pagination {
+  margin-top: 0;
+}
+
+.logdog-others {
+  position: relative;
+  margin: 15px 0;
+  padding: 39px 19px 14px;
+  *padding-top: 19px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+/* Echo out a label for the example */
+.logdog-others:after {
+  content: "Others";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+.logdog-others + .prettyprint {
+  margin-top: -20px;
+  padding-top: 15px;
+}
+
+/* Tweak examples
+------------------------- */
+.logdog-others > p:last-child {
+  margin-bottom: 0;
+}
+.logdog-others .table,
+.logdog-others .progress,
+.logdog-others .well,
+.logdog-others .alert,
+.logdog-others .hero-unit,
+.logdog-others .pagination,
+.logdog-others .navbar,
+.logdog-others > .nav,
+.logdog-others blockquote {
+  margin-bottom: 5px;
+}
+.logdog-others .pagination {
+  margin-top: 0;
+}
