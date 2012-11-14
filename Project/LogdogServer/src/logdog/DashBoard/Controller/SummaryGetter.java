@@ -19,6 +19,12 @@ import logdog.ErrorReport.DAO.Summary.DayReportInfo;
 
 import com.google.gson.Gson;
 
+/**
+ *  요청받은 그래프를 그리기 위한 정보를 DataStore를 수집하여 Json 객체로 만들어주는 Controller이다.
+ * @since 2012. 11. 15.오전 6:22:27
+ * TODO
+ * @author Karuana
+ */
 public class SummaryGetter {
 
 	/**
@@ -27,7 +33,7 @@ public class SummaryGetter {
 	 * @since 2012. 11. 10.오전 2:01:45
 	 * TODO
 	 * @author Karuana
-	 * @return
+	 * @return Json
 	 */
 	public String getDayErrorRate()
 	{
@@ -38,7 +44,7 @@ public class SummaryGetter {
 
 
 		try{
-
+			//최대 7개만 가져온다.
 			SearchQuery.setFilter("Year == year && MDay <= Timecode");
 			SearchQuery.declareParameters("int year,int Timecode");
 			SearchQuery.setRange(0,6);
@@ -63,7 +69,7 @@ public class SummaryGetter {
 				int code = (prevData==null) ? TCode: info.getMDay();
 				for(int i=0;i<NonData;i++)
 				{
-					report.AddDay(code-i);
+					report.AddDay(code-i);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 					report.AddReportRate(0);
 				}
 				
@@ -95,12 +101,12 @@ public class SummaryGetter {
 	}
 	
 	/**
-	 *	검색에 문제가 있다. 현재 단순히 Error Type으로는 문제가 있으니 해결 방법을 생각해보자
-	 * 가장 쉬운 해결책은 테이블을 하나 더 만들기.. 하지만 이에도 문제가 있다. 문제는 해당 클래스에서 발생한 에러를 검색할 때 문제가 있다.
+	 *	class별 에러량을 조사하여 해당 그래프를 그리기위한 데이터를 Json으로 리턴한다. 
+	 * 
 	 * @since 2012. 11. 11.오전 9:14:06
 	 * TODO
 	 * @author Karuana
-	 * @return
+	 * @return Json
 	 */
 	public String getClassErrorRate()
 	{
@@ -141,11 +147,11 @@ public class SummaryGetter {
 	}
 	
 	/**
-	 *
+	 *	Version별 에러량을 체크하여 그래프를 그리기 위한 Json데이터로 만들어 리턴한다.
 	 * @since 2012. 11. 11.오전 9:47:42
 	 * TODO
 	 * @author Karuana
-	 * @return
+	 * @return Json
 	 */
 	public String getVersionRate()
 	{
@@ -159,7 +165,7 @@ public class SummaryGetter {
 
 		try{
 			Versions = (List<AppVesionInfo>) 
-								SearchQuery.execute();
+								SearchQuery.execute();	//우선 서버에 저장된 App version 리스트를 가져온다.
 			
 			Iterator<AppVesionInfo> iterator = Versions.iterator();
 
@@ -169,7 +175,7 @@ public class SummaryGetter {
 			while ( iterator.hasNext() ){
 				AppVesionInfo info = iterator.next();
 				List<VersionReportInfo> OSversion=null;
-				OSVSearch.setFilter("AppVersion == ver");
+				OSVSearch.setFilter("AppVersion == ver");	// 각 App 버젼에 맞는 OS version에 에러량을 가져온다.
 				OSVSearch.declareParameters("String ver");
 			
 				OSversion = (List<VersionReportInfo>) 

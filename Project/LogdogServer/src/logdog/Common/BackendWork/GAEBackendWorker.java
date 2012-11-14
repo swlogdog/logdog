@@ -9,8 +9,18 @@ import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 
+/**
+ *  GAE Backend 작업을 위해 Push Queue에 작업을 넣는 과정을 처리하는 클래스이다.
+ *  이 클래스는 BackendWorkingSet라는 인터페이스를 구현받고 있으며, Backend팩토리를 통하여 생성해야만 한다. 
+ * @since 2012. 11. 15.오전 5:51:02
+ * TODO
+ * @author Karuana
+ */
 public class GAEBackendWorker implements BackendWorkingSet {
 
+	/* (non-Javadoc)
+	 * @see logdog.Common.BackendWork.BackendWorkingSet#CreateBackendWork(logdog.Common.BackendWork.DTO.BackendSettingData)
+	 */
 	public boolean CreateBackendWork(BackendSettingData BackendInfo)
 	{
 	  	Queue queue = QueueFactory.getQueue(BackendInfo.getPushQuereName());
@@ -31,6 +41,9 @@ public class GAEBackendWorker implements BackendWorkingSet {
 		return true; 
 		
 	}
+	/* (non-Javadoc)
+	 * @see logdog.Common.BackendWork.BackendWorkingSet#CreateBackendWorkJson(logdog.Common.BackendWork.DTO.BackendSettingData)
+	 */
 	public boolean CreateBackendWorkJson(BackendSettingData BackendInfo)
 	{
 		try{
@@ -51,6 +64,9 @@ public class GAEBackendWorker implements BackendWorkingSet {
 		}
 	  	return true; 
 	}
+	/* (non-Javadoc)
+	 * @see logdog.Common.BackendWork.BackendWorkingSet#CreateBackendWorkTextData(logdog.Common.BackendWork.DTO.BackendSettingData)
+	 */
 	public boolean CreateBackendWorkTextData(BackendSettingData BackendInfo)
 	{
 		try{
@@ -72,6 +88,9 @@ public class GAEBackendWorker implements BackendWorkingSet {
 	  	return true; 
 	}
 	
+	/* (non-Javadoc)
+	 * @see logdog.Common.BackendWork.BackendWorkingSet#CreateBackendWorkNoData(logdog.Common.BackendWork.DTO.BackendSettingData)
+	 */
 	public boolean CreateBackendWorkNoData(BackendSettingData BackendInfo)
 	{
 		try{

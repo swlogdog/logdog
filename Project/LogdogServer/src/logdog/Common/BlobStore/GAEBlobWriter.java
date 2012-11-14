@@ -11,10 +11,17 @@ import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 
+/**
+ *  BlobFileWriter를 직접 구현한 클래스 GAE의 blob작업을 처리한다.
+ * 
+ * @since 2012. 11. 15.오전 5:56:40
+ * TODO
+ * @author Karuana
+ */
 public class GAEBlobWriter implements BlobFileWriter{
 
 	/* (non-Javadoc)
-	 * @see logdog.Common.BlobStore.BlobFileWriter#TextWrite(java.lang.String) 현재 에러 있음 수정할 
+	 * @see logdog.Common.BlobStore.BlobFileWriter#TextWrite(java.lang.String) 
 	 */ 
 	public BlobKey TextWrite(String text)
 	{
@@ -51,6 +58,9 @@ public class GAEBlobWriter implements BlobFileWriter{
 		return blobKey;
 	}
 	
+	/* (non-Javadoc)
+	 * @see logdog.Common.BlobStore.BlobFileWriter#BlobDelete(com.google.appengine.api.blobstore.BlobKey)
+	 */
 	public boolean BlobDelete(BlobKey key)
 	{
 		BlobstoreService deletedata =  BlobstoreServiceFactory.getBlobstoreService();
