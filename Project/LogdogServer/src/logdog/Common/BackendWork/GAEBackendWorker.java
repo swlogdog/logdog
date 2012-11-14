@@ -47,6 +47,7 @@ public class GAEBackendWorker implements BackendWorkingSet {
 		catch(Exception e)
 		{
 			System.out.println(e.toString());
+			return false;
 		}
 	  	return true; 
 	}
@@ -66,7 +67,27 @@ public class GAEBackendWorker implements BackendWorkingSet {
 		catch(Exception e)
 		{
 			System.out.println(e.toString());
+			return false;
 		}
 	  	return true; 
+	}
+	
+	public boolean CreateBackendWorkNoData(BackendSettingData BackendInfo)
+	{
+		try{
+		  	Queue queue = QueueFactory.getQueue(BackendInfo.getPushQuereName());
+		  	TaskOptions taskOptions = TaskOptions.Builder.withUrl(BackendInfo.getWorkURL());
+
+		  	taskOptions.header("Host", BackendServiceFactory.getBackendService().getBackendAddress(BackendInfo.getBackendName()))
+	          .method(BackendInfo.getMethodType());
+			
+		  	queue.add(taskOptions);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				return false;
+			}
+		  	return true; 
 	}
 }

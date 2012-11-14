@@ -5,6 +5,9 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import logdog.Common.ServiceType;
+import logdog.Common.BlobStore.BlobFileWriter;
+import logdog.Common.BlobStore.BlobWriterFactory;
 import logdog.Common.DataStore.PMF;
 import logdog.DashBoard.DTO.Json.Highcharts.DayReport;
 import logdog.ErrorDetailView.DTO.ErrorTypeData;
@@ -14,6 +17,7 @@ import logdog.ErrorDetailView.DTO.JqGrid.UserSummaryData;
 import logdog.ErrorReport.DAO.ErrorReportInfo;
 import logdog.ErrorReport.DAO.ErrorTypeInfo;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
@@ -140,12 +144,13 @@ public class UserReportInfoGetter {
 	public String getDayVariation(String reportKey)
 	{
 		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
+	    Query SearchQuery = jdoConnector.newQuery(ErrorReportInfo.class);
 		try{
 		    String queryStr = String.format("select from " + ErrorReportInfo.class.getName() + 
 		            " where E_ClassificationCode == '%s'", reportKey);
 			
 		    final Key key = KeyFactory.stringToKey(reportKey);
-		    Query SearchQuery = jdoConnector.newQuery(ErrorReportInfo.class);
+	
 		    SearchQuery.setFilter("E_ClassificationCode == key");
 		    SearchQuery.declareParameters("com.google.appengine.api.datastore.Key key");
 		    SearchQuery.setOrdering("TimeCode descending");	
@@ -180,9 +185,27 @@ public class UserReportInfoGetter {
 			return null;
 			
 		}finally{
+			SearchQuery.closeAll();
 			jdoConnector.close();
 			
 		}
 		
 	}	
+	public void onBugDataClear(String reportKey)
+	{
+		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
+		try{
+			ErrorTypeInfo targetReport = jdoConnector.getObjectById(ErrorTypeInfo.class, KeyFactory.stringToKey(reportKey));
+			targetReport.setBugClear(true);
+		
+		}catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			
+		}finally{
+			jdoConnector.close();
+			
+		}
+	}
 }

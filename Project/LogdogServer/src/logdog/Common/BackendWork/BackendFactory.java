@@ -35,4 +35,8 @@ public class BackendFactory {
 	{
 		return new BackendSettingData("TaskQueue","report-backend",backendUrl,Type,map);
 	}
+	public static BackendSettingData GetDefaltSettingData(String backendUrl, Method Type)
+	{
+		return new BackendSettingData("TaskQueue","report-backend",backendUrl,Type);
+	}
 }

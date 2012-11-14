@@ -125,6 +125,9 @@ public class ErrorTypeInfo {
 		}
 		return true;
 	}
+	public void setBugClear(boolean bugClear) {
+		BugClear = bugClear;
+	}
 	
 
 }
