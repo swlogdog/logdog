@@ -26,9 +26,23 @@ public class LogCatAppender extends AbstractAppender {
 	@Element
 	IFormatter Formatter;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:57:50
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public LogCatAppender(){
 		super();
 	}
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:57:49
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param AppenderName
+	 * @param formatter
+	 */
 	public LogCatAppender(String AppenderName,IFormatter formatter){
 		super(AppenderName);
 		Formatter = formatter;

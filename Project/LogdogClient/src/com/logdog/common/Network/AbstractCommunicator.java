@@ -18,12 +18,32 @@ public abstract class AbstractCommunicator {
 	@Attribute
 	String CommunicatorName;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:59:11
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public AbstractCommunicator(){
 		CommunicatorName = new String();
 	}
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:59:12
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param communicatorname
+	 */
 	public AbstractCommunicator(String communicatorname){
 		CommunicatorName = communicatorname;
 	}
+	/**
+	 * 커뮤니케이터 이름 설정
+	 * @since 2012. 11. 15.오전 5:59:13
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param name
+	 */
 	public void SetCommunicatorName(String name){
 		CommunicatorName = name;
 	}

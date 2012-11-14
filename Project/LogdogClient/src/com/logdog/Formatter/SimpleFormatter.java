@@ -17,6 +17,12 @@ public class SimpleFormatter implements IFormatter {
 	String Delimiter;
 	com.google.code.microlog4android.format.SimpleFormatter formatter;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 6:02:29
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public SimpleFormatter() {
 		// TODO Auto-generated constructor stub
 	}

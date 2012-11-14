@@ -26,16 +26,43 @@ public abstract class AbstractAppender
 	@Attribute
 	String AppenderName;
 	
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:58:14
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public AbstractAppender(){
 		AppenderName = new String();
 	}
+	/**
+	 * 어펜더 이름
+	 * @since 2012. 11. 15.오전 5:58:00
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param appendername
+	 */
 	public AbstractAppender(String appendername){
 		AppenderName = appendername;
 	}
 	
+	/**
+	 * 어펜더 이름 설정
+	 * @since 2012. 11. 15.오전 5:58:16
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param name
+	 */
 	public void SetAppenderName(String name){
 		AppenderName = name;
 	}
+	/**
+	 * 어펜더 이름을 가져온다.
+	 * @since 2012. 11. 15.오전 5:58:23
+	 * TODO
+	 * @author JeongSeungsu
+	 * @return
+	 */
 	public String GetAppenderName(){
 		return AppenderName;
 	}

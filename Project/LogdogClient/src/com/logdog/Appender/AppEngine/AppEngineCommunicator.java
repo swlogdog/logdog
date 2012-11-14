@@ -59,6 +59,12 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	private final String LogSettingUrl = "LogSetting";
 	
 
+	/**
+	 *
+	 * @since 2012. 11. 15.오전 5:53:06
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public AppEngineCommunicator() {
 		// TODO Auto-generated constructor stub
 		super();
@@ -78,10 +84,24 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		m_SendData  	 = new HashMap<String, String>();
 		URL				 = url;
 	}
-	public void SetSaveDir(String savedir){
+	/**
+	 * 세이브된 디렉토리 이름 설정
+	 * @since 2012. 11. 15.오전 5:54:14
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param savedir
+	 */
+	public void SetSavedDir(String savedir){
 		SaveDir = savedir;
 	}
-	public void SetSaveErrorReportFileName(String errorreportfilename){
+	/**
+	 * 세이브된 에러리포트이름 설정 
+	 * @since 2012. 11. 15.오전 5:54:27
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param errorreportfilename
+	 */
+	public void SetSavedErrorReportFileName(String errorreportfilename){
 		ErrorReportFileName = errorreportfilename;
 	}
 	/**
@@ -116,6 +136,13 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		}
 		return true;
 	}
+	/**
+	 * 하나의 데이터만 보낸다.
+	 * @since 2012. 11. 15.오전 5:55:47
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param data 보낼 에러리포트
+	 */
 	public void OneSendData(ClientReportData data) {
 		
 		String Content 		  = LogDogJsonParser.toJson(data);
@@ -137,6 +164,14 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 	}
 
 	
+	/**
+	 * 앱이 사망할시 전송할 데이터만 보낸다.
+	 * @since 2012. 11. 15.오전 5:56:07
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param data 보낼 에러리포트
+	 * @throws InterruptedException
+	 */
 	public void EmergencySendData(ClientReportData data) throws InterruptedException {
 		
 		String Content 		  = LogDogJsonParser.toJson(data);
@@ -159,12 +194,33 @@ public class AppEngineCommunicator extends AbstractCommunicator {
 		
 	}
 	
+	/**
+	 * Map 형태로 보낼 데이터를 넣어준다.
+	 * @since 2012. 11. 15.오전 5:56:34
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param Key 키 
+	 * @param Data 데이터
+	 */
 	private void AddSendData(String Key,String Data){
 		m_SendData.put(Key, Data);
 	}
+	/**
+	 * 모든 보낼 데이터를 삭제한다.
+	 * @since 2012. 11. 15.오전 5:56:55
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	private void AllDeleteSendData(){
 		m_SendData.clear();
 	}
+	/**
+	 * 보낼 데이터를 얻는다.
+	 * @since 2012. 11. 15.오전 5:57:04
+	 * TODO
+	 * @author JeongSeungsu
+	 * @return 
+	 */
 	private Map<String,String> GetSendData(){
 		return m_SendData;
 	}

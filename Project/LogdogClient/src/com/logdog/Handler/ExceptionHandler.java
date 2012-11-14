@@ -17,6 +17,13 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
 	Thread.UncaughtExceptionHandler m_DefaultExceptionHandler;
 	
 	
+	/**
+	 * 워커를 가지고 워커에 정의된 메서드를 실행하기 위한 생성자
+	 * @since 2012. 11. 15.오전 6:02:42
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param process
+	 */
 	public ExceptionHandler(Worker process) {
 		// TODO Auto-generated constructor stub
 		m_DefaultExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();

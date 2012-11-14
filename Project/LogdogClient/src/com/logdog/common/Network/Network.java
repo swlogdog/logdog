@@ -23,22 +23,48 @@ public class Network {
 	 */
 	private List<AbstractCommunicator> 	NetworkCommunicatorList;
 	
+	/**
+	 *  안드로이드 Context객체
+	 */
 	Context m_Context;
 	
+	/**
+	 * 네트워크 객체 초기화 
+	 * @since 2012. 11. 15.오전 5:49:52
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context AndroidContext 값
+	 */
 	public Network(Context context){
 		m_Context = context;
 		NetworkCommunicatorList = new ArrayList<AbstractCommunicator>();
 	}
-	public void AddCommunicator(AbstractCommunicator Appender){
-		NetworkCommunicatorList.add(Appender);
+
+	/**
+	 * 커뮤니 케이터 추가
+	 * @since 2012. 11. 15.오전 5:50:56
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param Communicator 추가할 커뮤니케이터
+	 */
+	public void AddCommunicator(AbstractCommunicator Communicator){
+		NetworkCommunicatorList.add(Communicator);
 	}
-	public boolean DeleteCommunicator(String AppenderName){
+	/**
+	 * 커뮤니케이터 삭제
+	 * @since 2012. 11. 15.오전 5:51:10
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param CommunicatorName 삭제할 커뮤니케이터 이름
+	 * @return 실패면 false 성공이면 true
+	 */
+	public boolean DeleteCommunicator(String CommunicatorName){
 		
 		Iterator<AbstractCommunicator> iter = NetworkCommunicatorList.iterator();
 		
 		while(iter.hasNext()){
 			AbstractCommunicator appender = iter.next();
-			if(AppenderName.equalsIgnoreCase(appender.getClass().getName())){
+			if(CommunicatorName.equalsIgnoreCase(appender.getClass().getName())){
 				iter.remove();
 				return true;
 			}
@@ -46,6 +72,12 @@ public class Network {
 		
 		return false;
 	}
+	/**
+	 * 모든 커뮤니케이터 삭제
+	 * @since 2012. 11. 15.오전 5:51:08
+	 * TODO
+	 * @author JeongSeungsu
+	 */
 	public void AllDeleteCommunicator(){
 		NetworkCommunicatorList.clear();
 	}
@@ -88,9 +120,25 @@ public class Network {
 		return use;
 	}
 	
+	/**
+	 * 3G네트워크 상태를 얻는다.
+	 * @since 2012. 11. 15.오전 5:51:43
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return true면사용가능 false면 불가
+	 */
 	static public boolean Get3GNetwork(Context context){
 		return GetNetwork(context,ConnectivityManager.TYPE_MOBILE);
 	}
+	/**
+	 * WiFi상태를 얻는다.
+	 * @since 2012. 11. 15.오전 5:52:00
+	 * TODO
+	 * @author JeongSeungsu
+	 * @param context
+	 * @return true면 가능 false면 불가
+	 */
 	static public boolean GetWiFiNetwork(Context context){
 		return GetNetwork(context,ConnectivityManager.TYPE_WIFI);
 	}
