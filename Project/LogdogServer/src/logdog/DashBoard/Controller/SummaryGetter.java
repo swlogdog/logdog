@@ -164,9 +164,10 @@ public class SummaryGetter {
 			Iterator<AppVesionInfo> iterator = Versions.iterator();
 
 			VersionReportRate Data = new VersionReportRate();
+			Data.addAppVersion(Versions);
+			int AppCount=0;
 			while ( iterator.hasNext() ){
 				AppVesionInfo info = iterator.next();
-				Data.addAppVersion(info.getVersion());
 				List<VersionReportInfo> OSversion=null;
 				OSVSearch.setFilter("AppVersion == ver");
 				OSVSearch.declareParameters("String ver");
@@ -177,9 +178,10 @@ public class SummaryGetter {
 				for(int i=0;i<OSversion.size();i++)
 				{
 					VersionReportInfo vinfo = OSversion.get(i);
-					Data.addOSerror(vinfo.getOSVersion(), i, vinfo.getTotalOccurrences());
+					Data.addOSerror(vinfo.getOSVersion(), AppCount, vinfo.getTotalOccurrences());
 				}
 				
+				AppCount++;
 				
 			  }
 		 

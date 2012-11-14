@@ -20,13 +20,16 @@ public class UserReportinfo extends jqGridBase{
 	public void addReport(UserReportData report, BlobKey blob)
 	{
 		HashMap<String,Object> data = new HashMap<String,Object>();
+		data.put("index",userReport.size()+1);
 		data.put("device",report.getDeviceName());
 		data.put("gps", report.isGPSState());
 		data.put("wifi", report.isWifiState());
 		data.put("provider", report.isProviderNetworkState());
 		data.put("screan", report.getScreanWidth()+"*"+report.getScreanHeight());
-		data.put("blobkey", blob.getKeyString());
-		
+		if(blob != null)
+			data.put("blobkey", blob.getKeyString());
+		else
+			data.put("blobkey", "null");
 		userReport.add(data);
 	}
 }

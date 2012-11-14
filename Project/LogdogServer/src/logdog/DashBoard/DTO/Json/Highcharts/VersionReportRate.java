@@ -2,6 +2,7 @@ package logdog.DashBoard.DTO.Json.Highcharts;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import logdog.ErrorReport.DAO.AppVesionInfo;
 
@@ -16,9 +17,10 @@ public class VersionReportRate {
 		
 	}
 	
-	public void addAppVersion(String AppV)
+	public void addAppVersion(List<AppVesionInfo>  AppV)
 	{
-		AppVersions.add(AppV);
+		for(int i=0;i<AppV.size();i++)
+			AppVersions.add(AppV.get(i).getVersion());
 	}
 	
 	public void addOSerror(String OsVersion, int Count,int rate)
@@ -27,9 +29,10 @@ public class VersionReportRate {
 		boolean isVer =false;
 		while ( It.hasNext() ){
 			OSVesionErrorRate info = It.next();
-			if(info.getOsVersion() == OsVersion)
+			System.out.println(info.getOsVersion()+"    "+OsVersion);
+			
+			if(OsVersion.compareTo(info.getOsVersion())==0)
 			{
-				
 				info.setRate(Count, rate);
 				isVer = true;
 				break;
@@ -40,6 +43,7 @@ public class VersionReportRate {
 		
 		if(!isVer)
 		{
+			System.out.println("new ");
 			OSVesionErrorRate Version = new OSVesionErrorRate(OsVersion);
 			Version.initRate(AppVersions.size());
 			Version.setRate(Count,rate);	

@@ -148,6 +148,7 @@ public class UserReportInfoGetter {
 		    Query SearchQuery = jdoConnector.newQuery(ErrorReportInfo.class);
 		    SearchQuery.setFilter("E_ClassificationCode == key");
 		    SearchQuery.declareParameters("com.google.appengine.api.datastore.Key key");
+		    SearchQuery.setOrdering("TimeCode descending");	
 		    List<ErrorReportInfo> users = (List<ErrorReportInfo>) SearchQuery.execute(key);
 			
 	

@@ -56,7 +56,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);	
@@ -128,7 +128,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -186,7 +186,7 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);

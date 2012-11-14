@@ -9,16 +9,17 @@ public class ErrorTypeData {
 	private int CodeLine;
 	private String ReportCount;
 	private String LastUpdated;
-	private boolean BugClear;
+	private String BugClear;
 	
 	public ErrorTypeData(ErrorTypeInfo info) {
 		super();
 		ErrorName = info.getErrorName();
 		ErrorClass = info.getOccurrenceClass();
 		CodeLine = info.getCodeLine();
-		ReportCount = info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")";
+		ReportCount = info.getTotalOccurrences();
 		LastUpdated = TimeUtil.GetTime2String(info.getLastUpdateDay());
-		BugClear = info.isBugClear();
-	}
+		BugClear = new Boolean(info.isBugClear()).toString();
+		System.out.print(BugClear);
+		}
 	
 }

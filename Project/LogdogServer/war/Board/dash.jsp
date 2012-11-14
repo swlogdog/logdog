@@ -101,7 +101,7 @@ var Request = function() {
      	       <ul class="nav">
         	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
         	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -109,9 +109,14 @@ var Request = function() {
     </div>
 
 <header class="jumbotron subhead" id="overview">
- 	 <div class="container">
-    	<h1>DashBoard</h1>
-    	<p class="lead">The only choice for your development productivity</p>
+ 	 <div class="container" >
+ 	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"> <h1>DashBoard</h1>
+    		</div>
+ 
+		</div>
+		    	<p class="lead">The only choice for your development productivity</p>
  	 </div>
 </header>
 

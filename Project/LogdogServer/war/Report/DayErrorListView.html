@@ -75,8 +75,8 @@ var SelectDay;
     
      	       <ul class="nav">
         	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
-        	    	 <li><a href="#">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -87,7 +87,13 @@ var SelectDay;
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>Day ErrorReport</h1>
+ 	    	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle">    <h1>Day Error Report</h1>
+    		</div>
+ 
+		</div>
+ 
     <p class="lead"><script>var request = new Request();
              			var param = request.getParameter("Day");
              			var date = param.replace('-',' / ');

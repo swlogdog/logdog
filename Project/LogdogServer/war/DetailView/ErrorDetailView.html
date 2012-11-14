@@ -69,7 +69,7 @@ $(document).ready(function(){
 				$('#LastUpdated').append(value);
 			else if(key=='ReportCount')
 				$('#ReportCount').append(value);
-			else if(key=='BugClear')
+			else
 				$('#BugClear').append(value);
 		});
 	});
@@ -94,8 +94,8 @@ $(document).ready(function(){
             <p class="navbar-text pull-right">
      	       <ul class="nav">
         	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
-        	    	 <li><a href="#">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -106,7 +106,14 @@ $(document).ready(function(){
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>Detail View</h1>
+ 	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"> <h1>Detail View</h1>
+    		</div>
+ 
+		</div>
+		    	<p class="lead">The only choice for your development productivity</p>   
+
  	 </div>
 </header>
 <div class="container-fluid">
@@ -164,14 +171,14 @@ $(document).ready(function(){
                 		<tr>
                 			<th style="text-align:center;">Last Updated</th>
                 			<th style="text-align:center;">Report Count</th>
-                			<th style="text-align:center;">BugClear</th>
+                			<th style="text-align:center;">Bug Clear</th>
                 		</tr>
                 	</thead>
                 	<tbody>
 	               		<tr>
 							<td id='LastUpdated' style="text-align:center;"></td>
 							<td id='ReportCount' style="text-align:center;"></td>
-							<td id='BugClear' style="text-align:center;" ></td>
+							<td id='BugClear' style="text-align:center;"></td>
     	            	</tr>
                 	</tbody>
                 </table>
@@ -273,11 +280,12 @@ $(document).ready(function(){
 			   								 total: "total", 
 			   								 root: "userReport",
 			   					 			 repeatitems: false, 
-			   								 id: "blobkey"
+			   								 id: "index"
 			   							 },
-								           colNames: ['Device','GPS','Wifi','3G','Screan','Blob'],
+								           colNames: ['No.','Device','GPS','Wifi','3G','Screan','Blob'],
 								           colModel: [
-								             {name:'device',index:'device', align:"center", sortable:false},
+											{name:'index',index:'index', align:"center", sortable:false ,hidden:true},
+ 								             {name:'device',index:'device', align:"center", sortable:false},
 								             {name:'gps',index:'gps', align:"center", sortable:false},
 								             {name:'wifi',index:'wifi', align:"center", sortable:false},
 								             {name:'provider',index:'provider', align:"center", sortable:false},      
@@ -286,9 +294,11 @@ $(document).ready(function(){
 								           ],
 								           height: '100%',
 								           ondblClickRow: function(id){ 
-								        	   if(id!='null')
-								        		   window.open('/BlobData/BlobViewer.jsp?blob-key='+id,"Log","toolbar=no,location=no,status=no,menubar=no,scrollbars=yes, resizable=no, width=300,height=300"); 
-								        	   	
+								        	   var ret = jQuery("#"+subgrid_table_id).jqGrid('getRowData',id);
+								        	   if(ret.blobkey!='null')
+								        		   window.open('/BlobData/BlobViewer.jsp?blob-key='+ret.blobkey,"Log","toolbar=no,location=no,status=no,menubar=no,scrollbars=yes, resizable=no, width=300,height=300"); 
+								        	   else
+								        		   alert("등록된 로그가 없습니다.");
 								        	   },
 								           viewrecords: true
 								       });

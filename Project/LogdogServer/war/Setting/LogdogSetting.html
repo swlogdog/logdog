@@ -76,7 +76,7 @@ var SelectDay;
      	       <ul class="nav">
         	    	 <li><a href="/Board/dash.jsp">DashBoard</a></li>
         	    	 <li class="active"><a href="#">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -87,7 +87,13 @@ var SelectDay;
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>LogDog Setting</h1>
+ 	  	  	    	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"><h1>LogDog Setting</h1>
+    		</div>
+ 
+		</div>
+
  	 </div>
 </header>
 <div class="container-fluid">
@@ -123,7 +129,7 @@ var SelectDay;
              			 <input type="radio" name="LogSetting" id="optionsRadios2" value="false">
              				Not Use
             			</label>
-             		 	<button class="btn btn-large btn-block btn-primary" type="submit" class="btn">Logdog Start</button>
+             		 	<button class="btn btn-large  btn-primary" type="submit" class="btn">Setting Change</button>
           			</form>
 		  		
 		  		</section>
@@ -138,8 +144,8 @@ var SelectDay;
 				<p></p>
 		
 				<form class="form-inline" action="System/addUser" method="POST">
-            		<input type="text" name="user" class="input-small" placeholder="Email">
-           			 <button type="submit" class="btn">Add</button>
+            		<input type="text" name="user" class="input-large" placeholder="Email">
+           			 <button type="submit" class="btn btn-large  btn-primary">Add</button>
           		</form>
 		  		
 		  		</section>

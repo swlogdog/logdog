@@ -68,47 +68,37 @@ public class ErrorTypeInfo {
 		return Callstack;
 	}
 	
-	public int getCodeLine() {
+	public final int getCodeLine() {
 		return codeLine;
 	}
 	public void setCallstack(List<String> callstack) {
 		Callstack = callstack;
 	}
-	public boolean isBugClear() {
+	public final boolean isBugClear() {
 		return BugClear;
 	}
 
-	public void setBugClear(boolean bugClear) {
-		BugClear = bugClear;
-	}
-
-	public Key getE_ClassificationCode() {
+	public final Key getE_ClassificationCode() {
 		return E_ClassificationCode;
 	}
 
-	public String getErrorName() {
+	public final String getErrorName() {
 		return ErrorName;
 	}
 
-	public String getOccurrenceClass() {
+	public final String getOccurrenceClass() {
 		return OccurrenceClass;
 	}
 
-	public int getTotalOccurrences() {
-		return TotalOccurrences;
+	public final String getTotalOccurrences() {
+		return TotalOccurrences+"("+WeeklyOccurrences+")";
 	}
 
-	public int getWeeklyOccurrences() {
-		return WeeklyOccurrences;
-	}
 
-	public Date getLastUpdateDay() {
+	public final Date getLastUpdateDay() {
 		return LastUpdateDay;
 	}
 
-	public Date getWeeklyUpdateDay() {
-		return WeeklyUpdateDay;
-	}
 
 
 	public boolean updateError()
@@ -117,6 +107,7 @@ public class ErrorTypeInfo {
 			Date AfterWeekTime = TimeUtil.GetTimeWeekAdder(WeeklyUpdateDay);
 			LastUpdateDay = TimeUtil.GetNowDate();
 			TotalOccurrences+=1;
+			BugClear=false;
 			
 			if(TimeUtil.CheckNowTime(AfterWeekTime))
 			{

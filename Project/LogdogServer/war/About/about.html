@@ -31,32 +31,7 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-57-precomposed.png">
     
-<script>
-var Request = function() {
-    this.getParameter = function( name ) {
-        var rtnval = '';
-        var nowAddress = unescape(location.href);
-        var parameters = (nowAddress.slice(nowAddress.indexOf('?')+1,nowAddress.length)).split('&');
-        for(var i = 0 ; i < parameters.length ; i++)
-        {
-            var varName = parameters[i].split('=')[0];
-            if(varName.toUpperCase() == name.toUpperCase())
-            {
-                rtnval = parameters[i].split('=')[1];
-              rtnval = rtnval.split('#')[0];
-                break;
-            }
-        }
-        return rtnval;
-    };
-};
-var Today;
-var AppVersion;
-var OSVersion;
-var ClassName;
-var SelectClass;
 
-</script>
   </head>
   
   <body data-spy="scroll" data-target=".bs-docs-sidebar">
@@ -75,9 +50,9 @@ var SelectClass;
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
      	       <ul class="nav">
-        	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
+        	    	 <li><a href="/Board/dash.jsp">DashBoard</a></li>
         	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
-        	    	 <li><a href="/About/about.html">About</a></li>
+        	    	 <li class="active"><a href="#">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -90,15 +65,10 @@ var SelectClass;
  	 <div class="container">
    	 	 <div class="row-fluid">
             <div>
-    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"> <h1>Version ErrorReport</h1>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"> <h1>About</h1>
     		</div>
  
 		</div>
-    <p class="lead"><script>var request = new Request();
-             			var param = request.getParameter("ClassName");
-             			SelectClass = param;
-             			document.write(param+'에서 발생한 에러');
-             			</script></p>
  	 </div>
 </header>
 <div class="container-fluid">
@@ -107,120 +77,72 @@ var SelectClass;
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#classstat"><i class="icon-chevron-right"></i>그래프</a></li>
-          <li><a href="#classtable"><i class="icon-chevron-right"></i>리스트</a></li>
+          <li><a href="#logdog"><i class="icon-chevron-right"></i>Logdog</a></li>
+          <li><a href="#developer"><i class="icon-chevron-right"></i>개발지 및 도움을 준 사람</a></li>
+           <li><a href="#license"><i class="icon-chevron-right"></i>라이센스</a></li>
         </ul>
       </div>
 <!--  본 -->
+
 <div class="span8">
-           <section id="classstat">
+         <section id="logdog">
            <div class="page-header">
-            <h1>Class Error Statistics</h1>
+            <h1>LogDog이란?</h1>
            </div>
-           <div class="span12"  id="classError" style="height: 400px">
-				<script type='text/javascript'>
-				//<![CDATA[ 
-					$(function () {
-	   				var chart;
-     			   	var ClassNameList;
-	   				chart = new Highcharts.Chart({
-            			chart: {
-               				renderTo: 'classError',
-            	 	  		plotBackgroundColor: null,
-             			 	plotBorderWidth: null,
-                			plotShadow: false,
-                			events: {
-								load: function(event) {
+           	<img src="/assets/img/logdog/logdog_logo.png" class="span6" align="middle"><h3>LogDog is...</h3>
+				<p>
+				 LogDog은 개발자가 만든 앱이 설치된 User에 대한 정보와 로그 정보를 에러가 발생하엿을때 구글 앱 엔진에 전송하여, 이를 가시화하여 개발자기 쉽게 디버깅을 할 수 있도록 제공해주는 개발자의 개발 생산성 향상을 촉진시켜주는 프레임워크이다.</p>
+				<p> Logdog 프레임워크는 총 두 가지로 제공된다. 첫 번째 앱에서 에러 정보를 수집하고, 개발자가 보다 쉽게 로그를 남길 수 있도록 도와주고, 이를 앱 엔진 서버로 보내주는 클라이언트 라이브러리, 그리고 구글 앱 엔진으로 수집된 정보를 가시화시켜주는 앱 엔진 프로젝트로 구성되어있다.</p> 
+		   </section>
+		  		   
+		   <section id="developer">
+           <div class="page-header">
+            <h1>프로젝트 개발자 및 도움을 준 분</h1>
+           </div>
+           	<h3>LogDog is...</h3>
+				<p>다음의 프로젝트 인원이 함께 개발하였니다.</p>
+				<h3>프로젝트 메인 인원</h3>
+          		<ul>
+           			 <li><a href="http://arload.wordpress.com/">손 영수 멘토님</a>: 소프트웨어 공학과 아키텍팅을 국내 개발자들에게 널리 알리기 위해 노력하고 있는 EVA팀의 한 마리 기러기이다. 국내 몇 안되는 패턴 저자이며, 아시아 패턴 학회인 AsianPLoP의 공동 의자이다. 지식 공유를 위해 세미나, 워크숍, 기고 등 왕성한 활동을 하고 있다. 요즘 후배들을 양성하고 있으며, 더 큰 성장을 위해 수련을 하고 있다.</li>         		
+					 <li><a href="">장 선진 멘토님</a>:현재 (주)소프트웨어 인 라이프에 대표이사를 맡고있다.</li>
+ 					 <li><a href="http://www.facebook.com/sjdmldi">정 승수 멘티</a>: 현재 소프트웨어 마에스트로 3기 연수생으로 소프트웨어 설계와 사람에 관한 패턴들을 열심히 공부하고 있다.</li>
+             		 <li><a href="http://www.facebook.com/profile.php?id=100003198556738">오 혜성 멘티</a>: 현재 소프트웨어 마에스트로 3기 연수생으로 머신러닝을 주력으로 생각하고 있다. 하지만 마에스트로에 온 뒤로는 Web과 구글 앱 엔진에 대해 공부 하고 있다.</li>
+             		 <li><a href="http://www.facebook.com/profile.php?id=100003198556738">채 고은</a>: 이 프로젝트의 로고 및 패턴 등의 리소스 제작을 도와주었다.</li>
+          		</ul>
+          	<p>다음 사람들이 이 프로젝트가 진행되는데 많은 도움을 주었다.</p>	
+			<h3>Thanks to</h3>
+				<ul>
+           			 <li><a href="http://arload.wordpress.com/">소프트웨어 마에스트로 사무국</a>: 소프트웨어 마에스트로 연수센터를 관리하는 모든 사람들이 이프로젝트가 진행되는데 막대한 도움을 주어서 이 자리를 빌려 감사를 표한다.</li>         		
+					 <li><a href="">김 준수 멘티님</a>:현재 소프트웨어 마에스트로 3기 연수생으로 가끔 밥을 공급해주었다.</li>
+          		</ul>
+		   </section>
+		    
+         <section id="license">
+           <div class="page-header">
+            <h1>오픈소스 라이센스</h1>
+           </div>
+           	<h3>LogDog is...</h3>
+				<p>다음과 같은 오픈소스들을 바탕으로 하여 만들어졌습니다.</p>
+				<h3>Use Open Source and Licence</h3>
+          		<ul>
+           			 <li><a href="">Jersey</a>:우리는 최대한 Restful한 웹을 구성하기 위하여 Jersey라는 Web 프레임워크를 이용하였다.</li>
+           			 <li><a href="http://code.google.com/p/microlog4android/">MicroLog4Android</a>: 안드로이드 용 로그 라이브러리로 우리는 이 오픈소스 라이브러리를 리팩토링하여 이 프로젝트의 로그 기능을 제작하였다. MicroLog4Android는 Apache License 2.0 라이센스이다.</li>
+					 <li><a href="http://www.highcharts.com/">HighCharts JS</a>: 우리는 웹 상에 그래프를 그리기 위하여 HighCharts를 이용하였다. 이 라이브러리는 <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>이다.</li>
+             		 <li><a href="http://www.trirand.com/blog/">JqGrid</a>: 우리는 웹 상에 테이블응 그리기 위하여 jqGrid 이용하였다. 이 라이브러리는 MIT license 이다.</li>
+            		 <li><a href="http://www.highcharts.com/">bootstrap</a>: 우리는 웹페이지 구성을 위하여 BootStap을 이용하였다. 이 오픈소스 라이브러리는 Apache License 2.0 라이센스이다.</li>
+          			 <li><a href="">Gson</a>:</li>
+          			 <li><a href=""
+          		</ul>
+       	   <p>추가로 이 Web Page는 Google App Engine for Java 기반으로 제작되었으며, 이 프로젝트의 자체적인 라이센스는 MIT 라이센스를 채택하고 있다. </p>
+		   </section>
 
-								$.getJSON('/Board/summary/Class', function(data) {
-								
-									$.each(data,function(key,value){
-										
-									if('ClassErrors'==key)
-									{
-										chart.addSeries({
-				              				 type: 'pie',
-				            	     			name: 'Error Count', data: eval(value)});
-										ClassNameList=eval(value);
-										ClassName=ClassNameList[0][0];	
-										}
-								
-									} );
-									});
-								}
-							}
-
-           	 			},
-            			title: {
-                			text: 'Class Error Report Rate'
-            			},
-        			    plotOptions: {
-	    			        series: {
-	                			cursor: 'pointer',
-	                			events: {
-	                    			click: function(event) {
-	                    				
-	                    				location.href='/Report/ClassRateListView.html?ClassName='+ClassNameList[event.point.x][0];
-	                    				
-	                		 	  	 }
-	               		 		}	
-	         		  	 	}
-            			}
-        			});
-   			});
-			//]]> </script>
-   
-            </div><!--/span-->
-            </section>
-            <section id="classtable">
-        	<div class="span12" id="ErrorList" style="vertical-align:middle">
-        		<table id="list2" style="vertical-align:middle"></table>
-				<div id="pager2"></div>
-        	 <script type="text/javascript">
-			 jQuery(
-				function()
-				{
-				jQuery("#list2").jqGrid({
-				   	url:'/list/errlist/classname='+SelectClass,
-					datatype: "json",
-					autowidth: true,
-				
-					jsonReader : { 
-						page: "page", 
-						total: "total", 
-						root: "errors",
-						repeatitems: false, 
-						id: "key"
-					},
-				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total(Weekly)','BugClear','key'],
-				   	colModel:[
-				   	
-				   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
-				   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
-				   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
-				   		{name:'day',index:'day', sortable:false,resizable:false},		
-				   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
-				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
-				   		{name:'key',index:'key' , sortable:false, hidden:true},
-				   	],		
-				   
-					ondblClickRow: function(id){ location.href='/DetailView/ErrorDetailView.html?Key='+id;},
-					
-				    viewrecords: true,
-				    caption:"ErrorReport"
-				});
-				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
-			}
-		);  		
- 		</script>
-        </div>
-   </section>
 </div>
 
 
 </div>
     <!-- Footer
     ================================================== -->
+    
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>

@@ -123,14 +123,5 @@ public class ErrorReportRegister {
 		return summaryInfo;
 	}
 	
-	public List<ErrorReportInfo> getErrorReport(Key ErrorType)
-	{
-		return null;
-	}
-	
-	public boolean deleteErrorReport(Key reportKey)
-	{
-		return true;
-	}	
 	
 }

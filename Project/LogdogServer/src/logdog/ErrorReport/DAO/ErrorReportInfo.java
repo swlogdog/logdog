@@ -92,7 +92,7 @@ public class ErrorReportInfo {
 		TimeCode = TimeUtil.GetNowTimeCode();
 	}
 
-	public Key getE_ReportCode() {
+	public final Key getE_ReportCode() {
 		return E_ReportCode;
 	}
 	
@@ -100,7 +100,7 @@ public class ErrorReportInfo {
 		E_ClassificationCode = e_ClassificationCode;
 	}
 
-	public Key getE_ClassificationCode() {
+	public final Key getE_ClassificationCode() {
 		return E_ClassificationCode;
 	}
 
