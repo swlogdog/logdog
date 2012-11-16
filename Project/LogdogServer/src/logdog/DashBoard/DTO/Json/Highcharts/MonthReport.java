@@ -19,7 +19,7 @@ public class MonthReport {
 	}
 	public void AddMonth(int year,int month)
 	{
-		Months.add(year+"-"+month);
+		Months.add(year+" / "+month);
 	}
 	/**
 	 *	에러율을 더한다.

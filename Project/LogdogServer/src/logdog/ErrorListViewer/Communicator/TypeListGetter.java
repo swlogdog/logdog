@@ -30,8 +30,38 @@ public class TypeListGetter {
 		code= code.replace("-", "");
 		int daycode = new Integer(code);
 		ErrorTypeReportGetter getter = new ErrorTypeReportGetter();
-		System.out.print("Json 요청");
+		System.out.print("Json 요청 ㅇㅇ");
 		return getter.getDayErrorReport(TimeUtil.GetNowYear(), daycode);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Week={code}")
+	public String getWeekErrorList(@PathParam("code") final String day)
+	{	   		
+		String code = day;
+		String Year =  code.split("-")[0];
+		String week =  code.split("-")[1];
+		int yearcode = new Integer(Year);
+		int weekCode = new Integer(week.split("w")[0]);
+		ErrorTypeReportGetter getter = new ErrorTypeReportGetter();
+		System.out.print(yearcode+"  "+weekCode);
+		return getter.getWeekErrorReport(yearcode, weekCode);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Month={code}")
+	public String getMonthErrorList(@PathParam("code") final String day)
+	{	   		
+		String code = day;
+		String Year =  code.split("-")[0];
+		String month =  code.split("-")[1];
+		int yearcode = new Integer(Year);
+		int monthCode = new Integer(month);
+		ErrorTypeReportGetter getter = new ErrorTypeReportGetter();
+		System.out.print(yearcode+"  "+monthCode);
+		return getter.getMonthErrorReport(yearcode, monthCode);
 	}
 	
 	@GET

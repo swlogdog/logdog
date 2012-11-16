@@ -149,6 +149,147 @@ public class ErrorTypeReportGetter {
 		
 	}
 	
+	/**
+	 *
+	 * @since 2012. 11. 21.오전 5:21:28
+	 * TODO
+	 * @author Karuana
+	 * @param Year
+	 * @param Month
+	 * @return
+	 */
+	public String getMonthErrorReport(int Year, int Month)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		Query SearchReport = jdoConnector.newQuery(ErrorReportInfo.class);
+
+		List<ErrorReportInfo> ErrorReportList=null;
+
+
+
+		try{
+	
+			
+			SearchReport.setFilter("YearCode == year && Month == mon");
+			SearchReport.declareParameters("int year,int mon");
+			ErrorReportList = (List<ErrorReportInfo>) 
+					SearchReport.execute(Year,Month);
+			
+				
+
+			Iterator<ErrorReportInfo> iterator = ErrorReportList.iterator();
+			ArrayList<Key> KeyList = new ArrayList<Key>();
+	
+			while ( iterator.hasNext() ){
+				ErrorReportInfo info = iterator.next();
+				if(!KeyList.contains(info.getE_ClassificationCode()))
+				{
+					if(info.getE_ClassificationCode()!=null)
+						KeyList.add(info.getE_ClassificationCode());
+				}
+			  }
+			
+			ErrorTypeReport report = new ErrorTypeReport();  
+			for(int i=0;i<KeyList.size();i++)
+			{
+				ErrorTypeInfo info = jdoConnector.getObjectById(ErrorTypeInfo.class, KeyList.get(i));
+				HashMap<String,Object> error = new HashMap<String,Object>();
+				error.put("errname",info.getErrorName());
+				error.put("classname", info.getOccurrenceClass());
+				error.put("line",info.getCodeLine());
+				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
+				error.put("total", info.getTotalOccurrences());
+				error.put("clear", info.isBugClear());
+				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
+				report.addError(error);
+			}
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchReport.closeAll();
+			jdoConnector.close();
+				
+		}
+		
+	}
+	
+	/**
+	 *
+	 * @since 2012. 11. 21.오전 5:21:44
+	 * TODO
+	 * @author Karuana
+	 * @param Year
+	 * @param Month
+	 * @return
+	 */
+	public String getWeekErrorReport(int Year, int Week)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		Query SearchReport = jdoConnector.newQuery(ErrorReportInfo.class);
+
+		List<ErrorReportInfo> ErrorReportList=null;
+
+
+
+		try{
+	
+			
+			SearchReport.setFilter("YearCode == year && Week == week");
+			SearchReport.declareParameters("int year,int week");
+			ErrorReportList = (List<ErrorReportInfo>) 
+					SearchReport.execute(Year,Week);
+			
+				
+
+			Iterator<ErrorReportInfo> iterator = ErrorReportList.iterator();
+			ArrayList<Key> KeyList = new ArrayList<Key>();
+	
+			while ( iterator.hasNext() ){
+				ErrorReportInfo info = iterator.next();
+				if(!KeyList.contains(info.getE_ClassificationCode()))
+				{
+					if(info.getE_ClassificationCode()!=null)
+						KeyList.add(info.getE_ClassificationCode());
+				}
+			  }
+			
+			ErrorTypeReport report = new ErrorTypeReport();  
+			for(int i=0;i<KeyList.size();i++)
+			{
+				ErrorTypeInfo info = jdoConnector.getObjectById(ErrorTypeInfo.class, KeyList.get(i));
+				HashMap<String,Object> error = new HashMap<String,Object>();
+				error.put("errname",info.getErrorName());
+				error.put("classname", info.getOccurrenceClass());
+				error.put("line",info.getCodeLine());
+				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
+				error.put("total", info.getTotalOccurrences());
+				error.put("clear", info.isBugClear());
+				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
+				report.addError(error);
+			}
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchReport.closeAll();
+			jdoConnector.close();
+				
+		}
+		
+	}
+	
+	
 	public String getVersionErrorReport(String AppVersion, String OSVersion)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();

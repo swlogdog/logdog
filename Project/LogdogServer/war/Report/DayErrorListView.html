@@ -125,7 +125,27 @@ var SelectDay;
 		//<![CDATA[ 
 		      
 		      $(function () {
-				 var categori;
+		    	var request = new Request();
+       			var param = request.getParameter("Day");
+				var Type = request.getParameter("Type");
+				var interval = request.getParameter("Interval");
+				var Address='/Board/summary/Day='+interval;
+				alert(Type);
+				if(Type=="Week")
+				{
+					Address = '/Board/summary/Week='+interval;
+				}
+				else if(Type=="Day")
+				{
+					Address = '/Board/summary/Day='+interval;
+				}
+				else
+				{
+					Address = '/Board/summary/Month='+interval;
+				}
+					
+				
+       			var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
 			            renderTo: 'day',
@@ -134,8 +154,8 @@ var SelectDay;
 			                },
 							events: {
 								load: function(event) {
-
-								$.getJSON('/Board/summary/Day', function(data) {
+								
+								$.getJSON(Address, function(data) {
 									$.each(data,function(key,value){
 									if('Day'==key)
 									{
@@ -143,9 +163,21 @@ var SelectDay;
 										categori=eval(value);
 										Today=categori[0];
 									}
-									if('ReportRate'==key)
+									else if('Months'==key)
 									{
-										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
+										Daychart.xAxis[0].setCategories(eval(value));
+										categori=eval(value);
+									}
+									else if('Week'==key)
+									{
+										Daychart.xAxis[0].setCategories(eval(value));
+									
+										categori=eval(value);
+									}
+									else if('ReportRate'==key)
+									{
+										
+										Daychart.addSeries({ name: Type+' Report', data: eval(value)});
 									
 									}
 									} );
@@ -170,10 +202,10 @@ var SelectDay;
 			                events: {
 			                    click: function(event) {
 			            			var nameV = categori[event.point.x];
-			            		
+				            		
 			                    	var loca = nameV.replace(' / ','-');
 			                
-			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca+'&Type='+Type+"&Interval="+interval;
 			                    }
 			                }
 			            }
@@ -193,8 +225,23 @@ var SelectDay;
 			 jQuery(
 				function()
 				{
+					var Type = request.getParameter("Type");
+					var Address;
+					if(Type=="Week")
+					{
+						Address = '/list/errlist/Week='+SelectDay;
+					}
+					else if(Type=="Day")
+					{
+						Address = '/list/errlist/Day='+SelectDay;
+					}
+					else
+					{
+						Address = '/list/errlist/Month='+SelectDay;
+					}
+						
 				jQuery("#list2").jqGrid({
-				   	url:'/list/errlist/Day='+SelectDay,
+				   	url:Address,
 					datatype: "json",
 					autowidth: true,
 					height:500,

@@ -143,7 +143,7 @@ var Request = function() {
            </div>
 		 <div class="btn-toolbar" style="margin: 0;text-align:right;">
 		   	<div class="btn-group">
-                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">interval Option <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a id="intS"  style="margin: 0;text-align:left;">7 interval</a></li>
                   <li><a id="intT" style="margin: 0;text-align:left;">30 intval</a></li>
@@ -163,8 +163,8 @@ var Request = function() {
 		//<![CDATA[ 
 		      
 		      window.onload = function () {
-		    	 var interval=30; 
-		    	 var seletedOption="day";
+		    	 var interval=7; 
+		    	 var seletedOption="Day";
 				 var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
@@ -223,7 +223,7 @@ var Request = function() {
 			            		
 			                    	var loca = nameV.replace(' / ','-');
 			                
-			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca+'&Type='+seletedOption+"&Interval="+interval;
 			                    }
 			                }
 			            }
@@ -295,7 +295,7 @@ var Request = function() {
 								if('ReportRate'==key)
 								{
 									Daychart.series[0].remove();
-									Daychart.addSeries({ name: 'Day Report', color: '#2211ff', data: eval(value)});
+									Daychart.addSeries({ name: 'Month Report', color: '#2211ff', data: eval(value)});
 									
 								}
 								} );

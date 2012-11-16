@@ -15,7 +15,7 @@ public class WeekReport {
 	}
 	public void AddWeek(int year, int week)
 	{
-		Week.add(year+"("+week+")");
+		Week.add(year+" / "+week+"w");
 	}
 	/**
 	 *	에러율을 더한다.
