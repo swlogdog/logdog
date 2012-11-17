@@ -69,28 +69,31 @@ public class SummaryGetter {
 				DayReportInfo info = iterator.next();
 				
 				int NonData= (prevData==null) ? TimeCode - info.getMDay() : prevData.getMDay() - info.getMDay()-1;//1일이상 차이나는지 체크
-				int code = (prevData==null) ? TimeCode: prevData.getMDay();
+				int code = (prevData==null) ? TimeCode+1: prevData.getMDay();
 				YearCode = (prevData==null) ? YearCode: prevData.getYear();
+				NonData= NonData+(YearCode-info.getYear())*Interval;//년도가 넘치면 Max만
 				for(int i=1;i<=NonData;i++)
 				{
 					report.AddDay(TimeUtil.minTimCode(YearCode, code , -1*i));	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 				
 					report.AddReportRate(0);
-					if(++size ==30)
+					if(++size ==Interval)
 						break;
 				}
-				if(size==30)
+				if(size==Interval)
 					break;
+				
 				report.AddDay(info.getMDay());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
-				if(++size==30)
+				
+				if(++size==Interval)
 					break;
 			  }
 			int StartDate = (prevData==null) ? TimeCode:prevData.getMDay()-1;	//잠재적 에러 요소 1월 1일이면?
 			int j=1;
 			YearCode = (prevData==null) ? YearCode: prevData.getYear();
-			for(int i=ErrorTypeResults.size();i<Interval;i++)
+			for(int i=report.getSize();i<Interval;i++)
 			{
 				
 				report.AddDay(StartDate);
@@ -143,32 +146,36 @@ public class SummaryGetter {
 				WeekReportInfo info = iterator.next();
 				
 				int NonData= (prevData==null) ? WeekCode - info.getWeek() : prevData.getWeek() - info.getWeek()-1;//
-				int code = (prevData==null) ? WeekCode: prevData.getWeek();
+				int code = (prevData==null) ? WeekCode+1: prevData.getWeek();
 				YearCode = (prevData==null) ? YearCode: prevData.getYear();
-				for(int i=1;i<=NonData;i++)
+			
+				if(YearCode-info.getYear()!=0)
+					NonData+=TimeUtil.MaxWeekCount(YearCode-1);//하나만 더해도 50개가 넘어간다 즉 처리할 필요 없을듯 ㅇ
+					
+				for(int i=0;i<NonData;i++)
 				{
-					if(code == 0 )
+					if(code == 1 )
 					{
 						YearCode = YearCode-1;
-						code =TimeUtil.MaxWeekCount(YearCode);
+						code =TimeUtil.MaxWeekCount(YearCode)+1;
 					}
-					report.AddWeek(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+					report.AddWeek(YearCode, --code);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 					report.AddReportRate(0);
-					if(++size==30)
+					if(++size==Interval)
 						break;
 				}
-				if(size==30)
+				if(size==Interval)
 					break;
 				report.AddWeek(info.getYear(),info.getWeek());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
-				if(++size==30)
+				if(++size==Interval)
 					break;
 			  }
 			int StartDate = (prevData==null) ? WeekCode:prevData.getWeek()-1;
 			int j=1;
 			YearCode = (prevData==null) ? YearCode: prevData.getYear();
-			for(int i=ErrorTypeResults.size();i<Interval;i++)
+			for(int i=report.getSize();i<Interval;i++)
 			{
 				if(StartDate == 0 )
 				{
@@ -218,38 +225,42 @@ public class SummaryGetter {
 			
 			MonthReport report = new MonthReport();  
 
-			MonthReportInfo prevData=null;
+			MonthReportInfo prevData=null; 
 			int size=0;
 			while ( iterator.hasNext() ){
 				MonthReportInfo info = iterator.next();
 				
-				int NonData= (prevData==null) ? MonthCode - info.getMonth() : prevData.getMonth() - info.getMonth()-1;//
-				int code = (prevData==null) ? MonthCode: prevData.getMonth();
+				int NonData= (prevData==null) ? MonthCode - info.getMonth(): prevData.getMonth() - info.getMonth()-1;
+			
+				int code = (prevData==null) ? MonthCode+1: prevData.getMonth();
 				YearCode = (prevData==null) ? YearCode: prevData.getYear();
-				for(int i=1;i<=NonData;i++)
+				NonData= NonData+(YearCode-info.getYear())*12;
+				System.out.println(NonData);
+				for(int i=0;i<NonData;i++)
 				{
-					if(code == 0 )
+					if(code == 1 )
 					{
 						YearCode = YearCode-1;
-						code =12;//12월 달로 컴백
+						code =13;//12월 달로 컴백
 					}
-					report.AddMonth(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+					report.AddMonth(YearCode, --code);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 					report.AddReportRate(0);
-					if(++size==30)
+					if(++size==Interval) 
 						break;
 				}
-				if(size==30)
+				if(size==Interval)
 					break;
 				report.AddMonth(info.getYear(),info.getMonth());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
-				if(++size==30)
+				if(++size==Interval)
 					break;
 			  }
 			int StartDate = (prevData==null) ? MonthCode:prevData.getMonth()-1;
 			int j=1;
 			YearCode = (prevData==null) ? YearCode: prevData.getYear();
-			for(int i=ErrorTypeResults.size();i<Interval;i++)
+			
+			for(int i=report.getSize();i<Interval;i++)
 			{
 				if(StartDate == 0 )
 				{

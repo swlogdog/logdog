@@ -158,6 +158,7 @@ var Request = function() {
                 </ul>
 			 </div>
 		 </div>
+		 
          <div id="day" style="height: 400px">
 		<script type='text/javascript'>
 		//<![CDATA[ 
@@ -245,7 +246,7 @@ var Request = function() {
 							if('ReportRate'==key)
 							{
 								Daychart.series[0].remove();
-								Daychart.addSeries({ name: 'Week Report', data: eval(value)});
+								Daychart.addSeries({ name: 'Week Report', color: '#89A54E',data: eval(value)});
 								//Daychart.redraw();
 							}
 							} );
@@ -270,7 +271,7 @@ var Request = function() {
 							if('ReportRate'==key)
 							{
 								Daychart.series[0].remove();
-								Daychart.addSeries({ name: 'Day Report', color: '#0000ff', data: eval(value)});
+								Daychart.addSeries({ name: 'Day Report', color: '#4572A7', data: eval(value)});
 								
 							}
 							} );
@@ -295,7 +296,7 @@ var Request = function() {
 								if('ReportRate'==key)
 								{
 									Daychart.series[0].remove();
-									Daychart.addSeries({ name: 'Month Report', color: '#2211ff', data: eval(value)});
+									Daychart.addSeries({ name: 'Month Report', color: '#AA4643', data: eval(value)});
 									
 								}
 								} );
@@ -439,7 +440,8 @@ var Request = function() {
 	         		  	 	}
             			}
 				    });
-		});//]]> 
+		});
+				//]]> 
 				</script>
             </div><!--/span-->
             
