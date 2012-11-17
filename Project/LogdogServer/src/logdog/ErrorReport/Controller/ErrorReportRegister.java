@@ -23,6 +23,37 @@ public class ErrorReportRegister {
 
 		
 	}
+	
+	/**
+	 *	TestCase용 삭제할 꺼 
+	 * @since 2012. 11. 17.오후 7:39:00
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
+	public Key insertTestErrorReport(ClientReportData reportInfo)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		
+		ErrorReportInfo eInfo = new ErrorReportInfo(reportInfo,true);
+		
+		try{
+				jdoConnector.makePersistent(eInfo);
+		}
+		catch(Exception e){
+				e.printStackTrace();
+			return null;
+				
+		}
+		finally{
+		
+			jdoConnector.close();
+			
+		}
+	
+		return eInfo.getE_ReportCode();
+	}
 
 	public Key insertErrorReport(ClientReportData reportInfo)
 	{

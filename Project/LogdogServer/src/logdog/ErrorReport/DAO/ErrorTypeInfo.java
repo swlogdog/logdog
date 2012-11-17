@@ -61,6 +61,7 @@ public class ErrorTypeInfo {
 		Callstack=null; 
 		
 	}
+	
 	public ErrorTypeInfo(){}
 	
 	

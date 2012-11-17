@@ -1,5 +1,7 @@
 package logdog.ErrorReport.DAO;
 
+import java.util.Calendar;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -96,6 +98,47 @@ public class ErrorReportInfo {
 		Month = TimeCode/100;
 		Week=TimeUtil.GetWeek();
 	}
+	
+	/**
+	 *	TestCase용 생성자 
+	 * @since 2012. 11. 17.오후 6:54:14
+	 * TODO
+	 * @author Karuana
+	 * @param report
+	 * @param TestCase
+	 */
+	public ErrorReportInfo(ClientReportData report,boolean TestCase)
+	{
+		super();
+		try{ 
+		java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("yyyy-MM-dd.HH.mm.ss");
+
+		   java.util.Date date = format.parse(report.ReportTime);
+			int Month = date.getMonth()+1;
+			int days = date.getDate();
+			int Timecode = Month*100 + days;
+			Calendar Adder = Calendar.getInstance();
+			Adder.setTime(date);
+	
+		CountryName = report.National;
+		AppVersion =report.AppVersion;
+		OSVersion = report.OSVersion;
+		DeviceName = report.Model;
+		GPSState =report.GPS;
+		WifiState = report.WiFi;
+		ProviderNetworkState = report.MobileNetwork;
+		ScreanWidth = report.ScreenWidth;
+		ScreanHeight = report.ScreenHeight;
+		YearCode = date.getYear()+1900;
+		TimeCode = Timecode;
+		this.Month = Month;
+		Week=Adder.get(Calendar.WEEK_OF_YEAR);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 
 	public final Key getE_ReportCode() {
 		return E_ReportCode;

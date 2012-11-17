@@ -64,7 +64,7 @@ public class SummaryGetter {
 			DayReport report = new DayReport();  
 
 			DayReportInfo prevData=null;
-		
+			int size= 0;
 			while ( iterator.hasNext() ){
 				DayReportInfo info = iterator.next();
 				
@@ -76,11 +76,16 @@ public class SummaryGetter {
 					report.AddDay(TimeUtil.minTimCode(YearCode, code , -1*i));	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 				
 					report.AddReportRate(0);
+					if(++size ==30)
+						break;
 				}
-				
+				if(size==30)
+					break;
 				report.AddDay(info.getMDay());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
+				if(++size==30)
+					break;
 			  }
 			int StartDate = (prevData==null) ? TimeCode:prevData.getMDay()-1;	//잠재적 에러 요소 1월 1일이면?
 			int j=1;
@@ -133,7 +138,7 @@ public class SummaryGetter {
 			WeekReport report = new WeekReport();  
 
 			WeekReportInfo prevData=null;
-		
+			int size=0;
 			while ( iterator.hasNext() ){
 				WeekReportInfo info = iterator.next();
 				
@@ -149,11 +154,16 @@ public class SummaryGetter {
 					}
 					report.AddWeek(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 					report.AddReportRate(0);
+					if(++size==30)
+						break;
 				}
-				
+				if(size==30)
+					break;
 				report.AddWeek(info.getYear(),info.getWeek());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
+				if(++size==30)
+					break;
 			  }
 			int StartDate = (prevData==null) ? WeekCode:prevData.getWeek()-1;
 			int j=1;
@@ -209,7 +219,7 @@ public class SummaryGetter {
 			MonthReport report = new MonthReport();  
 
 			MonthReportInfo prevData=null;
-		
+			int size=0;
 			while ( iterator.hasNext() ){
 				MonthReportInfo info = iterator.next();
 				
@@ -225,11 +235,16 @@ public class SummaryGetter {
 					}
 					report.AddMonth(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
 					report.AddReportRate(0);
+					if(++size==30)
+						break;
 				}
-				
+				if(size==30)
+					break;
 				report.AddMonth(info.getYear(),info.getMonth());
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
+				if(++size==30)
+					break;
 			  }
 			int StartDate = (prevData==null) ? MonthCode:prevData.getMonth()-1;
 			int j=1;

@@ -109,7 +109,60 @@ public class ErrorReport {
 		return Response.status(202).entity(KeyFactory.keyToString(reportKey)).build();
  
 	}
+	
+	/**
+	 * TestCase
+	 * @since 2012. 11. 17.오후 7:42:35
+	 * TODO
+	 * @author Karuana
+	 * @param userInfo
+	 * @return
+	 */
+	@POST
+	@Path("/UserTestInfo")
+	@Consumes("application/json")
+	public Response UploadUseTestErrorInfo(ClientReportData userInfo) {
+		
+		ErrorReportRegister errRegister = new ErrorReportRegister();
+		Key reportKey = errRegister.insertTestErrorReport(userInfo);	
+		String reportKey_str = KeyFactory.keyToString(reportKey);
+		
+		Gson gson = new Gson();
+		TypeMatchingInfo matchingInfo= new TypeMatchingInfo(userInfo.ErrorName,userInfo.ErrorClassName,userInfo.line,reportKey_str);
 
+		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
+		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/TypeMatching", Method.POST, gson.toJson(matchingInfo));
+		backendService.CreateBackendWorkJson(BackendInfo);
+		System.out.println("Test Case 시작");
+		//백엔드로 타입 생
+		return Response.status(202).entity(KeyFactory.keyToString(reportKey)).build();
+ 
+	}
+	/**
+	 *	TestCase
+	 * @since 2012. 11. 17.오후 8:00:49
+	 * TODO
+	 * @author Karuana
+	 * @param reportKey
+	 * @param logData
+	 * @return
+	 */
+	@PUT
+	@Path("/UserTestInfo/Key={key}")
+	@Consumes("text/plain")
+	public Response UploadUserTestLog(
+			@PathParam("key") final String reportKey,
+									String logData) {
+		
+		System.out.println("로그 데이터 저장하기 호출");
+		BackendWorkingSet backendService = BackendFactory.GetBackendService(ServiceType.GOOGLE_APP_ENGINE);
+		BackendSettingData BackendInfo = BackendFactory.GetDefaltSettingData("/logdog/ReportBackend/LogUpdate/KEY="+reportKey, Method.PUT, logData);
+		backendService.CreateBackendWorkTextData(BackendInfo);
+		
+		//백엔드로 타입 생
+		return Response.status(202).entity("Log Update Accepted").build();
+ 
+	}
 	@PUT
 	@Path("/UserInfo/Key={key}")
 	@Consumes("text/plain")
