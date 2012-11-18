@@ -29,6 +29,14 @@ public class TimeUtil {
 		return Temp.getTime();
 	}
 	
+	/**
+	 *	주어진 년도에 최대 주수를 리턴한다.
+	 * @since 2012. 11. 18.오후 8:24:53
+	 * TODO
+	 * @author Karuana
+	 * @param Year
+	 * @return
+	 */
 	public static int MaxWeekCount(int Year)
 	{
 		Calendar Adder = Calendar.getInstance();
@@ -98,6 +106,13 @@ public class TimeUtil {
 		return Year;
 		
 	}
+	/**
+	 *	오늘이 몇번째 주인지 리턴한다.
+	 * @since 2012. 11. 18.오후 8:25:23
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	public static int GetWeek()
 	{
 		Calendar Adder = Calendar.getInstance();
@@ -121,6 +136,14 @@ public class TimeUtil {
 		return Timecode;
 	} 
 	
+	/**
+	 *	주어진 Date의 WeekCode를 리턴한다.
+	 * @since 2012. 11. 18.오후 8:25:39
+	 * TODO
+	 * @author Karuana
+	 * @param date
+	 * @return
+	 */
 	public static int getWeekCode(Date date)
 	{
 		Calendar Adder = Calendar.getInstance();
@@ -128,6 +151,15 @@ public class TimeUtil {
 		return Adder.get(Calendar.WEEK_OF_YEAR);
 	}
 
+	/**
+	 *	Yearcdoe +DayCode를 Date로 변환한다.
+	 * @since 2012. 11. 18.오후 8:26:00
+	 * TODO
+	 * @author Karuana
+	 * @param year
+	 * @param code
+	 * @return
+	 */
 	public static Date getCode2Date(int year, int code)
 	{
 		Date tempDate=null;

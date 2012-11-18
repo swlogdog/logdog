@@ -7,17 +7,38 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+/**
+ * 	일별 에러 정보를 기록하기 위한 DataStore 객체이다.
+ * @since 2012. 11. 19.오전 7:44:51
+ * TODO
+ * @author Karuana
+ */
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
 public class DayReportInfo {
+	/**
+	 * 기본 키
+	 */
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Key DayRateKey;
+	/**
+	 * 	년도
+	 */
 	@Persistent
-	int Year;//YYYY
+	private int Year;//YYYY
+	/**
+	 * 날자코드
+	 */
 	@Persistent
-	int MDay;//MMDD
+	private int MDay;//MMDD
+	/**
+	 * YearMMDD 형태로 저장되는 날짜 코드, 앱엔진의 부등호 두개 쿼리 안되는거 방지
+	 */
 	@Persistent
-	int TotalCode;
+	private int TotalCode;
+	/**
+	 * 총 에러량 
+	 */
 	@Persistent 
 	private int TotalOccurrences;
 	public DayReportInfo(){}

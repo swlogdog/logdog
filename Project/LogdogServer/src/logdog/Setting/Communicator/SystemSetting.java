@@ -21,12 +21,31 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+/**
+ * 시스템 셋팅에 관련된 Commu 객체이다. 
+ * @since 2012. 11. 19.오전 8:07:31
+ * TODO
+ * @author Karuana
+ */
 @Path("/System")
 public class SystemSetting {
 	
+	/**
+	 * Uri 정보를 얻어오기 위한 클래스 
+	 */
 	@Context UriInfo uriInfo;
 	
-	  @POST
+	/**
+	 *	로그 셋팅 정보를 변경해주는 커뮤니케이션 
+	 * @since 2012. 11. 19.오전 8:08:05
+	 * TODO
+	 * @author Karuana
+	 * @param Log
+	 * @param servletResponse
+	 * @return
+	 * @throws IOException
+	 */
+	@POST
 	  @Path("/logchage")
 	  @Produces(MediaType.TEXT_HTML)
 	  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -55,7 +74,17 @@ public class SystemSetting {
 
 	  }
 	  
-	  @POST
+	  /**
+	 *	새로운 개발자를 추가한다. 
+	 * @since 2012. 11. 19.오전 8:09:46
+	 * TODO
+	 * @author Karuana
+	 * @param UserInfo
+	 * @param servletResponse
+	 * @return
+	 * @throws IOException
+	 */
+	@POST
 	  @Path("/addUser")
 	  @Produces(MediaType.TEXT_HTML)
 	  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

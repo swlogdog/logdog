@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 public class SummaryInfo {
 	/**
 	 * 일별 그래프를 그리기위한 데이터를 넘겨주는 메소드이다. 
-	 * URL = /Board/summary/Day - GET 
+	 * URL = /Board/summary/Day=구간길이 - GET 
 	 * @since 2012. 11. 15.오전 6:19:05
 	 * TODO
 	 * @author Karuana
@@ -38,6 +38,15 @@ public class SummaryInfo {
 		System.out.print("Json 요청");
 		return getter.getDayErrorRate(interval);
 	}
+	/**
+	 *	Week 그래프를 그리기 위한 데이터를 넘겨주는 메소드이다.
+	 *	URL = /Board/summary/Week=구간길이 - GET 
+	 * @since 2012. 11. 18.오후 8:28:56
+	 * TODO
+	 * @author Karuana
+	 * @param interval 구간 길이
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/Week={interval}")
@@ -47,6 +56,16 @@ public class SummaryInfo {
 		System.out.print("Json 요청");
 		return getter.getWeekDayErrorRate(interval);
 	}
+	
+	/**
+	 *	Month 그래프를 그리기 위한 데이터를 넘겨주는 메소드이다.
+	 *	URL = /Board/summary/Month=구간길이 - GET  
+	 * @since 2012. 11. 18.오후 8:30:05
+	 * TODO
+	 * @author Karuana
+	 * @param interval 구간 길이
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/Month={interval}")

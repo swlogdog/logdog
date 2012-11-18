@@ -2,6 +2,12 @@ package logdog.DashBoard.DTO.Json.Highcharts;
 
 import java.util.ArrayList;
 
+/**
+ * 	월별 그래프를 그리기 위한 Json 탬플릿이다. 
+ * @since 2012. 11. 18.오후 8:32:47
+ * TODO
+ * @author Karuana
+ */
 public class MonthReport {
 	/**
 	 *  그래프에 표시될 일자가 저장된다.
@@ -17,6 +23,14 @@ public class MonthReport {
 		ReportRate = new ArrayList<Integer>();
 		
 	}
+	/**
+	 *	입력받은 Year + Month를 기반으로 Month에 값을 넣는다. 
+	 * @since 2012. 11. 18.오후 8:36:11
+	 * TODO
+	 * @author Karuana
+	 * @param year
+	 * @param month
+	 */
 	public void AddMonth(int year,int month)
 	{
 		Months.add(year+" / "+month);

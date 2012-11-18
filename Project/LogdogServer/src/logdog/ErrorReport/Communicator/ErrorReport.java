@@ -30,9 +30,23 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.gson.Gson;
 
+/**
+ * 	Error리포트를 하는 과정 전체를 담당하는 Commu이다. 
+ * @since 2012. 11. 19.오전 6:00:53
+ * TODO
+ * @author Karuana
+ */
 @Path("/Report")
 public class ErrorReport {
 
+	/**
+	 *	Log를 받는지, 받지 않는지 체크하는 로직이다.
+	 *	URL = /logdog/Report/LogSetting - GET 
+	 * @since 2012. 11. 19.오전 6:00:45
+	 * TODO
+	 * @author Karuana
+	 * @return Json 
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/LogSetting")
@@ -43,6 +57,17 @@ public class ErrorReport {
 		return ServerSetter.getLogFileSetting();
 	}
 	
+	/**
+	 *	제보하려는 에러가 존재하는지 체크한다.
+	 *	URL = /logdog/Report/ErrorType/에러명/클래스명/라인 - GET 
+	 * @since 2012. 11. 19.오전 6:04:18
+	 * TODO
+	 * @author Karuana
+	 * @param errName
+	 * @param ClassName
+	 * @param cLine
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/ErrorType/{errName}/{className}/{line}")
@@ -74,6 +99,16 @@ public class ErrorReport {
 		return gson.toJson(isType);
 	}
 	
+	/**
+	 *	새로운 타입의 에러를 제보한다. 
+	 *	URL = /logdog/Report/ErrorType- POST
+	 *	Json ->  CallStackInfo 참조 
+	 * @since 2012. 11. 19.오전 6:51:34
+	 * TODO
+	 * @author Karuana
+	 * @param callstack
+	 * @return
+	 */
 	@POST
 	@Path("/ErrorType")
 	@Consumes("application/json")
@@ -89,6 +124,15 @@ public class ErrorReport {
 	}
 
 	
+	/**
+	 *	유저 리포트 정보를 등록한다.
+	 *	URL = /logdog/Report/ErrorType- POST
+	 * @since 2012. 11. 19.오전 6:54:35
+	 * TODO
+	 * @author Karuana
+	 * @param userInfo
+	 * @return
+	 */
 	@POST
 	@Path("/UserInfo")
 	@Consumes("application/json")
@@ -163,6 +207,16 @@ public class ErrorReport {
 		return Response.status(202).entity("Log Update Accepted").build();
  
 	}
+	/**
+	 *  로그 정보를 등록하는 경우 로그 데이터를 Blobstore 서버에 기록한다.
+	 *	URL = /logdog/Report/ErrorType/Key=리포트 키- PUT
+	 * @since 2012. 11. 19.오전 7:02:19
+	 * TODO
+	 * @author Karuana
+	 * @param reportKey
+	 * @param logData
+	 * @return
+	 */
 	@PUT
 	@Path("/UserInfo/Key={key}")
 	@Consumes("text/plain")

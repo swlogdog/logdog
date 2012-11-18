@@ -27,12 +27,19 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.taskqueue.TaskOptions.Method;
 import com.google.gson.Gson;
 
+/**
+ * 입력받은 Report를 처리하기 위한 Backend작업을 처리하는 Commu이다.
+ * @since 2012. 11. 18.오후 8:47:08
+ * TODO
+ * @author Karuana
+ */
 @Path("/ReportBackend")
 public class BackendWorker {
 
 	
 	/**
-	 *
+	 *	에러 타입 정보를 등록한다.
+	 *	URL = /logdog/ReportBackend/ErrorType - GET 
 	 * @since 2012. 11. 3.오전 3:27:11
 	 * 에러 타입 등을 Backend를 통해 작업한다.
 	 * @author Karuana
@@ -57,6 +64,15 @@ public class BackendWorker {
 	}
 	
 	
+	/**
+	 *	등록된 유저정보의 에러타입의 매칭 작업을 진행한다.
+	 *	URL = /logdog/ReportBackend/TypeMatching - GET 
+	 * @since 2012. 11. 19.오전 5:56:56
+	 * TODO
+	 * @author Karuana
+	 * @param matchingdata
+	 * @return
+	 */
 	@POST
 	@Path("/TypeMatching")
 	@Consumes("application/json")
@@ -78,7 +94,7 @@ public class BackendWorker {
 
 	
 		//System.out.print("Backend Start");
-		if(eReport.MatchingErrorType(ReportKey, uid)==null)
+		if(eReport.MatchingErrorType(ReportKey, uid)==null)	//타입 매칭이 실패한 경우 재시도... Ex)실패하는 경우: DataStore
 		{
 			Gson gson = new Gson();
 			matchingdata.setRematching(true);
@@ -92,6 +108,16 @@ public class BackendWorker {
  
 	}
 	
+	/**
+	 *	Log를  BlobStore에 기록한다.
+	 *	URL = /logdog/ReportBackend/LogUpdate/KEY=리포트 키 - GET 
+	 * @since 2012. 11. 19.오전 6:00:16
+	 * TODO
+	 * @author Karuana
+	 * @param reportKey
+	 * @param logData
+	 * @return
+	 */
 	@PUT
 	@Path("/LogUpdate/KEY={key}")
 	@Consumes("text/plain")

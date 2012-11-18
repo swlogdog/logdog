@@ -8,14 +8,25 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
 
-
-@PersistenceCapable ( identityType = IdentityType.APPLICATION)
+/**
+ * App버젼 정보를 저장하기 위한 클래스이다.
+ * 
+ * @since 2012. 11. 19.오전 7:50:55 TODO
+ * @author Karuana
+ */
+@PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class AppVesionInfo {
+	/**
+	 * 기본 키
+	 */
 	@PrimaryKey
-	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key AppKey;
-	
-	@Persistent 
+
+	/**
+	 * 버젼
+	 */
+	@Persistent
 	private String Version;
 
 	public AppVesionInfo(String version) {
@@ -30,5 +41,5 @@ public class AppVesionInfo {
 	public String getVersion() {
 		return Version;
 	}
-	
+
 }

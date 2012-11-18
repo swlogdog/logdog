@@ -8,16 +8,30 @@ import javax.jdo.Query;
 import logdog.Common.TimeUtil;
 import logdog.Common.DataStore.PMF;
 import logdog.ErrorReport.DAO.AppVesionInfo;
-import logdog.ErrorReport.DAO.VersionReportInfo;
 import logdog.ErrorReport.DAO.Summary.ClassErrorInfo;
 import logdog.ErrorReport.DAO.Summary.CountryReportInfo;
 import logdog.ErrorReport.DAO.Summary.DayReportInfo;
 import logdog.ErrorReport.DAO.Summary.MonthReportInfo;
+import logdog.ErrorReport.DAO.Summary.VersionReportInfo;
 import logdog.ErrorReport.DAO.Summary.WeekReportInfo;
 import logdog.ErrorReport.DTO.UserSummaryInfo;
 
+/**
+ * HighCharts를 이용해 DashBoard에 요약 그래프를 그리기 위한 DB를 구성하는 Controller이다.
+ * @since 2012. 11. 19.오전 7:35:59
+ * TODO
+ * @author Karuana
+ */
 public class ReportSummaryUpdaer {
 	
+	/**
+	 *	들어온 에러에 대한 버젼 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:37:33
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
 	private boolean UpdateVersionError(final UserSummaryInfo reportInfo)
 	{
 
@@ -57,6 +71,14 @@ public class ReportSummaryUpdaer {
 		return true;
 	}
 	
+	/**
+	 *	들어온 에러에 대한 날짜 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:37:54
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
 	private boolean UpdateDayReportInfo(final UserSummaryInfo reportInfo)
 	{
 
@@ -93,6 +115,14 @@ public class ReportSummaryUpdaer {
 		}
 		return true;
 	}
+	/**
+	 *	들어온 에러에 대한 주간 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:38:11
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
 	private boolean UpdateWeekReportInfo(final UserSummaryInfo reportInfo)
 	{
 
@@ -130,6 +160,14 @@ public class ReportSummaryUpdaer {
 		}
 		return true;
 	}
+	/**
+	 *	들어온 에러에 대한 월간 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:38:24
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
 	private boolean UpdateMonthReportInfo(final UserSummaryInfo reportInfo)
 	{
 
@@ -167,6 +205,14 @@ public class ReportSummaryUpdaer {
 		}
 		return true;
 	}
+	/**
+	 *	들어온 정보에 대한 국가 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:38:40
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return
+	 */
 	private boolean UpdateCountryReportInfo(final UserSummaryInfo reportInfo)
 	{
 
@@ -204,6 +250,13 @@ public class ReportSummaryUpdaer {
 		return true;
 	}
 	
+	/**
+	 *	해당 앱 버젼이 존재하는 버젼인지 신번젼인지 체크하고 신버젼이면 데이터를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:39:00
+	 * TODO
+	 * @author Karuana
+	 * @param AppV
+	 */
 	private void ChkAppVersion(String AppV)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -237,6 +290,14 @@ public class ReportSummaryUpdaer {
 
 	}
 	
+	/**
+	 *	입력된 에러와 관련된 클래스 에러 정보를 갱신한다.
+	 * @since 2012. 11. 19.오전 7:40:23
+	 * TODO
+	 * @author Karuana
+	 * @param className
+	 * @return
+	 */
 	private boolean UpdateClassError(String className)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -273,6 +334,14 @@ public class ReportSummaryUpdaer {
 		return true;
 	}
 	
+	/**
+	 *	갱신 작업을 진행하는 클래스이다.
+	 * @since 2012. 11. 19.오전 7:40:46
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @param className
+	 */
 	public void UpdatedReportError(UserSummaryInfo reportInfo, String className)
 	{
 		UpdateVersionError(reportInfo);

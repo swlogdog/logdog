@@ -14,6 +14,12 @@ import logdog.ErrorReport.DTO.ErrorUniqueID;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 	에러의 타입을 분류해주는 일종의 타입 분류기 클래스이다.
+ * @since 2012. 11. 19.오전 7:17:36
+ * TODO
+ * @author Karuana
+ */
 public class ErrorTypeClassifier {
 
 	
@@ -22,6 +28,14 @@ public class ErrorTypeClassifier {
 		
 	}
 
+	/**
+	 *	입력된 uid값을 기준으로 해당 uid값과 일치하는 에러가 존재하는 체크하여 결과를 리턴한다.
+	 * @since 2012. 11. 19.오전 7:17:51
+	 * TODO
+	 * @author Karuana
+	 * @param errorTypeid
+	 * @return boolean 에러타입이 존재하면 t, 아니면 f
+	 */
 	public boolean IsErrorType(ErrorUniqueID errorTypeid)
 	{
 	
@@ -53,9 +67,9 @@ public class ErrorTypeClassifier {
 	}
 	
 	/**
-	 *
+	 *	새로운 에러 타입 정보를 추가한다. 추가한 뒤 추가한 에러 타입에 대한 정보를 리턴한다.
 	 * @since 2012. 11. 2.오전 3:54:40
-	 * TODO 키가 정상적으로 오는지 테스트할 것 옴 
+	 * TODO 
 	 * @author Karuana
 	 * @param name
 	 * @param classname
@@ -84,6 +98,14 @@ public class ErrorTypeClassifier {
 		return eType.getE_ClassificationCode();
 	}
 	
+	/**
+	 *	콜스택 정보를 에러 타입 정보에 기록한다. 
+	 * @since 2012. 11. 19.오전 7:30:49
+	 * TODO
+	 * @author Karuana
+	 * @param stackInfo
+	 * @return
+	 */
 	public boolean LinkCallStackData(CallStackInfo stackInfo)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -121,7 +143,7 @@ public class ErrorTypeClassifier {
 	}
 	
 	/**
-	 *	Backend에서 사용하는 
+	 *	에러 타입이 존재하는 경우 에러 타입을 새로 추가하지 않고 정보를 새로 업데이트 한
 	 * @since 2012. 11. 10.오전 9:50:51
 	 * TODO
 	 * @author Karuana
@@ -163,6 +185,14 @@ public class ErrorTypeClassifier {
 		return (errType == null) ? null: errType.getE_ClassificationCode();
 	}
 	
+	/**
+	 *	에러 고유 아이디를 기준으로 에러타입에 대한 정보를 얻어온다.
+	 * @since 2012. 11. 19.오전 7:32:52
+	 * TODO
+	 * @author Karuana
+	 * @param errorTypeid
+	 * @return ErrorTypeInfo
+	 */
 	public ErrorTypeInfo getErrorTypeInfo(ErrorUniqueID errorTypeid)
 	{	
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -198,6 +228,14 @@ public class ErrorTypeClassifier {
 		
 	}
 	
+	/**
+	 *	에러 리포트 키를 기준으로 에러 리포트 인포를 얻어온다.
+	 * @since 2012. 11. 19.오전 7:33:37
+	 * TODO
+	 * @author Karuana
+	 * @param ErrorKey
+	 * @return	ErrorTypeInfo
+	 */
 	public final ErrorTypeInfo getErrorTypeInfo(Key ErrorKey)
 	{
 	
@@ -226,6 +264,14 @@ public class ErrorTypeClassifier {
 			
 	}
 	
+	/**
+	 * 에러 고유 정보를 기반으로 에러 타입의 Key를 얻어온다.
+	 * @since 2012. 11. 19.오전 7:34:16
+	 * TODO
+	 * @author Karuana
+	 * @param errorTypeid
+	 * @return Key
+	 */
 	public final Key getErrorTypeKey(ErrorUniqueID errorTypeid)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();

@@ -13,6 +13,12 @@ import logdog.ErrorReport.DTO.UserSummaryInfo;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 	입력 받은 정보를 DataStore에 기록하는 Controller
+ * @since 2012. 11. 19.오전 7:06:02
+ * TODO
+ * @author Karuana
+ */
 public class ErrorReportRegister {
 	
 
@@ -25,7 +31,7 @@ public class ErrorReportRegister {
 	}
 	
 	/**
-	 *	TestCase용 삭제할 꺼 
+	 *	TestCase용 삭제 예정 
 	 * @since 2012. 11. 17.오후 7:39:00
 	 * TODO
 	 * @author Karuana
@@ -55,6 +61,14 @@ public class ErrorReportRegister {
 		return eInfo.getE_ReportCode();
 	}
 
+	/**
+	 *	유저 에러 리포트 정보를 등록한다.
+	 * @since 2012. 11. 19.오전 7:06:48
+	 * TODO
+	 * @author Karuana
+	 * @param reportInfo
+	 * @return	Key -> 등록된 유저 에러 리포트 키를 리턴한다.
+	 */
 	public Key insertErrorReport(ClientReportData reportInfo)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -78,12 +92,12 @@ public class ErrorReportRegister {
 		return eInfo.getE_ReportCode();
 	}
 	/**
-	 *
+	 * 에러를 식별하는 기본 값과 레포트 키를 입력받아 타입 매칭을 실시하여 유저 레포트에 에러 타입 키를 입력한다.		
 	 * @since 2012. 11. 2.오후 12:43:20
 	 * TODO 에러 파일의 타입을 매칭한다.
 	 * @author Karuana
-	 * @param reportKey
-	 * @param uid
+	 * @param reportKey	유저 리포트 키 
+	 * @param uid	에러를 식별하게 해주는 기본 값
 	 */
 	public Key MatchingErrorType(Key reportKey, ErrorUniqueID uid)
 	{
@@ -102,7 +116,7 @@ public class ErrorReportRegister {
 		}
 		catch(Exception e){
 				
-			System.out.print(e.getClass() +"    매칭 에  "+ e.getMessage());
+			e.printStackTrace();
 				
 		}
 		finally{
@@ -113,6 +127,14 @@ public class ErrorReportRegister {
 		return ErrTypeKey;
 	
 	}
+	/**
+	 *	로크 파일의 키를 유저 리포트 정보에 입력한다.
+	 * @since 2012. 11. 19.오전 7:15:06
+	 * TODO
+	 * @author Karuana
+	 * @param reportKey
+	 * @param filekey
+	 */
 	public void MatchingLogFile(Key reportKey, BlobKey filekey)
 	{
 		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -133,6 +155,14 @@ public class ErrorReportRegister {
 		}
 	}
 	
+	/**
+	 *	 요약 정보를 얻어온다.
+	 * @since 2012. 11. 19.오전 7:16:45
+	 * TODO
+	 * @author Karuana
+	 * @param reportKey
+	 * @return
+	 */
 	public UserSummaryInfo getSummaryInfo(Key reportKey)
 	{
 		PersistenceManager	jdoConnector = PMF.getPMF().getPersistenceManager();

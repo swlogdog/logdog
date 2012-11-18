@@ -14,10 +14,10 @@ import logdog.DashBoard.DTO.Json.Highcharts.MonthReport;
 import logdog.DashBoard.DTO.Json.Highcharts.VersionReportRate;
 import logdog.DashBoard.DTO.Json.Highcharts.WeekReport;
 import logdog.ErrorReport.DAO.AppVesionInfo;
-import logdog.ErrorReport.DAO.VersionReportInfo;
 import logdog.ErrorReport.DAO.Summary.ClassErrorInfo;
 import logdog.ErrorReport.DAO.Summary.DayReportInfo;
 import logdog.ErrorReport.DAO.Summary.MonthReportInfo;
+import logdog.ErrorReport.DAO.Summary.VersionReportInfo;
 import logdog.ErrorReport.DAO.Summary.WeekReportInfo;
 
 import com.google.gson.Gson;
@@ -115,6 +115,14 @@ public class SummaryGetter {
 				
 		}
 	}
+	/**
+	 *	Week별 그래프를 그려주기 위한 Json을 리턴한다.
+	 * @since 2012. 11. 18.오후 8:31:09
+	 * TODO
+	 * @author Karuana
+	 * @param Interval
+	 * @return
+	 */
 	public String getWeekDayErrorRate(int Interval)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -201,6 +209,14 @@ public class SummaryGetter {
 		}
 	}
 	
+	/**
+	 *	월별 그래프를 그려주기위한 Json을 반환한다.
+	 * @since 2012. 11. 18.오후 8:31:47
+	 * TODO
+	 * @author Karuana
+	 * @param Interval
+	 * @return
+	 */
 	public String getMonthErrorDate(int Interval){
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 

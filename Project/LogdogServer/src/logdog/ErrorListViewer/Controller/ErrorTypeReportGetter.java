@@ -18,6 +18,12 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 
+/**
+ * 	에러 타입 List를 생성할 수 있도록 Json으로 만들어주는 역할을 하는 Controller이다.
+ * @since 2012. 11. 18.오후 8:43:18
+ * TODO
+ * @author Karuana
+ */
 public class ErrorTypeReportGetter {
 
 	/**
@@ -57,6 +63,7 @@ public class ErrorTypeReportGetter {
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
 				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);	
@@ -129,6 +136,7 @@ public class ErrorTypeReportGetter {
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
 				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -150,7 +158,7 @@ public class ErrorTypeReportGetter {
 	}
 	
 	/**
-	 *
+	 *	입력받은 달에 대한 에러리스트를 뽑아온다. 
 	 * @since 2012. 11. 21.오전 5:21:28
 	 * TODO
 	 * @author Karuana
@@ -199,6 +207,7 @@ public class ErrorTypeReportGetter {
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
 				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -220,7 +229,7 @@ public class ErrorTypeReportGetter {
 	}
 	
 	/**
-	 *
+	 *	입력받은 주에 대한 에러리스트르 뽑아온다.
 	 * @since 2012. 11. 21.오전 5:21:44
 	 * TODO
 	 * @author Karuana
@@ -269,6 +278,7 @@ public class ErrorTypeReportGetter {
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
 				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -290,6 +300,15 @@ public class ErrorTypeReportGetter {
 	}
 	
 	
+	/**
+	 *	입력받은 버전에 대한 에러리스트를 뽑아온다.
+	 * @since 2012. 11. 18.오후 8:44:44
+	 * TODO
+	 * @author Karuana
+	 * @param AppVersion
+	 * @param OSVersion
+	 * @return
+	 */
 	public String getVersionErrorReport(String AppVersion, String OSVersion)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -328,6 +347,7 @@ public class ErrorTypeReportGetter {
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
 				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
