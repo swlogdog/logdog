@@ -93,4 +93,6 @@ public class ClientReportData {
 	 * 보낼 로그 파일 이름
 	 */
 	public String LogFileName;
+	
+
 }
