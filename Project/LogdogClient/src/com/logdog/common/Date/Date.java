@@ -13,15 +13,15 @@ public class Date {
 
 	/**
 	 * 시간값으 가져온다.
-	 * "yyyy.MM.dd HH:mm:ss" string으로 변환
+	 * "yyyy-MM-dd.HH.mm.ss" string으로 변환
 	 * @since 2012. 10. 29.오후 8:13:58
 	 * TODO
 	 * @author JeongSeungsu
-	 * @return "yyyy.MM.dd HH:mm:ss"
+	 * @return "yyyy-MM-dd.HH.mm.ss"
 	 */
 	public static String GetDateYYMMDDHHMMSS(Context context){
 		java.util.Date currenttime = new java.util.Date();
-		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy.MM.dd HH-mm-ss",  context.getResources( ).getConfiguration( ).locale);
+		SimpleDateFormat formatter = new SimpleDateFormat ( "yyyy-MM-dd.HH.mm.ss",  context.getResources( ).getConfiguration( ).locale);
 		String time = formatter.format(currenttime);
 		return time;
 	}
