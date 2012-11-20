@@ -142,19 +142,18 @@ var Request = function() {
              <img src="/assets/img/logdog/logdog_normal.png" class="span1" align="middle"><h1>Error Statistics</h1>
            </div>
 		 <div class="btn-toolbar" style="margin: 0;text-align:right;">
+		   	<div class="btn-group">
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a id="intS"  style="margin: 0;text-align:left;">7 interval</a></li>
+                  <li><a id="intT" style="margin: 0;text-align:left;">30 intval</a></li>
+                </ul>
+			 </div>
 		   <div class="btn-group">
                 <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
                 <ul class="dropdown-menu">
                   <li><a id="DayButton"  style="margin: 0;text-align:left;">Day</a></li>
                   <li><a id="WeekButton" style="margin: 0;text-align:left;">Week</a></li>
-                  <li><a id="MonthButton" style="margin: 0;text-align:left;">Month</a></li>
-                </ul>
-			 </div>
-			<div class="btn-group">
-                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
-                <ul class="dropdown-menu">
-                  <li><a id="DayButton"  style="margin: 0;text-align:left;">7 interval</a></li>
-                  <li><a id="WeekButton" style="margin: 0;text-align:left;">30 intval</a></li>
                   <li><a id="MonthButton" style="margin: 0;text-align:left;">Month</a></li>
                 </ul>
 			 </div>
@@ -164,7 +163,8 @@ var Request = function() {
 		//<![CDATA[ 
 		      
 		      window.onload = function () {
-		    	 var interval=7; 
+		    	 var interval=30; 
+		    	 var seletedOption="day";
 				 var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
@@ -207,7 +207,7 @@ var Request = function() {
 			        },
 			        xAxis: {
 			            labels: {
-			                step: 5
+			                step: 3
 			            }
 			        },
 			        title: {
@@ -239,7 +239,7 @@ var Request = function() {
 							if('Week'==key)
 							{
 								Daychart.xAxis[0].setCategories(eval(value));
-								
+							
 								categori=eval(value);
 							}
 							if('ReportRate'==key)
@@ -252,7 +252,7 @@ var Request = function() {
 							
 
 							});
-			      		
+				      		seletedOption="Week";
 			      			Daychart.hideLoading();
 						};
 			      	
@@ -277,7 +277,7 @@ var Request = function() {
 							
 
 							});
-			      		
+			      		seletedOption="Day";
 			      			Daychart.hideLoading();
 						};
 						
@@ -302,10 +302,46 @@ var Request = function() {
 								
 
 								});
-				      		
+				      		seletedOption="Month";
 				      			Daychart.hideLoading();
 							};	
-			    	 
+					      	var interval7btn = document.getElementById('intS');
+					      	interval7btn.onclick = function(){
+					      	
+					      			interval=7;
+					     			if(seletedOption =="Day")
+					     			{
+					     				daybtn.onclick();
+					     			}
+					     			else if(seletedOption =="Week")
+					     			{
+					     				Weekbtn.onclick();
+					     			}
+					     			else
+					     			{
+					     				Monthbtn.onclick();
+					     			}
+					      			
+							};	
+					      	var interval30btn = document.getElementById('intT');
+					      	interval30btn.onclick = function(){
+					    
+									interval=30;
+					     			if(seletedOption =="Day")
+					     			{
+					     				daybtn.onclick();
+					     			}
+					     			else if(seletedOption =="Week")
+					     			{
+					     				Weekbtn.onclick();
+					     			}
+					     			else
+					     			{
+					     				Monthbtn.onclick();
+					     			}
+		
+							};	
+				    	 
 		      
 		      };
 			//]]>  </script>
