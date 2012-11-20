@@ -2,6 +2,7 @@ package logdog.DashBoard.Communicator;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -30,14 +31,31 @@ public class SummaryInfo {
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/Day")
-	public String getDaySummary()
+	@Path("/Day={interval}")
+	public String getDaySummary(@PathParam("interval") final int interval)
 	{	   		
 		SummaryGetter getter = new SummaryGetter();
 		System.out.print("Json 요청");
-		return getter.getDayErrorRate();
+		return getter.getDayErrorRate(interval);
 	}
-	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Week={interval}")
+	public String getWeekSummary(@PathParam("interval") final int interval)
+	{	   		
+		SummaryGetter getter = new SummaryGetter();
+		System.out.print("Json 요청");
+		return getter.getWeekDayErrorRate(interval);
+	}
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/Month={interval}")
+	public String getMonthSummary(@PathParam("interval") final int interval)
+	{	   		
+		SummaryGetter getter = new SummaryGetter();
+		System.out.print("Json 요청");
+		return getter.getMonthErrorDate(interval);
+	}
 	/**
 	 *	버젼별 에러량 그래프를 그리기 위한 데이터를 JSon으로 넘겨주는 메소드이다.
 	 *	URL = /Board/summary/Version - GET 

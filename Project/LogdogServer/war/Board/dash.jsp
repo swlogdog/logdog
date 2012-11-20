@@ -141,12 +141,30 @@ var Request = function() {
               <div class="page-header">
              <img src="/assets/img/logdog/logdog_normal.png" class="span1" align="middle"><h1>Error Statistics</h1>
            </div>
-
-              <div id="day" style="height: 400px">
+		 <div class="btn-toolbar" style="margin: 0;text-align:right;">
+		   <div class="btn-group">
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a id="DayButton"  style="margin: 0;text-align:left;">Day</a></li>
+                  <li><a id="WeekButton" style="margin: 0;text-align:left;">Week</a></li>
+                  <li><a id="MonthButton" style="margin: 0;text-align:left;">Month</a></li>
+                </ul>
+			 </div>
+			<div class="btn-group">
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a id="DayButton"  style="margin: 0;text-align:left;">7 interval</a></li>
+                  <li><a id="WeekButton" style="margin: 0;text-align:left;">30 intval</a></li>
+                  <li><a id="MonthButton" style="margin: 0;text-align:left;">Month</a></li>
+                </ul>
+			 </div>
+		 </div>
+         <div id="day" style="height: 400px">
 		<script type='text/javascript'>
 		//<![CDATA[ 
 		      
-		      $(function () {
+		      window.onload = function () {
+		    	 var interval=7; 
 				 var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
@@ -156,23 +174,28 @@ var Request = function() {
 			                },
 							events: {
 								load: function(event) {
-
-								$.getJSON('/Board/summary/Day', function(data) {
+									
+								$.getJSON('/Board/summary/Day='+interval, function(data) {
+									Daychart.showLoading();
 									$.each(data,function(key,value){
 									if('Day'==key)
 									{
 										Daychart.xAxis[0].setCategories(eval(value));
+										
 										categori=eval(value);
 										Today=categori[0];
 									}
 									if('ReportRate'==key)
 									{
-										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
+										Daychart.addSeries({ name: 'Day Report', data: eval(value)});
 										
 									}
 									} );
+									Daychart.hideLoading();
+
 									});
 								}
+			           	
 							}
 
 			        },
@@ -181,6 +204,11 @@ var Request = function() {
 		                title: {
 		                    text: 'Error Rate'
 		                }
+			        },
+			        xAxis: {
+			            labels: {
+			                step: 5
+			            }
 			        },
 			        title: {
 			            text: 'Date Error Report'
@@ -201,8 +229,85 @@ var Request = function() {
 			            }
 			        }
 			    });
-				
-		           });
+					
+			      	var Weekbtn = document.getElementById('WeekButton');
+			      	Weekbtn.onclick = function(){
+			      		Daychart.showLoading()
+			      		$.getJSON('/Board/summary/Week='+interval, function(data) {
+							
+							$.each(data,function(key,value){
+							if('Week'==key)
+							{
+								Daychart.xAxis[0].setCategories(eval(value));
+								
+								categori=eval(value);
+							}
+							if('ReportRate'==key)
+							{
+								Daychart.series[0].remove();
+								Daychart.addSeries({ name: 'Week Report', data: eval(value)});
+								//Daychart.redraw();
+							}
+							} );
+							
+
+							});
+			      		
+			      			Daychart.hideLoading();
+						};
+			      	
+			      	var daybtn = document.getElementById('DayButton');
+			      	daybtn.onclick = function(){
+			      		Daychart.showLoading()
+			      		$.getJSON('/Board/summary/Day='+interval, function(data) {
+							
+							$.each(data,function(key,value){
+							if('Day'==key)
+							{
+								Daychart.xAxis[0].setCategories(eval(value));
+								categori=eval(value);
+							}
+							if('ReportRate'==key)
+							{
+								Daychart.series[0].remove();
+								Daychart.addSeries({ name: 'Day Report', color: '#0000ff', data: eval(value)});
+								
+							}
+							} );
+							
+
+							});
+			      		
+			      			Daychart.hideLoading();
+						};
+						
+				      	var Monthbtn = document.getElementById('MonthButton');
+				      	Monthbtn.onclick = function(){
+				      		Daychart.showLoading()
+				      		$.getJSON('/Board/summary/Month='+interval, function(data) {
+								
+								$.each(data,function(key,value){
+								if('Months'==key)
+								{
+									Daychart.xAxis[0].setCategories(eval(value));
+									categori=eval(value);
+								}
+								if('ReportRate'==key)
+								{
+									Daychart.series[0].remove();
+									Daychart.addSeries({ name: 'Day Report', color: '#2211ff', data: eval(value)});
+									
+								}
+								} );
+								
+
+								});
+				      		
+				      			Daychart.hideLoading();
+							};	
+			    	 
+		      
+		      };
 			//]]>  </script>
               </div>
              
@@ -213,6 +318,7 @@ var Request = function() {
 				//<![CDATA[ 
 
 				$(function () {
+				
 					var AppVer;
     				var chart= new Highcharts.Chart({
            	 			chart: {

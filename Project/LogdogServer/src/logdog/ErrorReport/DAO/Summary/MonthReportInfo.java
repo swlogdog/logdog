@@ -7,43 +7,42 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
-public class DayReportInfo {
+public class MonthReportInfo {
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Key DayRateKey;
+	private Key MonthRateKey;
 	@Persistent
 	int Year;//YYYY
 	@Persistent
-	int MDay;//MMDD
+	int Month;//MM
 	@Persistent
-	int TotalCode;
+	int TotalCode;//YYYYDD
 	@Persistent 
 	private int TotalOccurrences;
-	public DayReportInfo(){}
-	public DayReportInfo(int year, int mDay) {
+	public MonthReportInfo(){}
+	public MonthReportInfo(int year, int month) {
 		super();
 		Year = year;
-		MDay = mDay;
-		TotalCode = Year*10000+MDay;
+		Month = month;
+		TotalCode = Year*100+Month;
 		TotalOccurrences=1;
 	}
 	public void UpdatedError()
 	{
 		TotalOccurrences+=1;
 	}
-	public Key getDayRateKey() {
-		return DayRateKey;
+	public Key getMonthRateKey() {
+		return MonthRateKey;
 	}
 	public int getYear() {
 		return Year;
 	}
-	public int getMDay() {
-		return MDay;
+	public int getMonth() {
+		return Month;
 	}
 	public int getTotalOccurrences() {
 		return TotalOccurrences;
 	}
-	
-	
 }

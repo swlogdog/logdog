@@ -10,12 +10,15 @@ import logdog.Common.TimeUtil;
 import logdog.Common.DataStore.PMF;
 import logdog.DashBoard.DTO.Json.Highcharts.ClassReportRate;
 import logdog.DashBoard.DTO.Json.Highcharts.DayReport;
+import logdog.DashBoard.DTO.Json.Highcharts.MonthReport;
 import logdog.DashBoard.DTO.Json.Highcharts.VersionReportRate;
+import logdog.DashBoard.DTO.Json.Highcharts.WeekReport;
 import logdog.ErrorReport.DAO.AppVesionInfo;
-import logdog.ErrorReport.DAO.ErrorTypeInfo;
 import logdog.ErrorReport.DAO.VersionReportInfo;
 import logdog.ErrorReport.DAO.Summary.ClassErrorInfo;
 import logdog.ErrorReport.DAO.Summary.DayReportInfo;
+import logdog.ErrorReport.DAO.Summary.MonthReportInfo;
+import logdog.ErrorReport.DAO.Summary.WeekReportInfo;
 
 import com.google.gson.Gson;
 
@@ -35,7 +38,7 @@ public class SummaryGetter {
 	 * @author Karuana
 	 * @return Json
 	 */
-	public String getDayErrorRate()
+	public String getDayErrorRate(int Interval)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 
@@ -44,16 +47,16 @@ public class SummaryGetter {
 
 
 		try{
-			//최대 7개만 가져온다.
-			SearchQuery.setFilter("Year == year && MDay <= Timecode");
-			SearchQuery.declareParameters("int year,int Timecode");
-			SearchQuery.setRange(0,6);
-			SearchQuery.setOrdering("MDay descending");	
+			//최대 30개만 가져온다.
+			SearchQuery.setFilter("TotalCode <= Timecode");
+			SearchQuery.declareParameters("int Timecode");
+			SearchQuery.setRange(0,Interval);
+			SearchQuery.setOrdering("TotalCode descending");	
 			
 			int YearCode = TimeUtil.GetNowYear();
 			int TimeCode = TimeUtil.GetNowTimeCode();
 			ErrorTypeResults = (List<DayReportInfo>) 
-								SearchQuery.execute(YearCode, TimeCode);
+								SearchQuery.execute(YearCode*10000+TimeCode);
 
 
 			Iterator<DayReportInfo> iterator = ErrorTypeResults.iterator();
@@ -61,15 +64,17 @@ public class SummaryGetter {
 			DayReport report = new DayReport();  
 
 			DayReportInfo prevData=null;
-			int TCode = TimeUtil.GetNowTimeCode();//오늘의 타임코드를 얻어온다.
+		
 			while ( iterator.hasNext() ){
 				DayReportInfo info = iterator.next();
 				
-				int NonData= (prevData==null) ? TCode - info.getMDay() : prevData.getMDay() - info.getMDay()-1;//1일이상 차이나는지 체크
-				int code = (prevData==null) ? TCode: info.getMDay();
-				for(int i=0;i<NonData;i++)
+				int NonData= (prevData==null) ? TimeCode - info.getMDay() : prevData.getMDay() - info.getMDay()-1;//1일이상 차이나는지 체크
+				int code = (prevData==null) ? TimeCode: prevData.getMDay();
+				YearCode = (prevData==null) ? YearCode: prevData.getYear();
+				for(int i=1;i<=NonData;i++)
 				{
-					report.AddDay(code-i);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+					report.AddDay(TimeUtil.minTimCode(YearCode, code , -1*i));	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+				
 					report.AddReportRate(0);
 				}
 				
@@ -77,11 +82,90 @@ public class SummaryGetter {
 				report.AddReportRate(info.getTotalOccurrences());
 				prevData = info;
 			  }
-			int StartDate = (prevData==null) ? TCode:prevData.getMDay();
+			int StartDate = (prevData==null) ? TimeCode:prevData.getMDay()-1;	//잠재적 에러 요소 1월 1일이면?
 			int j=1;
-			for(int i=ErrorTypeResults.size();i<7;i++)
+			YearCode = (prevData==null) ? YearCode: prevData.getYear();
+			for(int i=ErrorTypeResults.size();i<Interval;i++)
 			{
-				report.AddDay(StartDate-(j++));
+				
+				report.AddDay(StartDate);
+				report.AddReportRate(0);
+				StartDate=TimeUtil.minTimCode(YearCode,StartDate,-1);
+			}
+			
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchQuery.closeAll();
+			jdoConnector.close();
+				
+		}
+	}
+	public String getWeekDayErrorRate(int Interval)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+
+		Query SearchQuery = jdoConnector.newQuery(WeekReportInfo.class);
+		List<WeekReportInfo> ErrorTypeResults=null;
+
+
+		try{
+			//최대 30개만 가져온다.
+			SearchQuery.setFilter("TotalCode <= Timecode");
+			SearchQuery.declareParameters("int Timecode");
+			SearchQuery.setRange(0,Interval);
+			SearchQuery.setOrdering("TotalCode descending");	
+			
+			int YearCode = TimeUtil.GetNowYear();
+			int WeekCode = TimeUtil.GetWeek();
+			ErrorTypeResults = (List<WeekReportInfo>) 
+								SearchQuery.execute(YearCode*100+ WeekCode);
+
+
+			Iterator<WeekReportInfo> iterator = ErrorTypeResults.iterator();
+			
+			WeekReport report = new WeekReport();  
+
+			WeekReportInfo prevData=null;
+		
+			while ( iterator.hasNext() ){
+				WeekReportInfo info = iterator.next();
+				
+				int NonData= (prevData==null) ? WeekCode - info.getWeek() : prevData.getWeek() - info.getWeek()-1;//
+				int code = (prevData==null) ? WeekCode: prevData.getWeek();
+				YearCode = (prevData==null) ? YearCode: prevData.getYear();
+				for(int i=1;i<=NonData;i++)
+				{
+					if(code == 0 )
+					{
+						YearCode = YearCode-1;
+						code =TimeUtil.MaxWeekCount(YearCode);
+					}
+					report.AddWeek(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+					report.AddReportRate(0);
+				}
+				
+				report.AddWeek(info.getYear(),info.getWeek());
+				report.AddReportRate(info.getTotalOccurrences());
+				prevData = info;
+			  }
+			int StartDate = (prevData==null) ? WeekCode:prevData.getWeek()-1;
+			int j=1;
+			YearCode = (prevData==null) ? YearCode: prevData.getYear();
+			for(int i=ErrorTypeResults.size();i<Interval;i++)
+			{
+				if(StartDate == 0 )
+				{
+					YearCode = YearCode-1;
+					StartDate =TimeUtil.MaxWeekCount(YearCode);
+				}
+				report.AddWeek(YearCode,StartDate--);
 				report.AddReportRate(0);
 			}
 			
@@ -100,6 +184,81 @@ public class SummaryGetter {
 		}
 	}
 	
+	public String getMonthErrorDate(int Interval){
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+
+		Query SearchQuery = jdoConnector.newQuery(MonthReportInfo.class);
+		List<MonthReportInfo> ErrorTypeResults=null;
+
+
+		try{
+			//최대 30개만 가져온다.
+			SearchQuery.setFilter("TotalCode <= Timecode");
+			SearchQuery.declareParameters("int Timecode");
+			SearchQuery.setRange(0,Interval);
+			SearchQuery.setOrdering("TotalCode descending");	
+			
+			int YearCode = TimeUtil.GetNowYear();
+			int MonthCode = TimeUtil.GetNowTimeCode()/100;
+			ErrorTypeResults = (List<MonthReportInfo>) 
+								SearchQuery.execute(YearCode*100+ MonthCode);
+
+
+			Iterator<MonthReportInfo> iterator = ErrorTypeResults.iterator();
+			
+			MonthReport report = new MonthReport();  
+
+			MonthReportInfo prevData=null;
+		
+			while ( iterator.hasNext() ){
+				MonthReportInfo info = iterator.next();
+				
+				int NonData= (prevData==null) ? MonthCode - info.getMonth() : prevData.getMonth() - info.getMonth()-1;//
+				int code = (prevData==null) ? MonthCode: prevData.getMonth();
+				YearCode = (prevData==null) ? YearCode: prevData.getYear();
+				for(int i=1;i<=NonData;i++)
+				{
+					if(code == 0 )
+					{
+						YearCode = YearCode-1;
+						code =12;//12월 달로 컴백
+					}
+					report.AddMonth(YearCode, code--);	//현재 TimeCode 연산을 단순 덧셈으로 하기 때문에 나중에 변경할 필요가 있다.
+					report.AddReportRate(0);
+				}
+				
+				report.AddMonth(info.getYear(),info.getMonth());
+				report.AddReportRate(info.getTotalOccurrences());
+				prevData = info;
+			  }
+			int StartDate = (prevData==null) ? MonthCode:prevData.getMonth()-1;
+			int j=1;
+			YearCode = (prevData==null) ? YearCode: prevData.getYear();
+			for(int i=ErrorTypeResults.size();i<Interval;i++)
+			{
+				if(StartDate == 0 )
+				{
+					YearCode = YearCode-1;
+					StartDate =12;//12월 달로 컴백
+				}
+				report.AddMonth(YearCode,StartDate--);
+				report.AddReportRate(0);
+			}
+			
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchQuery.closeAll();
+			jdoConnector.close();
+				
+		}
+	}
 	/**
 	 *	class별 에러량을 조사하여 해당 그래프를 그리기위한 데이터를 Json으로 리턴한다. 
 	 * 

@@ -16,9 +16,6 @@ import com.google.appengine.api.datastore.Key;
 
 public class ErrorTypeClassifier {
 
-
-	
-	
 	
 	public ErrorTypeClassifier() {
 		super();

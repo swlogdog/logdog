@@ -29,7 +29,12 @@ public class TimeUtil {
 		return Temp.getTime();
 	}
 	
-	
+	public static int MaxWeekCount(int Year)
+	{
+		Calendar Adder = Calendar.getInstance();
+		Adder.setTime(getCode2Date(Year,101));		
+		return Adder.getActualMaximum(Calendar.WEEK_OF_YEAR);
+	}
 	
 	/**
 	 * 입력된 Date에 7일을 더한 뒤 리턴한다.
@@ -93,6 +98,12 @@ public class TimeUtil {
 		return Year;
 		
 	}
+	public static int GetWeek()
+	{
+		Calendar Adder = Calendar.getInstance();
+		Adder.setTime(GetNowDate());
+		return Adder.get(Calendar.WEEK_OF_YEAR);
+	}
 	
 	/**
 	 * 월과 일을 MMDD형태로 반환된다. 
@@ -109,6 +120,75 @@ public class TimeUtil {
 		int Timecode = Month*100 + date;
 		return Timecode;
 	} 
+	
+	public static int getWeekCode(Date date)
+	{
+		Calendar Adder = Calendar.getInstance();
+		Adder.setTime(date);
+		return Adder.get(Calendar.WEEK_OF_YEAR);
+	}
+
+	public static Date getCode2Date(int year, int code)
+	{
+		Date tempDate=null;
+		try{
+			DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+			tempDate = sdFormat.parse(year+"-"+code/100 +"-"+code%100);
+			Calendar Adder = Calendar.getInstance();
+			Adder.setTime(tempDate);
+			tempDate = Adder.getTime();
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		
+		return tempDate;
+	}
+	/**
+	 *	Time Code의 값을 빼준다.
+	 * @since 2012. 11. 16.오후 10:40:05
+	 * TODO
+	 * @author Karuana
+	 * @param yeer
+	 * @param date
+	 * @param min	(is 음수)
+	 * @return	datecode - min
+	 */
+	public static int minTimCode(int year,int date,int min)
+	{
+		Date tempDate=null;
+		int Timecode =0;
+		int dayCount = date%100;
+	
+		try{
+			if( dayCount <= Math.abs(min))
+			{
+				DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				tempDate = sdFormat.parse(year+"-"+date/100 +"-"+date%100);
+				Calendar Adder = Calendar.getInstance();
+				Adder.setTime(tempDate);
+				Adder.add(Calendar.DATE, min);
+				tempDate = Adder.getTime();
+				int Month = tempDate.getMonth()+1;
+				int day = tempDate.getDate();
+				Timecode = Month*100 + day;
+	
+			}
+			else
+			{	
+				Timecode=date+min;
+			}
+
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return Timecode	;
+		
+	}
+	
 	/**
 	 * 주어진 Time 객체를 String으로 변환해준다.
 	 * @since 2012. 11. 15.오전 6:17:16

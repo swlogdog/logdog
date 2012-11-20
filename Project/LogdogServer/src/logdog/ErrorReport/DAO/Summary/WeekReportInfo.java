@@ -8,42 +8,40 @@ import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
-public class DayReportInfo {
+public class WeekReportInfo {
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
-	private Key DayRateKey;
+	private Key WeekRateKey;
 	@Persistent
 	int Year;//YYYY
 	@Persistent
-	int MDay;//MMDD
+	int Week;//Week OF Year Max 52 Or 53
 	@Persistent
-	int TotalCode;
+	int TotalCode;//YYYYWW
 	@Persistent 
 	private int TotalOccurrences;
-	public DayReportInfo(){}
-	public DayReportInfo(int year, int mDay) {
+	public WeekReportInfo(){}
+	public WeekReportInfo(int year, int week) {
 		super();
 		Year = year;
-		MDay = mDay;
-		TotalCode = Year*10000+MDay;
+		this.Week = week;
+		TotalCode = Year*100+week;
 		TotalOccurrences=1;
 	}
 	public void UpdatedError()
 	{
 		TotalOccurrences+=1;
 	}
-	public Key getDayRateKey() {
-		return DayRateKey;
+	public Key getMonthRateKey() {
+		return WeekRateKey;
 	}
 	public int getYear() {
 		return Year;
 	}
-	public int getMDay() {
-		return MDay;
+	public int getWeek() {
+		return Week;
 	}
 	public int getTotalOccurrences() {
 		return TotalOccurrences;
 	}
-	
-	
 }

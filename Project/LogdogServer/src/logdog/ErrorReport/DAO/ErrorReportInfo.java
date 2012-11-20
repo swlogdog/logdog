@@ -61,8 +61,11 @@ public class ErrorReportInfo {
 	
 	@Persistent
 	private int TimeCode;
-	
-	
+
+	@Persistent
+	int Month;//MM
+	@Persistent
+	int Week;//Week OF Year Max 52 Or 53
 
 	public ErrorReportInfo() {
 		super();
@@ -90,6 +93,8 @@ public class ErrorReportInfo {
 		ScreanHeight = report.ScreenHeight;
 		YearCode = TimeUtil.GetNowYear();
 		TimeCode = TimeUtil.GetNowTimeCode();
+		Month = TimeCode/100;
+		Week=TimeUtil.GetWeek();
 	}
 
 	public final Key getE_ReportCode() {
