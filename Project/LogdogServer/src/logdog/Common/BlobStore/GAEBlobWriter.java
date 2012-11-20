@@ -1,29 +1,27 @@
 package logdog.Common.BlobStore;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
-import java.util.Map;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.files.AppEngineFile;
-import com.google.appengine.api.files.FileReadChannel;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 
+/**
+ *  BlobFileWriter를 직접 구현한 클래스 GAE의 blob작업을 처리한다.
+ * 
+ * @since 2012. 11. 15.오전 5:56:40
+ * TODO
+ * @author Karuana
+ */
 public class GAEBlobWriter implements BlobFileWriter{
 
 	/* (non-Javadoc)
-	 * @see logdog.Common.BlobStore.BlobFileWriter#TextWrite(java.lang.String) 현재 에러 있음 수정할 
+	 * @see logdog.Common.BlobStore.BlobFileWriter#TextWrite(java.lang.String) 
 	 */ 
 	public BlobKey TextWrite(String text)
 	{
@@ -58,6 +56,16 @@ public class GAEBlobWriter implements BlobFileWriter{
 			System.out.print(e.getClass() + "  Blob error  "+e.getMessage());
 		}
 		return blobKey;
+	}
+	
+	/* (non-Javadoc)
+	 * @see logdog.Common.BlobStore.BlobFileWriter#BlobDelete(com.google.appengine.api.blobstore.BlobKey)
+	 */
+	public boolean BlobDelete(BlobKey key)
+	{
+		BlobstoreService deletedata =  BlobstoreServiceFactory.getBlobstoreService();
+		deletedata.delete(key);
+		return true;
 	}
 
 }

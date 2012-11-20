@@ -11,10 +11,23 @@ import logdog.Setting.DAO.LogdogSettingInfo;
 
 import com.google.gson.Gson;
 
+/**
+ * 서버에 정보를 얻어오는 클래스로, 로그파일받기 여부를 가져오기 위해 사용한다.
+ * @since 2012. 11. 19.오전 7:41:03
+ * TODO
+ * @author Karuana
+ */
 public class ServerSettingGetter {
 
 
 
+	/**
+	 *	로그 전송 여부 정보를 얻어온다.
+	 * @since 2012. 11. 19.오전 7:41:30
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	public String getLogFileSetting()
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();

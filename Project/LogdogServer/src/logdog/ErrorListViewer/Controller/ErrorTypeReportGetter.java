@@ -18,6 +18,12 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.gson.Gson;
 
+/**
+ * 	에러 타입 List를 생성할 수 있도록 Json으로 만들어주는 역할을 하는 Controller이다.
+ * @since 2012. 11. 18.오후 8:43:18
+ * TODO
+ * @author Karuana
+ */
 public class ErrorTypeReportGetter {
 
 	/**
@@ -56,7 +62,8 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);	
@@ -128,7 +135,8 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);
@@ -149,6 +157,158 @@ public class ErrorTypeReportGetter {
 		
 	}
 	
+	/**
+	 *	입력받은 달에 대한 에러리스트를 뽑아온다. 
+	 * @since 2012. 11. 21.오전 5:21:28
+	 * TODO
+	 * @author Karuana
+	 * @param Year
+	 * @param Month
+	 * @return
+	 */
+	public String getMonthErrorReport(int Year, int Month)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		Query SearchReport = jdoConnector.newQuery(ErrorReportInfo.class);
+
+		List<ErrorReportInfo> ErrorReportList=null;
+
+
+
+		try{
+	
+			
+			SearchReport.setFilter("YearCode == year && Month == mon");
+			SearchReport.declareParameters("int year,int mon");
+			ErrorReportList = (List<ErrorReportInfo>) 
+					SearchReport.execute(Year,Month);
+			
+				
+
+			Iterator<ErrorReportInfo> iterator = ErrorReportList.iterator();
+			ArrayList<Key> KeyList = new ArrayList<Key>();
+	
+			while ( iterator.hasNext() ){
+				ErrorReportInfo info = iterator.next();
+				if(!KeyList.contains(info.getE_ClassificationCode()))
+				{
+					if(info.getE_ClassificationCode()!=null)
+						KeyList.add(info.getE_ClassificationCode());
+				}
+			  }
+			
+			ErrorTypeReport report = new ErrorTypeReport();  
+			for(int i=0;i<KeyList.size();i++)
+			{
+				ErrorTypeInfo info = jdoConnector.getObjectById(ErrorTypeInfo.class, KeyList.get(i));
+				HashMap<String,Object> error = new HashMap<String,Object>();
+				error.put("errname",info.getErrorName());
+				error.put("classname", info.getOccurrenceClass());
+				error.put("line",info.getCodeLine());
+				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
+				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
+				error.put("clear", info.isBugClear());
+				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
+				report.addError(error);
+			}
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchReport.closeAll();
+			jdoConnector.close();
+				
+		}
+		
+	}
+	
+	/**
+	 *	입력받은 주에 대한 에러리스트르 뽑아온다.
+	 * @since 2012. 11. 21.오전 5:21:44
+	 * TODO
+	 * @author Karuana
+	 * @param Year
+	 * @param Month
+	 * @return
+	 */
+	public String getWeekErrorReport(int Year, int Week)
+	{
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
+		Query SearchReport = jdoConnector.newQuery(ErrorReportInfo.class);
+
+		List<ErrorReportInfo> ErrorReportList=null;
+
+
+
+		try{
+	
+			
+			SearchReport.setFilter("YearCode == year && Week == week");
+			SearchReport.declareParameters("int year,int week");
+			ErrorReportList = (List<ErrorReportInfo>) 
+					SearchReport.execute(Year,Week);
+			
+				
+
+			Iterator<ErrorReportInfo> iterator = ErrorReportList.iterator();
+			ArrayList<Key> KeyList = new ArrayList<Key>();
+	
+			while ( iterator.hasNext() ){
+				ErrorReportInfo info = iterator.next();
+				if(!KeyList.contains(info.getE_ClassificationCode()))
+				{
+					if(info.getE_ClassificationCode()!=null)
+						KeyList.add(info.getE_ClassificationCode());
+				}
+			  }
+			
+			ErrorTypeReport report = new ErrorTypeReport();  
+			for(int i=0;i<KeyList.size();i++)
+			{
+				ErrorTypeInfo info = jdoConnector.getObjectById(ErrorTypeInfo.class, KeyList.get(i));
+				HashMap<String,Object> error = new HashMap<String,Object>();
+				error.put("errname",info.getErrorName());
+				error.put("classname", info.getOccurrenceClass());
+				error.put("line",info.getCodeLine());
+				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
+				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
+				error.put("clear", info.isBugClear());
+				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
+				report.addError(error);
+			}
+			Gson gson = new Gson();
+			return gson.toJson(report);
+		}
+		catch(Exception e){
+					
+			e.printStackTrace();
+			return null;
+		}
+		finally{
+			SearchReport.closeAll();
+			jdoConnector.close();
+				
+		}
+		
+	}
+	
+	
+	/**
+	 *	입력받은 버전에 대한 에러리스트를 뽑아온다.
+	 * @since 2012. 11. 18.오후 8:44:44
+	 * TODO
+	 * @author Karuana
+	 * @param AppVersion
+	 * @param OSVersion
+	 * @return
+	 */
 	public String getVersionErrorReport(String AppVersion, String OSVersion)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -186,7 +346,8 @@ public class ErrorTypeReportGetter {
 				error.put("classname", info.getOccurrenceClass());
 				error.put("line",info.getCodeLine());
 				error.put("day", TimeUtil.GetTime2String(info.getLastUpdateDay()));
-				error.put("total", info.getTotalOccurrences()+"("+info.getWeeklyOccurrences()+")");
+				error.put("total", info.getTotalOccurrences());
+				error.put("weekly", info.getWeeklyOccurrences());
 				error.put("clear", info.isBugClear());
 				error.put("key", KeyFactory.keyToString(info.getE_ClassificationCode()));
 				report.addError(error);

@@ -14,36 +14,72 @@ import logdog.ErrorReport.DTO.ErrorUniqueID;
 
 import com.google.appengine.api.datastore.Key;
 // callStack����� �ȱ�� 
+/**
+ * 	에러 타입 정보를 저장하는 클래스 
+ * @since 2012. 11. 19.오전 7:57:27
+ * TODO
+ * @author Karuana
+ */
 @PersistenceCapable ( identityType = IdentityType.APPLICATION)
 public class ErrorTypeInfo {
+	/**
+	 *  기본 키 
+	 */
 	@PrimaryKey
 	@Persistent (valueStrategy = IdGeneratorStrategy.IDENTITY )
 	private Key E_ClassificationCode;
 	
+	/**
+	 * 에러 명 - 기본 분류 정보 
+	 */
 	@Persistent 
 	private String ErrorName;
 
+	/**
+	 *  밠생 클래스 - 기본 분류 정보 
+	 */
 	@Persistent
 	private String OccurrenceClass;
 	
+	/**
+	 *  코드 라인 - 기본 분류 정보 
+	 */
 	@Persistent
 	private int codeLine;
 	
+	/**
+	 *  발생 수 
+	 */
 	@Persistent 
 	private int TotalOccurrences;
 	
+	/**
+	 * 주간 발생 수 
+	 */
 	@Persistent
 	private int WeeklyOccurrences;
 	
+	/**
+	 * 최종 업데이트 된 날 
+	 */
 	@Persistent
 	private Date LastUpdateDay;
 	
+	/**
+	 * 일주일 체크용 임시 날짜 
+	 */
 	@Persistent
 	private Date WeeklyUpdateDay;
 	
+	/**
+	 * 버그 수정 여부 
+	 */
 	@Persistent
 	private boolean BugClear;
 	
+	/**
+	 *  콜스택 정보 
+	 */
 	@Persistent
 	private List<String> Callstack;
 		
@@ -61,6 +97,7 @@ public class ErrorTypeInfo {
 		Callstack=null; 
 		
 	}
+	
 	public ErrorTypeInfo(){}
 	
 	
@@ -68,47 +105,40 @@ public class ErrorTypeInfo {
 		return Callstack;
 	}
 	
-	public int getCodeLine() {
+	public final int getCodeLine() {
 		return codeLine;
 	}
 	public void setCallstack(List<String> callstack) {
 		Callstack = callstack;
 	}
-	public boolean isBugClear() {
+	public final boolean isBugClear() {
 		return BugClear;
 	}
 
-	public void setBugClear(boolean bugClear) {
-		BugClear = bugClear;
-	}
-
-	public Key getE_ClassificationCode() {
+	public final Key getE_ClassificationCode() {
 		return E_ClassificationCode;
 	}
 
-	public String getErrorName() {
+	public final String getErrorName() {
 		return ErrorName;
 	}
 
-	public String getOccurrenceClass() {
+	public final String getOccurrenceClass() {
 		return OccurrenceClass;
 	}
 
-	public int getTotalOccurrences() {
+	public final int getTotalOccurrences() {
 		return TotalOccurrences;
 	}
 
-	public int getWeeklyOccurrences() {
+	public final int getWeeklyOccurrences() {
 		return WeeklyOccurrences;
 	}
 
-	public Date getLastUpdateDay() {
+	public final Date getLastUpdateDay() {
 		return LastUpdateDay;
 	}
 
-	public Date getWeeklyUpdateDay() {
-		return WeeklyUpdateDay;
-	}
 
 
 	public boolean updateError()
@@ -117,6 +147,7 @@ public class ErrorTypeInfo {
 			Date AfterWeekTime = TimeUtil.GetTimeWeekAdder(WeeklyUpdateDay);
 			LastUpdateDay = TimeUtil.GetNowDate();
 			TotalOccurrences+=1;
+			BugClear=false;
 			
 			if(TimeUtil.CheckNowTime(AfterWeekTime))
 			{
@@ -133,6 +164,9 @@ public class ErrorTypeInfo {
 			return false;
 		}
 		return true;
+	}
+	public void setBugClear(boolean bugClear) {
+		BugClear = bugClear;
 	}
 	
 

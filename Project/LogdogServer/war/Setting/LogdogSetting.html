@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+	  <meta charset="utf-8">
     <title>LogDog -The only choice for your development -</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -76,7 +77,7 @@ var SelectDay;
      	       <ul class="nav">
         	    	 <li><a href="/Board/dash.jsp">DashBoard</a></li>
         	    	 <li class="active"><a href="#">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -87,7 +88,13 @@ var SelectDay;
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>LogDog Setting</h1>
+ 	  	  	    	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"><h1>LogDog Setting</h1>
+    		</div>
+ 
+		</div>
+
  	 </div>
 </header>
 <div class="container-fluid">
@@ -96,21 +103,21 @@ var SelectDay;
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#log"><i class="icon-chevron-right"></i>�α� ����</a></li>
-          <li><a href="#daytable"><i class="icon-chevron-right"></i>���� �߰�</a></li>
+          <li><a href="#log"><i class="icon-chevron-right"></i>로그 전송</a></li>
+          <li><a href="#daytable"><i class="icon-chevron-right"></i>계정 추가</a></li>
         </ul>
       </div>
-<!--  �� -->
+<!--  본 -->
 		<div class="span9">
             
        		  <section id="log">
         	  <div class="page-header">
-        	    <h1>LogSetting</h1>
+        	     <img src="/assets/img/logdog/logdog_setting.png" class="span1" align="middle"><h1>LogSetting</h1>
          	  </div>
           
 			  	<h3>LogFile Report Option</h3>
-				<p>Logdog�� Logdog�� ž���� ���ø����̼��� ����� �α� ������ ���� ���۽� �����ϴ� ����� �����մϴ�. �׷��� �� ����� ���� Ʈ������ �����ϱ� ������ �ɼ��� ���� �����ڰ� ���ų� �� �� �ֽ��ϴ�. Logdog ���� ���� �� ����� ����� ������ �������ֽñ� �ٶ��ϴ�. �� ����� �������� �������� ���ų� �� �� �ֽ��ϴ�. 
-				�߰������� Web Setting������ ������ ������ ���ؼ� �ڵ������� LogFile  ��������� ���������� ���� �Ͻñ� �ٶ��ϴ�(LogFile�� GAE�� Blob Store�� ����˴ϴ�).</p>
+				<p>Logdog은 Logdog이 탑제된 어플리케이션의 사용자 로그 파일을 에러 전송시 전송하는 기능을 제공합니다. 그러나 이 기능은 많은 트래픽을 유발하기 때문에 옵션을 통해 개발자가 끄거나 켤 수 있습니다. Logdog 시작 전에 이 기능을 사용할 것인지 결정해주시길 바랍니다. 이 기능은 설정에서 언제든지 끄거나 켤 수 있습니다. 
+				추가적으로 Web Setting이전에 접수된 에러에 대해서 자동적으로 LogFile  접수기능이 꺼져있으니 유의 하시길 바랍니다(LogFile은 GAE의 Blob Store에 저장됩니다).</p>
 				<p></p>
 		
 				
@@ -123,23 +130,23 @@ var SelectDay;
              			 <input type="radio" name="LogSetting" id="optionsRadios2" value="false">
              				Not Use
             			</label>
-             		 	<button class="btn btn-large btn-block btn-primary" type="submit" class="btn">Logdog Start</button>
+             		 	<button class="btn btn-large  btn-primary" type="submit" class="btn">Setting Change</button>
           			</form>
 		  		
 		  		</section>
 		  		
 		  	<section id="log">
         	  <div class="page-header">
-        	    <h1>������ �߰�</h1>
+        	     <img src="/assets/img/logdog/logdog_setting.png" class="span1" align="middle"><h1>관리자 추가</h1>
          	  </div>
           
-			  	<h3>���߿� ������ �����ڸ� �߰��մϴ�.</h3>
-				<p>���߿� �����ϰ� �ִ� �����ڸ� �߰��Ͽ� �ش� �����ڰ� ���� �����ϵ��� ����ϴ�. ����� ������ �߰� ��ɸ��� �����մϴ�. ������ ���� ���� �����Դϴ�</p>
+			  	<h3>개발에 참여할 관리자를 추가합니다.</h3>
+				<p>개발에 참여하고 있는 관리자를 추가하여 해당 관리자가 접근 가능하도록 만듭니다. 현재는 관리자 추가 기능만을 지원합니다. 삭제는 추후 지원 예정입니다</p>
 				<p></p>
 		
 				<form class="form-inline" action="System/addUser" method="POST">
-            		<input type="text" name="user" class="input-small" placeholder="Email">
-           			 <button type="submit" class="btn">Add</button>
+            		<input type="text" name="user" class="input-large" placeholder="Email">
+           			 <button type="submit" class="btn btn-large  btn-primary">Add</button>
           		</form>
 		  		
 		  		</section>
@@ -154,16 +161,8 @@ var SelectDay;
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
-        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <ul class="footer-links">
-          <li><a href="http://blog.getbootstrap.com">Blog</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Issues</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
-        </ul>
+        <p>logdog에 대한 안내는 about에 나와있는 개발자들에게 문의해주시길 바랍니다. 본 프로그램은 라이센스에 위반하지 않는한 무료로 사용가능합니다.<br></p>
+        <p>Logdog 프로젝트에서 사용된 라이브러리 코드를 제외한 다른 코드는 MIT라이센스로 모두 공개됩니다.</p>
       </div>
     </footer>
 

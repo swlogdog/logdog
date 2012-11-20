@@ -10,10 +10,16 @@ import logdog.Setting.DAO.LogdogSettingInfo;
 
 import com.google.appengine.api.datastore.Key;
 
+/**
+ * 	설정 정보를 변경하는 클래스 
+ * @since 2012. 11. 19.오전 8:13:14
+ * TODO
+ * @author Karuana
+ */
 public class LogdogSetter {
 
 	/**
-	 *
+	 *	설정 정보를 초기화 한다. 
 	 * @since 2012. 11. 3.오후 11:45:47
 	 * TODO
 	 * @author Karuana
@@ -45,6 +51,13 @@ public class LogdogSetter {
 		return settingInfo.getLogdogSystemrKey();
 	}
 	
+	/**
+	 *	셋팅 정보를 변경한다. 
+	 * @since 2012. 11. 19.오전 8:14:17
+	 * TODO
+	 * @author Karuana
+	 * @param settingInfo
+	 */
 	public void changeLogdogInfo(boolean settingInfo)
 	{
 		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
@@ -64,6 +77,13 @@ public class LogdogSetter {
 	}
 	
 
+	/**
+	 *	셋팅 정보를 얻어온다. 
+	 * @since 2012. 11. 19.오전 8:14:31
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	public final LogdogSettingInfo getLogdogSettingInfo()
 	{
 		
@@ -88,7 +108,7 @@ public class LogdogSetter {
 	}
 	
 	/**
-	 *
+	 *	셋팅의 키 값을 가져온다.
 	 * @since 2012. 11. 3.오후 11:42:44
 	 * TODO
 	 * @author Karuana

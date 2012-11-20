@@ -24,11 +24,24 @@ import logdog.Setting.Controller.DeveloperChecker;
 import logdog.Setting.Controller.LogdogSetter;
 import logdog.Setting.DTO.LoginStateInfo;
 
+/**
+ * 유저 로그인 및 첫 로그인 사용자를 위한 셋팅 작업 
+ * @since 2012. 11. 19.오전 8:10:00
+ * TODO
+ * @author Karuana
+ */
 @Path("/UserSetting")
 public class UserInfoAccessor {
 
 	@Context UriInfo uriInfo;
 	
+	/**
+	 *	로그인 후 인가된 사용자인지 체크한다. 인가 된 사용자이면 대쉬보드로 이동, 처음 사용자인경우 셋팅 화면으로 
+	 * @since 2012. 11. 19.오전 8:10:14
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	@Path("/LogIn")
@@ -60,7 +73,17 @@ public class UserInfoAccessor {
 		return Response.seeOther(RedirectPath.build()).build();
 	}
 	
-	  @POST
+	  /**
+	 *	처음 사용자 등록을 처리한다. 
+	 * @since 2012. 11. 19.오전 8:10:42
+	 * TODO
+	 * @author Karuana
+	 * @param Log
+	 * @param servletResponse
+	 * @return
+	 * @throws IOException
+	 */
+	@POST
 	  @Path("/StarterSet")
 	  @Produces(MediaType.TEXT_HTML)
 	  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)

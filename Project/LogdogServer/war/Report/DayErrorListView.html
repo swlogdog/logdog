@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+  	<meta charset="utf-8">
     <title>LogDog -The only choice for your development -</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -75,8 +76,8 @@ var SelectDay;
     
      	       <ul class="nav">
         	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
-        	    	 <li><a href="#">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -87,12 +88,18 @@ var SelectDay;
     
 <header class="jumbotron subhead" id="overview">
  	 <div class="container">
-    <h1>Day ErrorReport</h1>
+ 	    	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle">    <h1>Day Error Report</h1>
+    		</div>
+ 
+		</div>
+ 
     <p class="lead"><script>var request = new Request();
              			var param = request.getParameter("Day");
              			var date = param.replace('-',' / ');
              			SelectDay = param;
-             			document.write(date+'�� �߻��� ���� ����');
+             			document.write(date+'에 발생한 에러 정보');
              			</script></p>
  	 </div>
 </header>
@@ -102,15 +109,15 @@ var SelectDay;
     <div class="row-fluid">
       <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#daystatistics"><i class="icon-chevron-right"></i>�׷���</a></li>
-          <li><a href="#daytable"><i class="icon-chevron-right"></i>����Ʈ</a></li>
+          <li><a href="#daystatistics"><i class="icon-chevron-right"></i>그래프</a></li>
+          <li><a href="#daytable"><i class="icon-chevron-right"></i>리스트</a></li>
         </ul>
       </div>
-<!--  �� -->
+<!--  본 -->
 <div class="span8">
        <section id="daystatistics">
           <div class="page-header">
-            <h1>Day Error Statistics</h1>
+             <img src="/assets/img/logdog/logdog_normal.png" class="span1" align="middle"><h1>Day Error Statistics</h1>
            </div>
 
         <div id="day" style="height: 400px">
@@ -118,7 +125,27 @@ var SelectDay;
 		//<![CDATA[ 
 		      
 		      $(function () {
-				 var categori;
+		    	var request = new Request();
+       			var param = request.getParameter("Day");
+				var Type = request.getParameter("Type");
+				var interval = request.getParameter("Interval");
+				var Address='/Board/summary/Day='+interval;
+				
+				if(Type=="Week")
+				{
+					Address = '/Board/summary/Week='+interval;
+				}
+				else if(Type=="Day")
+				{
+					Address = '/Board/summary/Day='+interval;
+				}
+				else
+				{
+					Address = '/Board/summary/Month='+interval;
+				}
+					
+				
+       			var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
 			            renderTo: 'day',
@@ -127,8 +154,8 @@ var SelectDay;
 			                },
 							events: {
 								load: function(event) {
-
-								$.getJSON('/Board/summary/Day', function(data) {
+								
+								$.getJSON(Address, function(data) {
 									$.each(data,function(key,value){
 									if('Day'==key)
 									{
@@ -136,9 +163,21 @@ var SelectDay;
 										categori=eval(value);
 										Today=categori[0];
 									}
-									if('ReportRate'==key)
+									else if('Months'==key)
 									{
-										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
+										Daychart.xAxis[0].setCategories(eval(value));
+										categori=eval(value);
+									}
+									else if('Week'==key)
+									{
+										Daychart.xAxis[0].setCategories(eval(value));
+									
+										categori=eval(value);
+									}
+									else if('ReportRate'==key)
+									{
+										
+										Daychart.addSeries({ name: Type+' Report', data: eval(value)});
 									
 									}
 									} );
@@ -163,10 +202,10 @@ var SelectDay;
 			                events: {
 			                    click: function(event) {
 			            			var nameV = categori[event.point.x];
-			            		
+				            		
 			                    	var loca = nameV.replace(' / ','-');
 			                
-			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca+'&Type='+Type+"&Interval="+interval;
 			                    }
 			                }
 			            }
@@ -177,19 +216,35 @@ var SelectDay;
 			//]]>  </script>
               </div>
               </section>
+              
               <section id="daytable">
-             <div class="span12" id="ErrorList" style="vertical-align:middle">
-        		<table id="list2" style="vertical-align:middle"></table>
-				<div id="pager2"></div>
-        	 <script type="text/javascript">
+             	<div class="span12" id="ErrorList" style="vertical-align:middle">
+        			<table id="list2" style="vertical-align:middle"></table>
+					<div id="pager2"></div>
+        			 	<script type="text/javascript">
 			 jQuery(
 				function()
 				{
+					var Type = request.getParameter("Type");
+					var Address;
+					if(Type=="Week")
+					{
+						Address = '/list/errlist/Week='+SelectDay;
+					}
+					else if(Type=="Day")
+					{
+						Address = '/list/errlist/Day='+SelectDay;
+					}
+					else
+					{
+						Address = '/list/errlist/Month='+SelectDay;
+					}
+						
 				jQuery("#list2").jqGrid({
-				   	url:'/list/errlist/Day='+SelectDay,
+				   	url:Address,
 					datatype: "json",
 					autowidth: true,
-					autoheight:true,
+					height:500,
 					jsonReader : { 
 						page: "page", 
 						total: "total", 
@@ -197,16 +252,17 @@ var SelectDay;
 						repeatitems: false, 
 						id: "key"
 					},
-				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total(Weekly)','BugClear','key'],
+				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total','Weekly','BugClear','key'],
 				   	colModel:[
 				   	
-				   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
-				   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
-				   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
-				   		{name:'day',index:'day', sortable:false,resizable:false},		
-				   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
-				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
-				   		{name:'key',index:'key' , sortable:false, hidden:true},
+						   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
+						   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
+						   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
+						   		{name:'day',index:'day', sortable:false,resizable:false},		
+						   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
+						   		{name:'weekly',index:'weekly',align:"center" , sortable:false, resizable:false},	
+						   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
+						   		{name:'key',index:'key' , sortable:false, hidden:true},
 				   	],		
 
 				    viewrecords: true,
@@ -218,8 +274,9 @@ var SelectDay;
 			}
 		);  		
 	 </script>
+	 	</div>
 	 </section>
-        	</div>
+     </div>
             
        
             
@@ -232,18 +289,11 @@ var SelectDay;
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
-        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <ul class="footer-links">
-          <li><a href="http://blog.getbootstrap.com">Blog</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Issues</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
-        </ul>
+        <p>logdog에 대한 안내는 about에 나와있는 개발자들에게 문의해주시길 바랍니다. 본 프로그램은 라이센스에 위반하지 않는한 무료로 사용가능합니다.<br></p>
+        <p>Logdog 프로젝트에서 사용된 라이브러리 코드를 제외한 다른 코드는 MIT라이센스로 모두 공개됩니다.</p>
       </div>
     </footer>
+
 
 
 

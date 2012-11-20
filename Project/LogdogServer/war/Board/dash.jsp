@@ -14,9 +14,11 @@
     <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="/assets/css/docs.css" rel="stylesheet">
     <link href="/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
- 
-	
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
     
+    <link rel="stylesheet" type="text/css" href="/assets/js/ui.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ui.jqgrid.css" />
+
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -54,7 +56,9 @@ var Request = function() {
 	var AppVersion;
 	var OSVersion;
 	var ClassName;
+	var d = new Date();
 	
+	var DateCode = (d.getMonth()+1)*100+d.getDate();
 	window.onload = function(){
 		
 		var dayReport = document.getElementById('ToDayList');
@@ -101,7 +105,7 @@ var Request = function() {
      	       <ul class="nav">
         	    	 <li class="active"><a href="/Board/dash.jsp">DashBoard</a></li>
         	    	 <li><a href="/Setting/LogdogSetting.html">Setting</a></li>
-        	    	 <li><a href="#">About</a></li>
+        	    	 <li><a href="/About/about.html">About</a></li>
            	   </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -109,9 +113,14 @@ var Request = function() {
     </div>
 
 <header class="jumbotron subhead" id="overview">
- 	 <div class="container">
-    	<h1>DashBoard</h1>
-    	<p class="lead">The only choice for your development productivity</p>
+ 	 <div class="container" >
+ 	 	 <div class="row-fluid">
+            <div>
+    			<img src="/assets/img/logdog/b-144.png" class="span1" align="middle"> <h1>DashBoard</h1>
+    		</div>
+ 
+		</div>
+		    	<p class="lead">The only choice for your development productivity</p>
  	 </div>
 </header>
 
@@ -124,19 +133,39 @@ var Request = function() {
           <li><a id="ToDayList"><i class="icon-chevron-right"></i>날짜별 에러량</a></li>
           <li><a id="VersionError"><i class="icon-chevron-right"></i>버전별 에러량</a></li>
           <li><a id="ClassError"><i class="icon-chevron-right"></i>클래스별 에러량</a></li>
+          <li><a href="#todaylist"><i class="icon-chevron-right"></i>오늘 접수된 에러</a></li>
         </ul>
       </div>
 <!--  본 -->
 <div class="span8">
               <div class="page-header">
-            <h1>Error Statistics</h1>
+             <img src="/assets/img/logdog/logdog_normal.png" class="span1" align="middle"><h1>Error Statistics</h1>
            </div>
-
-              <div id="day" style="height: 400px">
+		 <div class="btn-toolbar" style="margin: 0;text-align:right;">
+		   	<div class="btn-group">
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">interval Option <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a id="intS"  style="margin: 0;text-align:left;">7 interval</a></li>
+                  <li><a id="intT" style="margin: 0;text-align:left;">30 intval</a></li>
+                </ul>
+			 </div>
+		   <div class="btn-group">
+                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">Date Option <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a id="DayButton"  style="margin: 0;text-align:left;">Day</a></li>
+                  <li><a id="WeekButton" style="margin: 0;text-align:left;">Week</a></li>
+                  <li><a id="MonthButton" style="margin: 0;text-align:left;">Month</a></li>
+                </ul>
+			 </div>
+		 </div>
+		 
+         <div id="day" style="height: 400px">
 		<script type='text/javascript'>
 		//<![CDATA[ 
 		      
-		      $(function () {
+		      window.onload = function () {
+		    	 var interval=7; 
+		    	 var seletedOption="Day";
 				 var categori;
 		    	 var Daychart = new Highcharts.Chart({
 			        chart: {
@@ -146,23 +175,28 @@ var Request = function() {
 			                },
 							events: {
 								load: function(event) {
-
-								$.getJSON('/Board/summary/Day', function(data) {
+									
+								$.getJSON('/Board/summary/Day='+interval, function(data) {
+									Daychart.showLoading();
 									$.each(data,function(key,value){
 									if('Day'==key)
 									{
 										Daychart.xAxis[0].setCategories(eval(value));
+										
 										categori=eval(value);
 										Today=categori[0];
 									}
 									if('ReportRate'==key)
 									{
-										Daychart.addSeries({ name: 'Error Report', data: eval(value)});
+										Daychart.addSeries({ name: 'Day Report', data: eval(value)});
 										
 									}
 									} );
+									Daychart.hideLoading();
+
 									});
 								}
+			           	
 							}
 
 			        },
@@ -171,6 +205,11 @@ var Request = function() {
 		                title: {
 		                    text: 'Error Rate'
 		                }
+			        },
+			        xAxis: {
+			            labels: {
+			                step: 3
+			            }
 			        },
 			        title: {
 			            text: 'Date Error Report'
@@ -185,14 +224,127 @@ var Request = function() {
 			            		
 			                    	var loca = nameV.replace(' / ','-');
 			                
-			                    	location.href='/Report/DayErrorListView.html?Day='+loca;
+			                    	location.href='/Report/DayErrorListView.html?Day='+loca+'&Type='+seletedOption+"&Interval="+interval;
 			                    }
 			                }
 			            }
 			        }
 			    });
-				
-		           });
+					
+			      	var Weekbtn = document.getElementById('WeekButton');
+			      	Weekbtn.onclick = function(){
+			      		Daychart.showLoading()
+			      		$.getJSON('/Board/summary/Week='+interval, function(data) {
+							
+							$.each(data,function(key,value){
+							if('Week'==key)
+							{
+								Daychart.xAxis[0].setCategories(eval(value));
+							
+								categori=eval(value);
+							}
+							if('ReportRate'==key)
+							{
+								Daychart.series[0].remove();
+								Daychart.addSeries({ name: 'Week Report', color: '#89A54E',data: eval(value)});
+								//Daychart.redraw();
+							}
+							} );
+							
+
+							});
+				      		seletedOption="Week";
+			      			Daychart.hideLoading();
+						};
+			      	
+			      	var daybtn = document.getElementById('DayButton');
+			      	daybtn.onclick = function(){
+			      		Daychart.showLoading()
+			      		$.getJSON('/Board/summary/Day='+interval, function(data) {
+							
+							$.each(data,function(key,value){
+							if('Day'==key)
+							{
+								Daychart.xAxis[0].setCategories(eval(value));
+								categori=eval(value);
+							}
+							if('ReportRate'==key)
+							{
+								Daychart.series[0].remove();
+								Daychart.addSeries({ name: 'Day Report', color: '#4572A7', data: eval(value)});
+								
+							}
+							} );
+							
+
+							});
+			      		seletedOption="Day";
+			      			Daychart.hideLoading();
+						};
+						
+				      	var Monthbtn = document.getElementById('MonthButton');
+				      	Monthbtn.onclick = function(){
+				      		Daychart.showLoading()
+				      		$.getJSON('/Board/summary/Month='+interval, function(data) {
+								
+								$.each(data,function(key,value){
+								if('Months'==key)
+								{
+									Daychart.xAxis[0].setCategories(eval(value));
+									categori=eval(value);
+								}
+								if('ReportRate'==key)
+								{
+									Daychart.series[0].remove();
+									Daychart.addSeries({ name: 'Month Report', color: '#AA4643', data: eval(value)});
+									
+								}
+								} );
+								
+
+								});
+				      		seletedOption="Month";
+				      			Daychart.hideLoading();
+							};	
+					      	var interval7btn = document.getElementById('intS');
+					      	interval7btn.onclick = function(){
+					      	
+					      			interval=7;
+					     			if(seletedOption =="Day")
+					     			{
+					     				daybtn.onclick();
+					     			}
+					     			else if(seletedOption =="Week")
+					     			{
+					     				Weekbtn.onclick();
+					     			}
+					     			else
+					     			{
+					     				Monthbtn.onclick();
+					     			}
+					      			
+							};	
+					      	var interval30btn = document.getElementById('intT');
+					      	interval30btn.onclick = function(){
+					    
+									interval=30;
+					     			if(seletedOption =="Day")
+					     			{
+					     				daybtn.onclick();
+					     			}
+					     			else if(seletedOption =="Week")
+					     			{
+					     				Weekbtn.onclick();
+					     			}
+					     			else
+					     			{
+					     				Monthbtn.onclick();
+					     			}
+		
+							};	
+				    	 
+		      
+		      };
 			//]]>  </script>
               </div>
              
@@ -203,6 +355,7 @@ var Request = function() {
 				//<![CDATA[ 
 
 				$(function () {
+				
 					var AppVer;
     				var chart= new Highcharts.Chart({
            	 			chart: {
@@ -287,9 +440,11 @@ var Request = function() {
 	         		  	 	}
             			}
 				    });
-		});//]]> 
+		});
+				//]]> 
 				</script>
             </div><!--/span-->
+            
             <div class="span6"  id="classError" style="height: 400px">
 				<script type='text/javascript'>
 				//<![CDATA[ 
@@ -345,9 +500,65 @@ var Request = function() {
    
             </div><!--/span-->
             </div>
-            
-</div>
+           <section id="todaylist">
+            <div class="page-header">
+            	 <img src="/assets/img/logdog/logdog_normal.png" class="span1" align="middle"><h1>Today ErrorList</h1>
+           </div>  
+           	<div class="span12">
+           	            
+             	<div class="span12" style="vertical-align:middle">
+        			<table id="list2" style="vertical-align:middle"></table>
+					<div id="pager2"></div>
+        			 	<script type="text/javascript">
+			 jQuery(
+				function()
+				{
+					
+				jQuery("#list2").jqGrid({
+				   	url:'/list/errlist/Day='+DateCode,
+					datatype: "json",
+					autowidth: true,
+					height:500,
+					jsonReader : { 
+						page: "page", 
+						total: "total", 
+						root: "errors",
+						repeatitems: false, 
+						id: "key"
+					},
+				   	colNames:['Error Name', 'Class Name', 'Code Line','Last Updated Day','Total(Weekly)','BugClear','key'],
+				   	colModel:[
+				   	
+				   		{name:'errname',index:'errname' , align:"center" , sortable:false, resizable:false},
+				   		{name:'classname',index:'classname' , align:"center" ,sortable:false, resizable:false},
+				   		{name:'line',index:'line', align:"center" , sortable:false, fixed:true},
+				   		{name:'day',index:'day', sortable:false,resizable:false},		
+				   		{name:'total',index:'total',align:"center" , sortable:false, resizable:false},		
+				   		{name:'clear',index:'clear',align:"center", sortable:false,resizable:false},
+				   		{name:'key',index:'key' , sortable:false, hidden:true},
+				   	],		
 
+				    viewrecords: true,
+				    ondblClickRow: function(id){ location.href='/DetailView/ErrorDetailView.html?Key='+id;},
+				    caption:"Today Error List"
+				    
+				});
+				jQuery("#list2").jqGrid('navGrid','#pager2',{edit:false,add:false,del:false});
+			}
+		);  		
+	 </script>
+	 	</div>
+	 </section>
+           	</div>
+        	
+	
+
+  
+  
+            
+	</div>
+
+</div>
 
 </div>
     <!-- Footer
@@ -355,16 +566,8 @@ var Request = function() {
     <footer class="footer">
       <div class="container">
         <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>Designed and built with all the love in the world by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
-        <p>Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
-        <ul class="footer-links">
-          <li><a href="http://blog.getbootstrap.com">Blog</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/issues?state=open">Issues</a></li>
-          <li class="muted">&middot;</li>
-          <li><a href="https://github.com/twitter/bootstrap/wiki">Roadmap and changelog</a></li>
-        </ul>
+        <p>logdog에 대한 안내는 about에 나와있는 개발자들에게 문의해주시길 바랍니다. 본 프로그램은 라이센스에 위반하지 않는한 무료로 사용가능합니다.<br></p>
+        <p>Logdog 프로젝트에서 사용된 라이브러리 코드를 제외한 다른 코드는 MIT라이센스로 모두 공개됩니다.</p>
       </div>
     </footer>
 
@@ -373,6 +576,7 @@ var Request = function() {
    <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
  	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/google-code-prettify/prettify.js"></script>
@@ -390,9 +594,13 @@ var Request = function() {
     <script src="/assets/js/bootstrap-typeahead.js"></script>
     <script src="/assets/js/bootstrap-affix.js"></script>
     <script src="/assets/js/application.js"></script>
- 
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script src="/assets/js/ui.multiselect.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.jqGrid.min.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.tablednd.js" type="text/javascript"></script>
+	<script src="/assets/js/jquery.contextmenu.js" type="text/javascript"></script>
+	<script src="/assets/js/subgrid_grid.js" type="text/javascript"> </script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
   </body>
   
 </html>

@@ -3,6 +3,12 @@ package logdog.ErrorReport.DTO;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * 	클라이언트에서 보내져오는 유저 에러 전송 규격 
+ * @since 2012. 11. 19.오전 8:03:47
+ * TODO
+ * @author Karuana
+ */
 @XmlRootElement
 public class ClientReportData {
 		/**

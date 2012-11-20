@@ -14,6 +14,7 @@
    
    	BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
    BlobKey blobKey = new BlobKey(request.getParameter("blob-key"));
+   response.setHeader("Content-Type", "text/plain");
    blobstoreService.serve(blobKey, response);
    %>
    

@@ -14,14 +14,27 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
+/**
+ * 
+ * @since 2012. 11. 19.오전 8:11:29
+ * TODO
+ * @author Karuana
+ */
 public class DeveloperChecker {
-	private PersistenceManager jdoConnector;
+
 
 	public DeveloperChecker() {
 		super();
-		this.jdoConnector = null;
+
 	}
 	
+	/**
+	 *	개발자 로그인 체크 
+	 * @since 2012. 11. 19.오전 8:12:26
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	public LoginStateInfo DevleoprLogin()
 	{
 		LogInResult result;
@@ -56,9 +69,17 @@ public class DeveloperChecker {
 		return LoginInfo;
 	}
 	
+	/**
+	 *	새로운 개발자를 추가한다. 
+	 * @since 2012. 11. 19.오전 8:12:35
+	 * TODO
+	 * @author Karuana
+	 * @param user
+	 * @return
+	 */
 	public boolean insertDeveloper(String user)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 
 	
 		
@@ -83,9 +104,16 @@ public class DeveloperChecker {
 		return true;
 	}
 	
+	/**
+	 *	처음 로그인한 개발자인지 확인한다. 
+	 * @since 2012. 11. 19.오전 8:12:46
+	 * TODO
+	 * @author Karuana
+	 * @return
+	 */
 	private boolean IsFirstLogin()
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 		boolean IsUser = false;
 		Query SearchQuery = jdoConnector.newQuery(DeveloperInfo.class);
 		List<DeveloperInfo> users=null;
@@ -110,9 +138,17 @@ public class DeveloperChecker {
 		return IsUser;
 	}
 	
+	/**
+	 *	권한이 있는 유저인지 확인한다. 
+	 * @since 2012. 11. 19.오전 8:13:00
+	 * TODO
+	 * @author Karuana
+	 * @param user
+	 * @return
+	 */
 	private boolean PermisionCheck(User user)
 	{
-		jdoConnector = PMF.getPMF().getPersistenceManager();
+		PersistenceManager jdoConnector = PMF.getPMF().getPersistenceManager();
 		boolean IsPermision = false;
 		Query SearchQuery = jdoConnector.newQuery(DeveloperInfo.class);
 		List<DeveloperInfo> users=null;
