@@ -1,0 +1,496 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LogDog HomePage &middot; OpenSource</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<!--코드를 위한 -->
+	<link type="text/css" rel="stylesheet" href="/syntaxhighlighter/styles/shCore.css">
+	<link type="text/css" rel="stylesheet" href="/syntaxhighlighter/styles/shThemeDefault.css">
+
+    <!-- Le styles -->
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+        
+    
+    
+    
+       <style>
+
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+
+    body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+      background-color : #eaeaea;
+    }
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+
+    /* Special class on .container surrounding .navbar, used for positioning it into place. */
+    .navbar-wrapper {
+      position: relative;
+      z-index: 10;
+      margin-top: 20px;
+      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+    }
+
+    /* Remove border and change up box shadow for more contrast */
+    .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+              box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    /* Downsize the brand/project name a bit */
+    .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+    }
+
+    /* Navbar links: increase padding for taller navbar */
+    .navbar .nav > li > a {
+      padding: 15px 20px;
+    }
+
+    /* Offset the responsive button for proper vertical alignment */
+    .navbar .btn-navbar {
+      margin-top: 10px;
+    }
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/asset/A-57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/asset/A-144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/asset/A-114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/asset/A-72.png">
+    <link rel="apple-touch-icon-precomposed" href="/asset/A-57.png">
+    
+  </head>
+
+  <body >
+    <!-- NAVBAR
+    ================================================== -->
+    <!-- Wrap the .navbar in .container to center it on the page and provide easy way to target it with .navbar-wrapper. -->
+    
+
+   
+
+
+    
+    <div class="container navbar-wrapper">
+
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/index.html">LogDog</a>
+          <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/index.html">Home</a></li>
+              <li class="active"><a href="#">Tutorial</a></li>
+              <li><a href="https://github.com/swlogdog/logdog">Download</a></li>
+              <li><a href="/license.html">License</a></li>
+              <li><a href="/team.html">Team</a></li>
+              <li><a href="/about.html">About</a></li>
+              
+              <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!-- /.navbar-inner -->
+
+
+
+   
+
+<div class="container-fluid">
+
+
+<div class="page-header">
+<h1 style="color:black">LogDogClient Tutorial</h1>
+</div>
+<h3 style="color:black">This tutorial will guide you through the key steps to use LogDog Client.</h3>
+<br>
+<h3 style="color:black"><a href ="#1">Step 1: Import LogDogClient.jar</a></h3>
+<br>
+<h3 style="color:black"><a href ="#2">Step 2: Create XMLfile in asset folder</a></h3>
+<br>
+<h3 style="color:black"><a href ="#3">Step 3: XML Option Setting</a></h3>
+<br>
+<h3 style="color:black"><a href ="#4">Step 4: Create instance</a></h3>
+<br>
+<h3 style="color:black"><a href ="#5">Step 5: Using LogDog </a></h3>
+<br>
+<h3 style="color:black">Reference : <a href =/clientjavadoc/index.html> LogDogClient Document</a></h3>
+<hr>
+
+
+<h3 style="color:black"><a name = '1'></a>Step 1: Import LogDogClient.jar</h3>
+<p style="color:black">To use LogDog, you have to import the LogDogClient.jar.<br>
+right click the project -> properties -> add External JARs -> add LogDogClient.jar
+</p>
+
+<img src= "/asset/tutorial/step1.png" align="middle">
+<br>
+<br>
+<br>
+<h3 style="color:black"><a name = '2'></a>Step 2: Create XMLfile in asset folder</h3>
+<p style="color:black">Create XML file in your android project in asset folder</p>
+<img src= "/asset/tutorial/step2.png" align="middle">
+<br>
+<br>
+<br>
+<h3 style="color:black"><a name = '3'></a>Step 3: XML Option Setting</h3>
+<h4 style="color:black">Example.xml</h4>
+
+<!-- &lt; -->    
+<pre class='brush: xml'>
+&lt;!-- Log Setting -->
+&lt;Log>
+   &lt;Level>level&lt;/Level>
+&lt;/Log>
+
+&lt;!-- Appender List -->
+&lt;Appenders>
+   &lt;AppenderList class="java.util.ArrayList">
+   
+      &lt;!-- Appengine Appender -->
+      &lt;Appender class="com.logdog.Appender.AppEngine.AppEngineAppender" AppenderName="AppEngine">
+      	 &lt;!-- Formatter Setting -->
+         &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+         &lt;/Formatter>
+         &lt;LogFileName>log.txt&lt;/LogFileName>
+         &lt;SaveDirName>LogDog1&lt;/SaveDirName>
+         &lt;AppComunicator CommunicatorName="AppEngineComm">
+            &lt;URL>http://swlogdog7.appspot.com/logdog/Report/&lt;/URL>
+         &lt;/AppComunicator>
+         &lt;ReadLogLine>100&lt;/ReadLogLine>
+      &lt;/Appender>
+      
+      &lt;!-- logcat Appender -->
+      &lt;Appender class="com.logdog.Appender.LogCatAppender.LogCatAppender" AppenderName="LogCat">
+      &lt;!-- Formatter Setting -->
+      &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+      &lt;/Formatter>
+      &lt;/Appender>
+      
+   &lt;/AppenderList>
+&lt;/Appenders>
+
+
+</pre>
+<br>
+<h4 style="color:black">Log setting</h4>
+<pre class='brush: xml'>
+&lt;Log>
+   &lt;Level>level&lt;/Level>
+&lt;/Log>
+</pre>
+<p style="color:black">Level has five options.<br>
+`Fatal`<br>
+`Debug`<br>
+`Error`<br>
+`Warn`<br>
+`Info`</p>
+
+<br>
+<h4 style="color:black">Appender Setting</h4>
+<p style="color:black">See the code below the in order to add the appender<br>
+<pre class='brush: xml'>
+&lt;Appenders>
+   &lt;AppenderList class="java.util.ArrayList">
+     &lt;!-- Add Appender -->
+     &lt;/AppenderList>
+&lt;/Appenders>
+</pre>
+<br>
+<p style="color:black"><b>Appengine appender</b><br>
+sends bug reports and logs at AppEngine 
+</p>
+<pre class='brush: xml'>
+&lt;Appender class="com.logdog.Appender.AppEngine.AppEngineAppender" AppenderName="AppEngine">
+		 &lt;!-- Formatter Setting -->
+         &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+         &lt;/Formatter>
+         &lt;!-- set Log File name -->
+         &lt;LogFileName>log.txt&lt;/LogFileName>
+         &lt;!-- set Save directory -->
+         &lt;SaveDirName>LogDog1&lt;/SaveDirName>
+         &lt;!-- Network  -->
+         &lt;AppComunicator CommunicatorName="AppEngineComm">
+            &lt;!-- Set Appengine Url
+                    Your Appengine URL+/Report -->
+            &lt;URL>http://swlogdog7.appspot.com/logdog/Report/&lt;/URL>
+         &lt;/AppComunicator>
+         &lt;!-- set Send Log Line  -->
+         &lt;ReadLogLine>100&lt;/ReadLogLine>
+      &lt;/Appender>
+</pre>
+
+<br>
+<p style="color:black"><b>File appender</b><br>
+Log information, error reports are stored on the local 
+</p>
+<pre class='brush: xml'>
+&lt;Appender class="com.logdog.Appender.FileAppender.FileAppender" AppenderName="File">
+	     &lt;!-- Formatter Setting -->
+         &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+         &lt;/Formatter>
+         &lt;!-- set Log File name -->
+         &lt;LogFileName>log.txt&lt;/LogFileName>
+         &lt;!-- set Save directory -->
+         &lt;SaveDirName>logdog&lt;/SaveDirName>
+         &lt;!-- set save Log Line  -->
+         &lt;ReadLogLine>20&lt;/ReadLogLine>
+      &lt;/Appender>
+</pre>
+
+<br>
+<p style="color:black"><b>Logcat appender</b><br>
+sends bug reports and logs at Android logcat  
+</p>
+<pre class='brush: xml'>
+ &lt;!-- logcat Appender -->
+      &lt;Appender class="com.logdog.Appender.LogCatAppender.LogCatAppender" AppenderName="LogCat">
+      &lt;!-- Formatter Setting -->
+      &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+      &lt;/Formatter>
+      &lt;/Appender>
+</pre>
+
+<br>
+<p style="color:black"><b>Foramtter</b><br>
+There are two formatters.<br>
+One is pattern formatter<br>
+The other is simple formatter<br>
+
+<p style="color:black"><a href = "http://microlog.sourceforge.net/snapshot/microlog-logger/apidocs/net/sf/microlog/format/PatternFormatter.html">
+ Pattern setting reference page</a></p>
+
+</p>
+<pre class='brush: xml'>
+
+ &lt;!-- Pattern Foramtter -->
+ &lt;Formatter class="com.logdog.Formatter.PatternFormatter">
+ 			&lt;!-- Pattern Setting -->
+            &lt;PatternString>   %d{ISO8601}    [%P]  %m  %T  &lt;/PatternString>
+      &lt;/Formatter>
+      
+&lt;!-- Simple Foramtter -->
+ &lt;Formatter class="com.logdog.Formatter.SimpleFormatter">
+ 			 &lt;!-- Simple delimiter -->
+             &lt;Delimiter>delimiter &lt;/Delimiter>
+          &lt;/Formatter>
+
+</pre>
+
+<br>
+<br>
+<br>
+<h3 style="color:black"><a name = '4'></a>Step 4: Create instance</h3>
+<p style="color:black">Create a new class in your package root If your app already contains an Application subclass, add LogDog to this class.</p>
+
+<pre class='brush: java'>
+package rollcake.State;
+import com.logdog.LogDog;
+
+import android.app.Application;
+
+
+public class RollCake extends Application {
+
+	@Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		super.onCreate();
+		
+		// Init LogDog 1.yourContext, 2. XmlSetting File name
+		 LogDog.LogDoginitialize(getApplicationContext(), "LogDog.xml");
+	}
+
+}
+</pre>
+
+<br>
+<br>
+<br>	   
+<h3 style="color:black"><a name = '5'></a>Step 5: Using LogDog </h3>
+<p style="color:black">Use LogDog in your project</p>	 
+
+<pre class='brush: java'>
+        //Set Log Level in code 
+        LogDog.SetLogLever(Level.DEBUG);
+        LogDog.SetLogLever(Level.INFO);
+        LogDog.SetLogLever(Level.ERROR);
+        LogDog.SetLogLever(Level.FATAL);
+        LogDog.SetLogLever(Level.WARN);
+        
+        //print Log Data
+        LogDog.PrintLog(Level.DEBUG, "TestDebug");
+        LogDog.PrintLog(Level.INFO, "TestINFO");
+        LogDog.PrintLog(Level.ERROR, "TestERROR");
+        LogDog.PrintLog(Level.FATAL, "TestFATAL");
+        LogDog.PrintLog(Level.WARN, "TestWARN");
+                
+        try{
+        	  String nulldata =null;
+        	  nulldata.toUpperCase();
+        	  }
+           catch(Exception e){
+        	   //nullpoint Exception
+        	   e.printStackTrace();
+        	   //print Exception
+        	   LogDog.PrintLog(Level.DEBUG, e);
+           }
+
+</pre>
+
+<div class="page-header">
+<h1 style="color:black">LogDogServer Tutorial</h1>
+</div>
+<h3 style="color:black">This tutorial will guide you through the key steps to use LogDog Client.</h3>
+<br>
+<h3 style="color:black"><a href ="#s1">Step 1: Install Google App Engine And Eclipse</a></h3>
+<br>
+<h3 style="color:black"><a href ="#s2">Step 2: Import Server project</a></h3>
+<br>
+<h3 style="color:black"><a href ="#s3">Step 3: Deploy our Service</a></h3>
+<br>
+<h3 style="color:black"><a href ="#s4">Step 4: Setting GAE</a></h3>
+<br>
+<h3 style="color:black">Reference : <a href =/serverjavadoc/index.html> LogDogServer Document</a></h3>
+<hr>
+
+
+<h3 style="color:black"><a name = 's1'></a>Step 1: Install Google App Engine And Eclipse</h3>
+<p style="color:black">To use Logdog Web Service, you have to install Google App Engine ver 1.7.2.<br>
+(in stall of GAE is see from https://developers.google.com/appengine/)
+</p>
+
+
+<br>
+<h3 style="color:black"><a name = 's2'></a>Step 2: Import Server project</h3>
+<p style="color:black">Download Web Service Source Code by our Github. Importing into eclipse.<br>
+import is File -> import -> existing projects into Workspace<br>
+</p>
+
+<img src= "/asset/tutorial/s1.png" align="middle">
+<br>
+<h3 style="color:black"><a name = 's3'></a>Step 3: Deploy our Service</h3>
+<p style="color:black">Select our Web Service.<br>
+<img src= "/asset/tutorial/s2.png" align="middle">
+<br> find and click GAE  tools ico in eclipse. <br>
+<img src= "/asset/tutorial/s3.png" align="middle">
+<br>Click “App engine project settings...”<br>
+<img src= "/asset/tutorial/s4.png" align="middle">
+<br>input your GAE application ID and Version.<br>
+(GAE project is created in https://appengine.google.com/) 
+<br>
+<img src= "/asset/tutorial/s5.png" align="middle"><br>
+Click  Ok button, and Click Deploy button.<br>
+</p>
+
+
+<br>
+<h3 style="color:black"><a name = 's4'></a>Step 4: Setting GAE</h3>
+<p style="color:black">move your GAE project DashBoard Page in https://appengine.google.com/<br>
+<img src= "/asset/tutorial/s6.png" align="middle"><br>
+click main - Versions menu.<br>
+<img src= "/asset/tutorial/s7.png" align="middle"><br>
+check your Deploy Version. and Click Make Default button.
+<img src= "/asset/tutorial/s8.png" align="middle"><br>
+</p>
+<br>
+
+
+</div><!-- /.container -->
+
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+<hr>
+
+    <div class="container marketing">
+    
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2012 LogDog,  Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+</div><!-- /.container -->
+    
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    </body>
+
+<script src='/syntaxhighlighter/scripts/shCore.js' type='text/javascript'></script> 
+<script src='/syntaxhighlighter/scripts/shBrushJava.js' type='text/javascript'></script>
+<script src='/syntaxhighlighter/scripts/shBrushXml.js' type='text/javascript'></script>
+<script src='/syntaxhighlighter/scripts/shAutoloader.js' type='text/javascript'></script>
+<script type="text/javascript" src="/syntaxhighlighter/scripts/shLegacy.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+SyntaxHighlighter.config.bloggerMode = false;
+SyntaxHighlighter.all();
+//]]>
+</script>
+
+    <script src="/bootstrap/js/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+ 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+</html>
+    
+    
+    
+
+
+
+
+
+
+
+

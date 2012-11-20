@@ -1,0 +1,199 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LogDog HomePage &middot; OpenSource</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  
+    <!-- Le styles -->
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/js/ui.multiselect.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/ui.jqgrid.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+        
+    
+    
+    
+       <style>
+
+    /* GLOBAL STYLES
+    -------------------------------------------------- */
+    /* Padding below the footer and lighter body text */
+
+    body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+      background-color : #eaeaea;
+    }
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+
+    /* Special class on .container surrounding .navbar, used for positioning it into place. */
+    .navbar-wrapper {
+      position: relative;
+      z-index: 10;
+      margin-top: 20px;
+      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+    }
+
+    /* Remove border and change up box shadow for more contrast */
+    .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+         -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+              box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    /* Downsize the brand/project name a bit */
+    .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+    }
+
+    /* Navbar links: increase padding for taller navbar */
+    .navbar .nav > li > a {
+      padding: 15px 20px;
+    }
+
+    /* Offset the responsive button for proper vertical alignment */
+    .navbar .btn-navbar {
+      margin-top: 10px;
+    }
+
+
+
+    /* CUSTOMIZE THE NAVBAR
+    -------------------------------------------------- */
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/asset/A-57.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/asset/A-144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/asset/A-114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/asset/A-72.png">
+    <link rel="apple-touch-icon-precomposed" href="/asset/A-57.png">
+    
+  </head>
+
+  <body>
+    <!-- NAVBAR
+    ================================================== -->
+    <!-- Wrap the .navbar in .container to center it on the page and provide easy way to target it with .navbar-wrapper. -->
+    <div class="container navbar-wrapper">
+
+      <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+          <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/index.html">LogDog</a>
+          <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="/index.html">Home</a></li>
+              <li><a href="tutorial.html">Tutorial</a></li>
+              <li><a href="https://github.com/swlogdog/logdog">Download</a></li>
+              <li><a href="/license.html">License</a></li>
+              <li><a href="/team.html">Team</a></li>
+              <li class="active"><a href="#">About</a></li>
+              
+              <!-- Read about Bootstrap dropdowns at http://twitter.github.com/bootstrap/javascript.html#dropdowns -->
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!-- /.navbar-inner -->
+
+
+
+   
+
+<div class="container-fluid">
+
+           <section id="logdog">
+           <div class="page-header">
+            <h1 color>LogDog란?</h1>
+           </div>
+           	<img src="/asset/one.png" class="span6" align="middle"><h3>LogDog is...</h3>
+				<p>
+				 LogDog은 개발자가 만든 앱이 설치된 User에 대한 정보와 로그 정보를 에러가 발생하엿을때 구글 앱 엔진에 전송하여, 이를 가시화하여 개발자기 쉽게 디버깅을 할 수 있도록 제공해주는 개발자의 개발 생산성 향상을 촉진시켜주는 프레임워크이다.</p>
+				<p> Logdog 프레임워크는 총 두 가지로 제공된다. 첫 번째 앱에서 에러 정보를 수집하고, 개발자가 보다 쉽게 로그를 남길 수 있도록 도와주고, 이를 앱 엔진 서버로 보내주는 클라이언트 라이브러리, 그리고 구글 앱 엔진으로 수집된 정보를 가시화시켜주는 앱 엔진 프로젝트로 구성되어있다.</p> 
+		   </section>
+		  		   
+		   <section id="developer">
+           <div class="page-header">
+            <h1>프로젝트 개발자 및 도움을 준 분</h1>
+           </div>
+           	<h3>LogDog is...</h3>
+				<p>다음의 프로젝트 인원이 함께 개발하였니다.</p>
+				<h3>프로젝트 메인 인원</h3>
+          		<ul>
+           			 <li><a href="http://arload.wordpress.com/">손 영수 멘토님</a>: 소프트웨어 공학과 아키텍팅을 국내 개발자들에게 널리 알리기 위해 노력하고 있는 EVA팀의 한 마리 기러기이다. 국내 몇 안되는 패턴 저자이며, 아시아 패턴 학회인 AsianPLoP의 공동 의장이다. 지식 공유를 위해 세미나, 워크숍, 기고 등 왕성한 활동을 하고 있다. 요즘 후배들을 양성하고 있으며, 더 큰 성장을 위해 수련을 하고 있다.</li>         		
+					 <li><a href="">장 선진 멘토님</a>:현재 (주)소프트웨어 인 라이프에 대표이사를 맡고있다.</li>
+ 					 <li><a href="http://www.facebook.com/sjdmldi">정 승수 멘티</a>: 현재 소프트웨어 마에스트로 3기 연수생으로 소프트웨어 설계와 사람에 관한 패턴들을 열심히 공부하고 있다.</li>
+             		 <li><a href="http://www.facebook.com/profile.php?id=100003198556738">오 혜성 멘티</a>: 현재 소프트웨어 마에스트로 3기 연수생으로 머신러닝을 주력으로 생각하고 있다. 하지만 마에스트로에 온 뒤로는 Web과 구글 앱 엔진에 대해 공부 하고 있다.</li>
+             		 <li><a href="http://www.facebook.com/profile.php?id=100003198556738">채 고은</a>: 이 프로젝트의 로고 및 패턴 등의 리소스 제작을 도와주었다.</li>
+          		</ul>
+          	<p>다음 사람들이 이 프로젝트가 진행되는데 많은 도움을 주었다.</p>	
+			<h3>Thanks to</h3>
+				<ul>
+           			 <li><a href="http://arload.wordpress.com/">소프트웨어 마에스트로 사무국</a>: 소프트웨어 마에스트로 연수센터를 관리하는 모든 사람들이 이프로젝트가 진행되는데 막대한 도움을 주어서 이 자리를 빌려 감사를 표한다.</li>         		
+					 <li><a href="">김 준수 멘티님</a>:현재 소프트웨어 마에스트로 3기 연수생으로 가끔 밥을 공급해주었다.</li>
+          		</ul>
+		   </section>
+		   	 
+
+</div><!-- /.container -->
+
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+<hr>
+
+    <div class="container marketing">
+    
+      <!-- FOOTER -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2012 LogDog,  Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+</div><!-- /.container -->
+    
+
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/bootstrap/js/jquery.js"></script>
+    <script src="/bootstrap/js/bootstrap.js"></script>
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+ 	<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  </body>
+</html>
+    
+    
+    
