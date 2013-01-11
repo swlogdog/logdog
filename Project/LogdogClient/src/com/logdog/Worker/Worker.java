@@ -158,7 +158,7 @@ public class Worker {
 	 * @param level 보일 레벨
 	 * @param t Exception 데이터
 	 */
-	public void PrintLog(Level level,Throwable t){
+	public void PrintLog(Level level,Exception t){
 		m_LogManager.PrintLog(level, t);
 		//CreateErrorReport(t);
 		ErrorReportProcess process = new ErrorReportProcess(t);

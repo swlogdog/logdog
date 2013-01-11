@@ -59,7 +59,7 @@ public final class LogDog {
 	 * @author JeongSeungsu
 	 * @param level
 	 */
-	public static void SetLogLever(Level level){
+	public static void SetLogLevel(Level level){
 		Worker.getInstance().SetLogLever(level);
 	}
 	
@@ -71,7 +71,7 @@ public final class LogDog {
 	 * @param level
 	 * @param log
 	 */
-	public static void PrintLog(Level level,String log){
+	public static void Print(Level level,String log){
 		Worker.getInstance().PrintLog(level, log);
 	}
 	
@@ -83,7 +83,7 @@ public final class LogDog {
 	 * @param level
 	 * @param t
 	 */
-	public static void PrintLog(Level level,Throwable t){
+	public static void Print(Level level,Exception t){
 		Worker.getInstance().PrintLog(level, t);
 	}
 	

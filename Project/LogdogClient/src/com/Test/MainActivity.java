@@ -37,19 +37,19 @@ public class MainActivity extends Activity {
         
       
         //Set Log Level in code 
-        LogDog.SetLogLever(Level.DEBUG);
-        LogDog.SetLogLever(Level.INFO);
-        LogDog.SetLogLever(Level.ERROR);
-        LogDog.SetLogLever(Level.FATAL);
-        LogDog.SetLogLever(Level.WARN);
+        LogDog.SetLogLevel(Level.DEBUG);
+        LogDog.SetLogLevel(Level.INFO);
+        LogDog.SetLogLevel(Level.ERROR);
+        LogDog.SetLogLevel(Level.FATAL);
+        LogDog.SetLogLevel(Level.WARN);
         
         
         //print Log Data
-        LogDog.PrintLog(Level.DEBUG, "TestDebug");
-        LogDog.PrintLog(Level.INFO, "TestINFO");
-        LogDog.PrintLog(Level.ERROR, "TestERROR");
-        LogDog.PrintLog(Level.FATAL, "TestFATAL");
-        LogDog.PrintLog(Level.WARN, "TestWARN");
+        LogDog.Print(Level.DEBUG, "TestDebug");
+        LogDog.Print(Level.INFO, "TestINFO");
+        LogDog.Print(Level.ERROR, "TestERROR");
+        LogDog.Print(Level.FATAL, "TestFATAL");
+        LogDog.Print(Level.WARN, "TestWARN");
                
         try{
         	  String nulldata =null;
@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
         	   //nullpoint Exception
         	   e.printStackTrace();
         	   //print Exception
-        	   LogDog.PrintLog(Level.DEBUG, e);
+        	   LogDog.Print(Level.DEBUG, e);
            }
            
  
